@@ -1,0 +1,16 @@
+version: '3.2'
+services:
+  database:
+    environment:
+      POSTGRES_DB: broadleaf
+      POSTGRES_PASSWORD: demo
+      POSTGRES_USER: broadleaf
+    image: postgres:11.2
+    networks:
+      - databasenet
+    ports:
+      - '5432:5432'
+    restart: always
+    tty: true
+networks:
+  databasenet:

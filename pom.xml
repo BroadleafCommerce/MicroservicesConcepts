@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>broadleaf-microservices-tutorial-research-parent</artifactId>
+    <groupId>com.broadleafcommerce.microservices</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Broadleaf Microservice Tutorial Research Parent</name>
+    <description>Parent project that holds tutorial projects that demonstrate different possible dev and extension use case patterns</description>
+
+    <properties>
+        <java.version>11</java.version>
+        <maven.compiler.release>11</maven.compiler.release>
+        <resource.delimiter>@</resource.delimiter>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Plugin Versions -->
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <spring.boot.maven.plugin.version>2.7.1</spring.boot.maven.plugin.version>
+        <maven.resources.plugin.version>2.7</maven.resources.plugin.version>
+
+        <!-- Microservice Versions -->
+        <blc.release.train>1.9.0-SNAPSHOT</blc.release.train>
+        <blc.jpa.core>1.7.8-SNAPSHOT</blc.jpa.core>
+        <demo.version>1.9.0-SNAPSHOT</demo.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>broadleaf-microservices</id>
+            <url>https://repository.broadleafcommerce.com/repository/microservices/</url>
+        </repository>
+    </repositories>
+
+    <scm>
+        <connection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git</connection>
+        <developerConnection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git</developerConnection>
+        <url>https://github.com/BroadleafCommerce/MicroservicesTutorialResearch</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/application*.yml</include>
+                    <include>**/application*.yaml</include>
+                    <include>**/application*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <excludes>
+                    <exclude>**/application*.yml</exclude>
+                    <exclude>**/application*.yaml</exclude>
+                    <exclude>**/application*.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.maven.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>repackage</id>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <mainClass>${start-class}</mainClass>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven.resources.plugin.version}</version>
+                    <configuration>
+                        <delimiters>
+                            <delimiter>${resource.delimiter}</delimiter>
+                        </delimiters>
+                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!-- Always execute these in the build -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-shared-codestyle-resources</id>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.broadleafcommerce.microservices</groupId>
+                <artifactId>broadleaf-offer-services</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.broadleafcommerce.microservices</groupId>
+                <artifactId>broadleaf-offer-services-metadata</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.broadleafcommerce.microservices</groupId>
+                <artifactId>broadleaf-microservices-release-train</artifactId>
+                <version>${blc.release.train}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Min Application Requirements -->
+        <!-- Microservices Demo Helpers Dependency -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-helpers</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <!-- Admin & Core Services -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-admin-navigation-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-admin-user-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-import-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-inventory-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-sandbox-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-metadata-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-scheduled-job-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-tenant-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Catalog and Asset -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-asset-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-catalog-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Pricing and Offers -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-offer-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-pricing-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Cart -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-cart-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Order -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-order-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- CreditAccount -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-credit-account-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Customers, Segments, and Accounts -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-customer-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Notification -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-notification-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Vendor -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-vendor-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Experience & Composite Services -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-cart-operation-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-catalog-browse-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-menu-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-content-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-order-operation-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-rating-and-review-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Search -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-solr-search-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Shipping -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-shipping-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Payment Transaction -->
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-payment-transaction-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+
+        <!-- Misc -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-oauth2-resource-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.zalando</groupId>
+            <artifactId>jackson-datatype-money</artifactId>
+        </dependency>
+
+        <!-- Standard -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-jpa-core</artifactId>
+            <version>${blc.jpa.core}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-jpa-core-test</artifactId>
+            <scope>test</scope>
+            <version>${blc.jpa.core}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase.ext</groupId>
+            <artifactId>liquibase-yugabytedb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-kafka</artifactId>
+        </dependency>
+
+        <!-- Observability -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-cloud-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.jaegertracing</groupId>
+                    <artifactId>jaeger-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.thrift</groupId>
+                    <artifactId>libthrift</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.jaegertracing</groupId>
+            <artifactId>jaeger-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+
+        <!-- Non-transitive (optional/provided/runtime) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.yugabyte</groupId>
+            <artifactId>jdbc-yugabytedb</artifactId>
+            <version>42.3.0</version>
+        </dependency>
+
+        <!-- Tests -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-oauth2-resource-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-kubernetes-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>productExtensionOnly</module>
+        <module>basics</module>
+    </modules>
+
+</project>

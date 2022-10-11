@@ -1,0 +1,620 @@
+broadleafdemo:
+  startup:
+    product-reindex: true
+broadleaf:
+  database:
+    provider: jpa
+  composite:
+    datasource:
+      url: 'jdbc:postgresql://localhost:5432/broadleaf'
+      username: broadleaf
+      password: demo
+      hikari:
+        maximumPoolSize: 10
+      properties:
+        hibernate:
+          jdbc:
+            lob:
+              non_contextual_creation: true
+  adminnavigation:
+    liquibase:
+      change-log: 'classpath:/db/changelog/adminnavigation.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: adminnavigation
+    delegating:
+      schema: adminnavigation
+      delegate-ref: composite
+  adminuser:
+    liquibase:
+      change-log: 'classpath:/db/changelog/adminuser.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: adminuser
+    delegating:
+      schema: adminuser
+      delegate-ref: composite
+    data:
+      load:
+        default-users: true
+        default-marketplace-users: true
+        default-marketplace-roles: true
+  asset:
+    internal:
+      content-provider-url-prefix: '/api/asset'
+      prepend-request-context-path: false
+    data:
+      load-on-startup: true
+      files:
+        - path: 'classpath:__initial-data.zip'
+          context:
+            tenant-id: 5DF1363059675161A85F576D
+        - path: 'classpath:__initial-data-2.zip'
+          context:
+            tenant-id: 5DF1363059675161A85F576D
+        - path: 'classpath:__initial-data-3.zip'
+          context:
+            tenant-id: 5DF1363059675161A85F576D
+    provider:
+      contentUrlPrefix: '/api/asset/content'
+    liquibase:
+      change-log: 'classpath:/db/changelog/asset.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: asset
+    delegating:
+      schema: asset
+      delegate-ref: composite
+  cart:
+    liquibase:
+      change-log: 'classpath:/db/changelog/cart.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: cart
+    delegating:
+      schema: cart
+      delegate-ref: composite
+  store-credit:
+    creditaccountprovider:
+      url: 'https://localhost:8447'
+  cartoperation:
+    anonymouscart:
+      application-id-included-in-cookie-name: true
+    campaignprovider:
+      url: 'https://localhost:8447'
+    cartprovider:
+      url: 'https://localhost:8447'
+    catalogprovider:
+      url: 'https://localhost:8447'
+    offerprovider:
+      url: 'https://localhost:8447'
+    pricingprovider:
+      url: 'https://localhost:8447'
+    walletprovider:
+      url: 'https://localhost:8447'
+    inventoryprovider:
+      url: 'https://localhost:8447'
+    shippingprovider:
+      url: 'https://localhost:8447'
+    paymentprovider:
+      url: 'https://localhost:8447'
+    creditaccountprovider:
+      url: 'https://localhost:8447'
+    customerprovider:
+      url: 'https://localhost:8447'
+    service:
+      match-cart-item-asset-to-variant: true
+      checkout:
+        checkout-payment-method-options:
+          - payment-method-type: CREDIT_CARD
+            payment-method-gateway-type: PASSTHROUGH
+          - payment-method-type: STORE_CREDIT
+            payment-method-gateway-type: BLC_STORE_CREDIT
+    transfercart:
+      encoder:
+        # Generated using KeyGeneratorUtil at 2048-bit strength
+        encoded-private-key: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCN+56ihLx1Vv09XQ/duZlkUh61RfNs8VKPXvlpU6v7HPp9cfZIj2Ibm8WWn7AElIicY75hX2FcUQ4RHAQhkzksAnAtQ+q5wrkyy/ENSI74xmbHxokg5YIGuR70/17pLj9wCXLzjwnZ/s60qXJOZCPau9lCL/pJ3CUIVcepuw7TwSpuNF5Gw3fsuFpzutH4ON+S6F7wIkXlFBdeP5RlAh1QgYZmWAvZ3Ki/6mkSxs5wu4dk+rZSlQd9OVYEg5oeBUBoE4f5cCsd+yri5rzIW6aruPnLL7Gez8QFSnz8QvyqxWkLkGqaRvkrXxwv+1uiMq3ketBmwJZqk14GQ4f8/tU9AgMBAAECggEBAIKfybRvNgsmOtmnsp8kz9CSFJplfqzt4CzzDbcvOXxPjsy2egULlREdYM1QoNm15XEr+s0OuT37fFuVUN+q2OB6ZcXfRCYe1c+7/UthQ9fwgEKvjx1qyRNyYN65yxHwcICc0Nru7/tVB8sCUZ15V9s3E4xnI3esR43BjW3EIMIDBSJ/CqKmFCsL7EEYFuYoqpzy6XLR7CVUbtjmWid6f2igj/Ld1F9D5xTiRLb5tJDIfELNPRJ6U5KUwCyQof4vTLgrzF7KTyAFKLJTcbeA8+v6rePNVP8GcZzNBZVQFb/a1jfjp0MpSqvT96QKaZcGYojkjYfZtsEWkaRo2Egmw+kCgYEA2cpAhZni91oNIBp80eGZ9m+A5Rt2+XnWGqbmGefo2Pr/kHC3JHIkyuH4xGNKfRLm9qEErS0T/Q0yqaLLxrJHk9tO/eN88akyi9J5cNcqfHUcPQnqs1BmgGtpTzlg4NCrvq1TKE9fkL2Da5T5sHjYJksDCtxzFBcnL1Zcn9diaN8CgYEApuSXPUUC+9EouLoDLZ6z1L4ozieaG27u/xRp6forp/8hRYVX6YyFK2slpfiQSKkSL3zAaTkbAzLkjOfiRgwTfvxLu9yaQ/ew3fBnb+rll0tHT6a4HL9jMJU02sUtatnImD5jK2vBjXLDf8uHKya0Tlnx9Q7nfKiSbQ3/KAAdmWMCgYEAkp/h1JCIB3NvBsAObNbv6sOjCZv1+3uVM5hNrf89+mbxi/L2uejG8Hg2HTGjwpTpPf2lwllo7aLnCuH5QypfmiG6CqAPTDtXNl9bNycFCYlmm4mDo3lrqOWnnpjIqlKSbesO40Kc2jtcsR85AyA4lX9G6xcDuvDjhrEj5tEBBg0CgYAcUfP8GKbd9mszlZUOe7zGYBJqkTvMZfG2ZU9nveUEl/2cX3lAj3DVolP8KwbI3a/RURkRgfg8fblc08iI3Gm+ha+QTGn9GJ3xu2bCDhkxqDuMn5zke/Gn/9m9OfJwDE7GzudjKeDpUM0t9WqVfvbfyNGPJR1RAQX/7X0b25EqQwKBgQCMFOT5fKhw/SeCxBgKWxvuSjJC3DYa3RQje6/Cq2OaMkmqse34C69b++qsgh0po83y34HckddOpImIBAUTndspTTauAJUyOBzLbuQtawSaRIYlpDM3xaD0mfmbVB14iLJY6gWzoSDueQeBX8doQcvX9qp/mzhbHJ9yofTga3Nd2A==
+      decoder:
+        encoded-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjfueooS8dVb9PV0P3bmZZFIetUXzbPFSj175aVOr+xz6fXH2SI9iG5vFlp+wBJSInGO+YV9hXFEOERwEIZM5LAJwLUPqucK5MsvxDUiO+MZmx8aJIOWCBrke9P9e6S4/cAly848J2f7OtKlyTmQj2rvZQi/6SdwlCFXHqbsO08EqbjReRsN37Lhac7rR+Djfkuhe8CJF5RQXXj+UZQIdUIGGZlgL2dyov+ppEsbOcLuHZPq2UpUHfTlWBIOaHgVAaBOH+XArHfsq4ua8yFumq7j5yy+xns/EBUp8/EL8qsVpC5Bqmkb5K18cL/tbojKt5HrQZsCWapNeBkOH/P7VPQIDAQAB
+  catalog:
+    liquibase:
+      change-log: 'classpath:/db/changelog/catalog.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: catalog
+    delegating:
+      schema: catalog
+      delegate-ref: composite
+  catalogbrowse:
+    catalogprovider:
+      url: 'https://localhost:8447'
+    catalogsearchprovider:
+      url: 'https://localhost:8447'
+      hydrate-assets: true
+    contentprovider:
+      url: 'https://localhost:8447'
+    pricingprovider:
+      url: 'https://localhost:8447'
+    offerProvider:
+      url: 'https://localhost:8447'
+  common:
+    data:
+      route:
+        enabled: true
+    policy:
+      validation:
+        enforce: true
+    ssl-verification:
+      disabled: true
+  creditaccount:
+    liquibase:
+      change-log: 'classpath:/db/changelog/creditaccount.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: creditaccount
+    delegating:
+      schema: creditaccount
+      delegate-ref: composite
+  customer:
+    liquibase:
+      change-log: 'classpath:/db/changelog/customer.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: customer
+    delegating:
+      schema: customer
+      delegate-ref: composite
+    useFullName: true
+    paymentprovider:
+      url: 'https://localhost:8447'
+  dataimport:
+    liquibase:
+      change-log: 'classpath:/db/changelog/import.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: import
+    delegating:
+      schema: import
+      delegate-ref: composite
+    processor:
+      batch-size: 100
+  image:
+    availableEffects: 'crop, resize, scale, thumbnail, unsharp'
+  inventory:
+    liquibase:
+      change-log: 'classpath:/db/changelog/inventory.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: inventory
+    delegating:
+      schema: inventory
+      delegate-ref: composite
+  menu:
+    liquibase:
+      change-log: 'classpath:/db/changelog/menu.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: menu
+    delegating:
+      schema: menu
+      delegate-ref: composite
+  metadata:
+    liquibase:
+      change-log: 'classpath:/db/changelog/metadata.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: metadata
+    delegating:
+      schema: metadata
+      delegate-ref: composite
+  modelmapper:
+    cache:
+      load:
+        enabled: true
+  notification:
+    liquibase:
+      change-log: 'classpath:/db/changelog/notification.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: notification
+    delegating:
+      schema: notification
+      delegate-ref: composite
+    message:
+      variables-by-application-id:
+        # Heat Clinic
+        2:
+          support-url: https://heatclinic.localhost:8456/contact-us
+          asset:
+            base-url: https://heatclinic.localhost:8447/content
+            logo-url: /b2b-the-heat-clinic-logo.png
+  offer:
+    liquibase:
+      change-log: 'classpath:/db/changelog/offer.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: offer
+    delegating:
+      schema: offer
+      delegate-ref: composite
+    messaging:
+      use-customer-email-as-user-target-value: true
+  order:
+    liquibase:
+      change-log: 'classpath:/db/changelog/order.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: order
+    delegating:
+      schema: order
+      delegate-ref: composite
+  orderoperation:
+    orderprovider:
+      url: 'https://localhost:8447'
+    campaignprovider:
+      url: 'https://localhost:8447'
+    offerprovider:
+      url: 'https://localhost:8447'
+    paymentprovider:
+      url: 'https://localhost:8447'
+  payment:
+    gateway:
+      passthrough-transactions:
+        active: true
+  paymenttransaction:
+    liquibase:
+      change-log: 'classpath:/db/changelog/paymenttransaction.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: paymenttransaction
+    delegating:
+      schema: paymenttransaction
+      delegate-ref: composite
+    customerprovider:
+      url: 'https://localhost:8447'
+  content:
+    liquibase:
+      change-log: 'classpath:/db/changelog/content.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: content
+    delegating:
+      schema: content
+      delegate-ref: composite
+  pricing:
+    liquibase:
+      change-log: 'classpath:/db/changelog/pricing.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: pricing
+    delegating:
+      schema: pricing
+      delegate-ref: composite
+  ratings:
+    liquibase:
+      change-log: 'classpath:/db/changelog/ratings.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: ratings
+    delegating:
+      schema: ratings
+      delegate-ref: composite
+  resource:
+    security:
+      oauth2:
+        defaultAllowAllAnonymous: false
+  sandbox:
+    propagation:
+      enabled: true
+    messaging:
+      active: true
+    liquibase:
+      change-log: 'classpath:/db/changelog/sandbox.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: sandbox
+    preview:
+      encoder:
+        # Generated using KeyGeneratorUtil at 2048-bit strength
+        encoded-private-key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCMQ9Xq3UWtXkMj2M2z9f0Za/HhaBWMpycZ4eRTGAKQH9kMYLm0CiUG/Jm2GKdrGZKBYqI8mXUxK979qCvQuR+xdaAvK02KzyMUWlu9b6ALhrVw3Er/aiZhkxhQE/MIYoW3RBVFt9yuAJqaKJuFEFFSYjLmt2GlfcBt6L1lRcLignfm26Bu7nLhCFC29Y59fIlfe6RpJvok7ppTOvvRCUzODbVNWjeDjQ3jvpra56zJcPW9KNxQggBPVKjuGbR9AOyTsWt3Pt4BvBjdNmieVluz27BoVdMGcju/nEdRhwbikQFp0qeWi0utZbfgM4QdR2XC5rc+7ras/aMkTCtoJmS1AgMBAAECggEAYhOYw3XfH592sN0K0JfjVuA8rFD8KHJEi/uAjH2QZThvqxEDKJmjVGRSEprgjam+4EuYh2kCIdS8Qn9Ry8t2Fr7Zt8G+oZ2+uJ+J4EbqEMUrn3PZ2QhfOAEDkhKw8B77wq6PdUVfwCdZ8wsL25oSUtmpH9wAIhhw8ik4LVT/NSPbTiOaGRPdQE31DCnwLG8chDpkX2VkhQp0ah4+1NwQHyGLkrPY9P6tpcsxCpDK9OcIC8eJW612dMUpTLr1AGvAiuCO/Bhzr1d7HCwBOm95PhJWRi+zLOmWz2K9QWxvqwOsGiNb/23ngFu03tsAGz8yGdKFMRpG0ywLPykZmnEw7QKBgQDbry8lcIRlYSigcPZWo2AHLCOZGxmi9O9dXE/MB5d+Qw4HalHbVxnykwRF0uWobQf99JNSeFqkZy51dGvr55ADaJYuA1Hvr+Yqu63aS2iLbMk+xmBpfLRAmuuCcC0v+WbsNjYz0hdNHf08/sumjM6QoGOGF2PWfddtwJo0847nXwKBgQCjc7Tb3AHlkQR6pfHUwz/7oynI6p0/nw/Q9UXIYXhCYJlrqddz0QMn5LhOILTjJq9dAX7vUNhIIpBBFaVk5voagpnkRbkUG5LHPtm/Wps/Uosdg6WHgB4xWVcE0nWJZWCtwgv60N9T3qU8t3lyQg8BkFyBcJJg9gL2D2BrF6JQawKBgQDCKxurpsCOboqfDFjeiLZGgJ/SIl7NZlnulbm95vPiWFgc+77v9BNuEL1VDauI6x2GO9a+rLvI1Z39mHIO5vOl35nlf2+7Pyhbmth1ufLkULmq72GluuACvirsdkOqRHDQ1LWhpc6MjbYXZEkRoyCsOebdTO0kVsPDMNnbdW5YVwKBgH+K8y64T1aWQVt/D+SI8u1llV5tDIUvlkTkjy5cOF37SNxFLJT4HLFNfS+hv+ScNCyr1SPi/tHS/qN6w5On1LNJA9KnQVNabL9C4OC7T/cqbtl593lzVJwHbaqamxK6Y6VSjMyLniiwzFlDheXNfC4pOrXaZK56aTceKouGZqa/AoGAbPkdybZD/NyJxcQm3sE+ff6v9iHxzhg4aULGWhGeJd38Iq3rSJBo4gCt3Zj7Psq+Jt9s+BY4GbT/5MbfWG2dC1mbexkbdz/cH+ytg55ihD0TJVhGCHz/5o+eYkP26nDIAvnbWcGRA5Vzxg2XB9g/OoPPNhakmhLQXDILu7OJY0k=
+      decoder:
+        encoded-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjEPV6t1FrV5DI9jNs/X9GWvx4WgVjKcnGeHkUxgCkB/ZDGC5tAolBvyZthinaxmSgWKiPJl1MSve/agr0LkfsXWgLytNis8jFFpbvW+gC4a1cNxK/2omYZMYUBPzCGKFt0QVRbfcrgCamiibhRBRUmIy5rdhpX3Abei9ZUXC4oJ35tugbu5y4QhQtvWOfXyJX3ukaSb6JO6aUzr70QlMzg21TVo3g40N476a2uesyXD1vSjcUIIAT1So7hm0fQDsk7Frdz7eAbwY3TZonlZbs9uwaFXTBnI7v5xHUYcG4pEBadKnlotLrWW34DOEHUdlwua3Pu62rP2jJEwraCZktQIDAQAB
+    delegating:
+      schema: sandbox
+      delegate-ref: composite
+  securevault:
+    googlecloud:
+      project-id: broadleaf-qa
+  scheduledjob:
+    liquibase:
+      change-log: 'classpath:/db/changelog/scheduledjob.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: scheduledjob
+    delegating:
+      schema: scheduledjob
+      delegate-ref: composite
+  search:
+    catalog:
+      primaryAlias: catalog_alias_1
+      secondaryAlias: catalog_alias_2
+    customer:
+      primaryAlias: customer_alias_1
+      secondaryAlias: customer_alias_2
+    order:
+      primaryAlias: order_alias_1
+      secondaryAlias: order_alias_2
+    order-fulfillment:
+      primaryAlias: order_fulfillment_alias_1
+      secondaryAlias: order_fulfillment_alias_2
+    liquibase:
+      change-log: 'classpath:/db/changelog/search.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: search
+    delegating:
+      schema: search
+      delegate-ref: composite
+    solr:
+      boost:
+        phraseBoost: 3
+        phraseExactBoost: 4
+        phraseSlop: 2
+        wordBoost: 2
+      server:
+        chroot: /solr
+        host: 'localhost:2181'
+        password: SolrRocks
+        user-name: indexer
+    spell-check:
+      config:
+        PRODUCT:
+          autoCorrectQuery: true
+          showSuggestionQueryHitCount: true
+          spellCheckEnabled: true
+          spellCheckQuery: true
+          suggestedQueryCount: 1
+          suggestionCount: 1
+          suggestionQueryCollationTries: 1
+  shipping:
+    liquibase:
+      change-log: 'classpath:/db/changelog/shipping.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: shipping
+    delegating:
+      schema: shipping
+      delegate-ref: composite
+    service:
+      shipengine:
+        active: false
+        apiKey:
+  tenant:
+    liquibase:
+      change-log: 'classpath:/db/changelog/tenant.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: tenant
+    delegating:
+      schema: tenant
+      delegate-ref: composite
+    global:
+      allowed-locales:
+        - en_US
+        - en
+        - en_GB
+        - es
+        - es_ES
+        - es_MX
+        - fr
+        - fr_FR
+    urlresolver:
+      application:
+        port: 8456
+      admin:
+        port: 8446
+  vendor:
+    liquibase:
+      change-log: 'classpath:/db/changelog/vendor.flexdemo.postgresql.changelog-master.yaml'
+      liquibase-schema: public
+      default-schema: vendor
+    delegating:
+      schema: vendor
+      delegate-ref: composite
+  environment:
+    report:
+      disabled: false
+  transitionrequest:
+    enabled: true
+  bulk:
+    processBulkUpdateRequest:
+      retry:
+        retryClusterServiceNamespace: process-bulkupdate-request-uber
+    createSandboxRequest:
+      retry:
+        retryClusterServiceNamespace: create-sandbox-request-bulk-uber
+    deleteSandboxRequest:
+      retry:
+        retryClusterServiceNamespace: delete-sandbox-request-bulk-uber
+  changesummary:
+    retry:
+      retryClusterServiceNamespace: changesummary-uber
+    notification:
+      active: true
+  export:
+    process-export-request:
+      retry:
+        retryClusterServiceNamespace: process-export-request-uber
+  import:
+    createSandboxRequest:
+      retry:
+        retryClusterServiceNamespace: create-sandbox-request-import-uber
+  persistence:
+    retry:
+      retryClusterServiceNamespace: persistence-uber
+  single-index-request:
+    retry:
+      retryClusterServiceNamespace: single-index-request-uber
+  transitionrequestcompletion:
+    retry:
+      retryClusterServiceNamespace: completion-uber
+  transition:
+    retry:
+      retryClusterServiceNamespace: transition-uber
+  scheduledjobtrigger:
+    retry:
+      retryClusterServiceNamespace: trigger-uber
+  sandbox-delete:
+    retry:
+      retryClusterServiceNamespace: sandbox-delete-uber
+management:
+  metrics:
+    tags:
+      application: Demo Min
+server:
+  port: 8447
+  servlet:
+    context-path: /
+  ssl:
+    key-store: 'classpath:local.keystore'
+    key-store-password: storepass
+spring:
+  application:
+    name: Demo:Min
+  cache:
+    type: none
+  codec:
+    max-in-memory-size: 1048576
+  integration:
+    jdbc:
+      initialize-schema: always
+  cloud:
+    stream:
+      bindings:
+        persistenceInputTenantSyncDataTracking:
+          group: uber-tenant-sync
+          destination: persistence
+        promotionInput:
+          group: uber-promotion
+          destination: promotion
+        deploymentInput:
+          group: uber-deployment
+          destination: deployment
+        rejectionInput:
+          group: uber-rejection
+          destination: rejection
+        reversionInput:
+          group: uber-reversion
+          destination: reversion
+        rebasingInput:
+          group: uber-rebase
+          destination: rebasing
+        processBulkUpdateRequestInput:
+          group: uber-bulk-update
+          destination: bulkUpdateRequest
+        batchRequestInput:
+          group: uber-batch
+          destination: batchRequest
+        triggeredJobEventInputOrphanBulk:
+          group: uber-orphan-bulk
+          destination: triggeredJobEvent
+        triggeredJobEventInputOrphanExport:
+          group: uber-orphan-export
+          destination: triggeredJobEvent
+        processExportRequestInput:
+          group: uber-export
+          destination: exportRequest
+        triggeredJobEventInputPurgeLock:
+          group: uber-purge-lock
+          destination: triggeredJobEvent
+        triggeredJobEventInputPruneNotification:
+          group: uber-prune-notification
+          destination: triggeredJobEvent
+        triggeredJobEventInputPurgeSandbox:
+          group: uber-purge-sandbox
+          destination: triggeredJobEvent
+        sandboxDeleteInput:
+          group: uber-sandbox-delete
+          destination: sandboxDelete
+      kafka:
+        default:
+          consumer:
+            configuration:
+              max:
+                poll:
+                  interval:
+                    ms: 1200000
+    bus:
+      enabled: false
+  datasource:
+    initialization-mode: never
+  liquibase:
+    # to disable the demo data set this property to "!demo", e.g "spring.liquibase.contexts='!demo'"
+    # it is possible to override this value for the specified service e.g "broadleaf.catalog.liquibase.contexts='!demo'"
+    contexts: demo
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        dialect: com.broadleafcommerce.data.tracking.jpa.hibernate.PostgresDialect
+  messages:
+    useCodeAsDefaultMessage: true
+  security:
+    oauth2:
+      client:
+        provider:
+          adminuserclient:
+            token-uri: 'https://localhost:8443/oauth/token'
+          indexerclient:
+            token-uri: 'https://localhost:8443/oauth/token'
+          catalogbrowseclient:
+            token-uri: 'https://localhost:8443/oauth/token'
+          orderopsclient:
+            token-uri: 'https://localhost:8443/oauth/token'
+          cartopsclient:
+            token-uri: 'https://localhost:8443/oauth/token'
+          inventoryclient:
+            token-uri: 'https://localhost:8443/oauth/token'
+          paymenttransactionclient:
+            token-uri: 'https://localhost:8443/oauth/token'
+          customerclient:
+            token-uri: 'https://localhost:8443/oauth/token'
+          storecreditclient:
+            token-uri: 'https://localhost:8443/oauth/token'
+        registration:
+          adminuserclient:
+            authorization-grant-type: client_credentials
+            client-id: adminuserclient
+            client-secret: admin_user_secret
+          indexerclient:
+            authorization-grant-type: client_credentials
+            client-id: indexerclient
+            client-secret: indexer_secret
+          catalogbrowseclient:
+            authorization-grant-type: client_credentials
+            client-id: catalogbrowseclient
+            client-secret: catalog_browse_secret
+          orderopsclient:
+            authorization-grant-type: client_credentials
+            client-id: orderopsclient
+            client-secret: order_ops_secret
+          cartopsclient:
+            authorization-grant-type: client_credentials
+            client-id: cartopsclient
+            client-secret: cart_ops_secret
+          inventoryclient:
+            authorization-grant-type: client_credentials
+            client-id: inventoryclient
+            client-secret: inventory_secret
+          paymenttransactionclient:
+            authorization-grant-type: client_credentials
+            client-id: paymenttransactionclient
+            client-secret: payment_transaction_secret
+          customerclient:
+            authorization-grant-type: client_credentials
+            client-id: customerclient
+            client-secret: customer_secret
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+      resolve-lazily: true
+  thymeleaf:
+    cache: false
+logging:
+  level:
+    org:
+      apache:
+        kafka: WARN
+    io:
+      micrometer:
+        core:
+          instrument:
+            binder:
+              kafka:
+                KafkaMetrics: WARN
+opentracing:
+  jaeger:
+    log-spans: false
+    enabled: false
