@@ -10,9 +10,9 @@
         <relativePath>../../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-product-extension-only</artifactId>
-    <name>Product Extension Only</name>
-    <description>Product Extension Only</description>
+    <artifactId>broadleaf-concept-product-extension-only-catalog</artifactId>
+    <name>Product Extension Only Catalog</name>
+    <description>Product Extension Only Catalog</description>
 
     <dependencies>
         <dependency>
