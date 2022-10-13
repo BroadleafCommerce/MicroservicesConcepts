@@ -26,6 +26,8 @@
         <blc.release.train>1.9.0-SNAPSHOT</blc.release.train>
         <blc.jpa.core>1.7.8-SNAPSHOT</blc.jpa.core>
         <demo.version>1.9.0-SNAPSHOT</demo.version>
+        <spring-start-class>com.broadleafcommerce.microservices.tutorial.MinApplication</spring-start-class>
+        <spring-profile>tutorial</spring-profile>
     </properties>
 
     <repositories>
@@ -77,7 +79,11 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <mainClass>${start-class}</mainClass>
+                        <mainClass>${spring-start-class}</mainClass>
+                        <profiles>
+                            <profile>default</profile>
+                            <profile>${spring-profile}</profile>
+                        </profiles>
                     </configuration>
                 </plugin>
                 <plugin>
