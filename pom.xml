@@ -19,12 +19,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- Plugin Versions -->
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <spring.boot.maven.plugin.version>2.7.1</spring.boot.maven.plugin.version>
         <maven.resources.plugin.version>2.7</maven.resources.plugin.version>
 
-        <!-- Microservice Versions -->
         <blc.release.train>1.9.0-SNAPSHOT</blc.release.train>
         <blc.jpa.core>1.7.8-SNAPSHOT</blc.jpa.core>
         <demo.version>1.9.0-SNAPSHOT</demo.version>
@@ -88,6 +86,11 @@
                     <version>${maven-surefire-plugin.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+                <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven.resources.plugin.version}</version>
                     <configuration>
@@ -114,201 +117,53 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <dependenciesToScan>
+                        <dependency>com.broadleafcommerce.microservices:broadleaf-build-utilities</dependency>
+                    </dependenciesToScan>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.broadleafcommerce.microservices</groupId>
-                <artifactId>broadleaf-offer-services</artifactId>
-                <version>2.0.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.broadleafcommerce.microservices</groupId>
-                <artifactId>broadleaf-offer-services-metadata</artifactId>
-                <version>2.0.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.broadleafcommerce.microservices</groupId>
-                <artifactId>broadleaf-microservices-release-train</artifactId>
-                <version>${blc.release.train}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <profiles>
+        <profile>
+            <id>overrideReleaseTrain</id>
+            <activation>
+                <file>
+                    <missing>.overrideReleaseTrain</missing>
+                </file>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.broadleafcommerce.microservices</groupId>
+                        <artifactId>broadleaf-offer-services</artifactId>
+                        <version>2.0.0-SNAPSHOT</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.broadleafcommerce.microservices</groupId>
+                        <artifactId>broadleaf-offer-services-metadata</artifactId>
+                        <version>2.0.0-SNAPSHOT</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.broadleafcommerce.microservices</groupId>
+                        <artifactId>broadleaf-microservices-release-train</artifactId>
+                        <version>${blc.release.train}</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+    </profiles>
 
     <dependencies>
-        <!-- Min Application Requirements -->
-        <!-- Microservices Demo Helpers Dependency -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-helpers</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <!-- Admin & Core Services -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-admin-navigation-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-admin-user-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-import-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-inventory-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-sandbox-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-metadata-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-scheduled-job-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-tenant-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Catalog and Asset -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-asset-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-catalog-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Pricing and Offers -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-offer-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-pricing-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Cart -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-cart-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Order -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-order-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- CreditAccount -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-credit-account-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Customers, Segments, and Accounts -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-customer-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Notification -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-notification-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Vendor -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-vendor-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Experience & Composite Services -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-cart-operation-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-catalog-browse-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-menu-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-content-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-order-operation-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-rating-and-review-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Search -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-solr-search-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Shipping -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-shipping-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
-        <!-- Payment Transaction -->
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-payment-transaction-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-
         <!-- Misc -->
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
@@ -453,8 +308,10 @@
     </dependencies>
 
     <modules>
-        <module>productExtensionOnly</module>
-        <module>basics</module>
+        <module>base</module>
+        <module>core</module>
+        <module>utilities</module>
+        <module>concepts</module>
     </modules>
 
 </project>
