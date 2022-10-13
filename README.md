@@ -9,12 +9,8 @@ R &amp; D around various extension and dev use cases. Proving ground for concept
 
 Structure
 
-- ***base*** - Similar to the min flexpackage pom, except this is actually a pom project, instead of a jar project. This is an example of something we could make available via nexus and remove from here.
-
-- ***concepts*** - Group of runnable projects that demonstrate a key dev or extension experience using the most streamlined approach available.
-
-- ***core*** - This project removes the need to include the boilerplate application launch hook point. This is an example of something we could make available on nexus to simplify tutorial setup and remove from here.
-
-- ***docker*** - Basic docker configuration to support backend of the tutorial runtime. We can consider not having these items in docker and instead have them be launched by java, or similar. If we did that, the goal would be to reduce tooling required to run the tutorial cases.
-
-- ***utilities*** - Utility classes to help with build simplification are included here. This serves duties like automatic generation of liquibase schema and spring configuration overrides to point to the generated liquibase changelogs. This removes more boilerplate that a student needs to create on their own. This is an example of something we could make available on nexus to simplify tutorial setup and remove from here.
+- ***base*** Similar to the min flexpackage pom, except this is actually a pom project, instead of a jar project. This is an example of something we could make available via nexus and remove from here.
+- ***concepts*** Group of runnable projects that demonstrate a key dev or extension experience using the most streamlined approach available.
+- ***core*** This project removes the need to include the boilerplate application launch hook point. This is an example of something we could make available on nexus to simplify tutorial setup and remove from here.
+- ***docker*** Basic docker configuration to support backend of the tutorial runtime. We can consider not having these items in docker and instead have them be launched by java, or similar. If we did that, the goal would be to reduce tooling required to run the tutorial cases.
+- ***utilities*** Utility classes to help with build simplification are included here. This serves duties like automatic generation of liquibase schema and spring configuration overrides to point to the generated liquibase changelogs. This removes more boilerplate that a student needs to create on their own. This is an example of something we could make available on nexus to simplify tutorial setup and remove from here.
