@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.broadleafcommerce.microservices</groupId>
+        <artifactId>broadleaf-microservices-project-root</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath />
+    </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>broadleaf-microservices-tutorial-research-parent</artifactId>
-    <groupId>com.broadleafcommerce.microservices</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Broadleaf Microservice Tutorial Research Parent</name>
-    <description>Parent project that holds tutorial projects that demonstrate different possible dev and extension use case patterns</description>
+    <description>Parent project that holds tutorial projects that demonstrate different possible dev
+        and extension use case patterns
+    </description>
 
     <properties>
-        <java.version>11</java.version>
-        <maven.compiler.release>11</maven.compiler.release>
-        <resource.delimiter>@</resource.delimiter>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <tutorial-base-version>1.0.0-SNAPSHOT</tutorial-base-version>
     </properties>
 
     <repositories>
@@ -28,11 +29,50 @@
     </repositories>
 
     <scm>
-        <connection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git</connection>
-        <developerConnection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git</developerConnection>
+        <connection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git
+        </connection>
+        <developerConnection>
+            scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git
+        </developerConnection>
         <url>https://github.com/BroadleafCommerce/MicroservicesTutorialResearch</url>
         <tag>HEAD</tag>
     </scm>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.broadleafcommerce.microservices</groupId>
+                <artifactId>broadleaf-min-core</artifactId>
+                <version>${tutorial-base-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.broadleafcommerce.microservices</groupId>
+                <artifactId>broadleaf-build-utilities</artifactId>
+                <version>${tutorial-base-version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-build-utilities</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>app</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.broadleafcommerce.microservices</groupId>
+                    <artifactId>broadleaf-min-core</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <modules>
         <module>concepts</module>
