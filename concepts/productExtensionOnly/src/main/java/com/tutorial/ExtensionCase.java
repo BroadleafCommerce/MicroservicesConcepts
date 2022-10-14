@@ -34,9 +34,14 @@ import static com.broadleafcommerce.catalog.provider.RouteConstants.Persistence.
  * runtime used by the tutorial. In other FlexPackage combinations, where these two services are not
  * co-located, the jar containing these components would need to be referenced as a dependency in
  * the multiple relevant locations.
+ * <p>
+ * </p>
+ * If you leave this top-level configuration named {@code ExtensionCase} for the tutorial exercises,
+ * you will be able to benefit from auto-generation of spring.factories for Spring auto
+ * configuration.
  */
 @Configuration
-public class ProductExtensionOnly {
+public class ExtensionCase {
 
     /**
      * Spring configuration to wire the extension and establish admin metadata for the domain

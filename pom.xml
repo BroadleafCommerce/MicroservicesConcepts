@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.broadleafcommerce.microservices</groupId>
-        <artifactId>broadleaf-microservices-project-root</artifactId>
+        <artifactId>broadleaf-microservices-project-root-min</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -30,38 +30,7 @@
         </repository>
     </repositories>
 
-    <scm>
-        <connection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git
-        </connection>
-        <developerConnection>
-            scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git
-        </developerConnection>
-        <url>https://github.com/BroadleafCommerce/MicroservicesTutorialResearch</url>
-        <tag>HEAD</tag>
-    </scm>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.broadleafcommerce.microservices</groupId>
-                <artifactId>broadleaf-min-core</artifactId>
-                <version>${tutorial-base-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.broadleafcommerce.microservices</groupId>
-                <artifactId>broadleaf-build-utilities</artifactId>
-                <version>${tutorial-base-version}</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
-        <dependency>
-            <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-build-utilities</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>com.broadleafdemo</groupId>
             <artifactId>demo-catalog-services</artifactId>
@@ -72,21 +41,6 @@
             <artifactId>broadleaf-catalog-services-metadata</artifactId>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>app</id>
-            <dependencies>
-                <dependency>
-                    <groupId>com.broadleafcommerce.microservices</groupId>
-                    <artifactId>broadleaf-min-core</artifactId>
-                </dependency>
-            </dependencies>
-            <properties>
-                <skip-schema>true</skip-schema>
-            </properties>
-        </profile>
-    </profiles>
 
     <modules>
         <module>concepts</module>
