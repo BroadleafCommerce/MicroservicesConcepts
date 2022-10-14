@@ -14,18 +14,4 @@
     <name>Product Extension Only</name>
     <description>Product Extension Only</description>
 
-    <properties>
-        <!-- This value is used during liquibase schema generation when
-            the project is compiled using the `schema` maven profile -->
-        <service-key>catalog</service-key>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-catalog-services</artifactId>
-            <version>${demo.version}</version>
-        </dependency>
-    </dependencies>
-
 </project>

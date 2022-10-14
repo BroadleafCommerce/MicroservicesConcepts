@@ -20,3 +20,4 @@ bin/
 local.keystore
 **/resources/db/changelog/*.*
 **/resources/*.yaml
+/.prepare.sh

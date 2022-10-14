@@ -6,7 +6,6 @@
         <groupId>com.broadleafcommerce.microservices</groupId>
         <artifactId>broadleaf-microservices-project-root</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath />
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>broadleaf-microservices-tutorial-research-parent</artifactId>
@@ -19,6 +18,9 @@
 
     <properties>
         <tutorial-base-version>1.0.0-SNAPSHOT</tutorial-base-version>
+        <!-- This value is used during liquibase schema generation when
+           the project is compiled using the `schema` maven profile -->
+        <service-key>catalog</service-key>
     </properties>
 
     <repositories>
@@ -60,6 +62,15 @@
             <artifactId>broadleaf-build-utilities</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-catalog-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-catalog-services-metadata</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -71,6 +82,9 @@
                     <artifactId>broadleaf-min-core</artifactId>
                 </dependency>
             </dependencies>
+            <properties>
+                <skip-schema>true</skip-schema>
+            </properties>
         </profile>
     </profiles>
 
