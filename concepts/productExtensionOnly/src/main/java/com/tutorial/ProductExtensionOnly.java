@@ -1,8 +1,8 @@
 package com.tutorial;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.Nullable;
 import com.broadleafcommerce.catalog.metadata.autoconfigure.CatalogMetadataProperties;
 import com.broadleafcommerce.catalog.metadata.support.DefaultProductType;
 import com.broadleafcommerce.catalog.metadata.support.ProductGroups;
@@ -15,6 +15,7 @@ import com.broadleafcommerce.metadata.dsl.core.utils.Fields;
 import com.broadleafcommerce.metadata.dsl.registry.ComponentSource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +23,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import static com.broadleafcommerce.catalog.metadata.support.DefaultProductType.values;
 import static com.broadleafcommerce.catalog.provider.RouteConstants.Persistence.CATALOG_ROUTE_PACKAGE;
@@ -39,29 +39,25 @@ import static com.broadleafcommerce.catalog.provider.RouteConstants.Persistence.
 public class ProductExtensionOnly {
 
     /**
-     * Spring configuration to wire the extension
+     * Spring configuration to wire the extension and establish admin metadata for the domain
+     * extension.
      */
     @Configuration
     @JpaEntityScan(basePackages = "com.tutorial", routePackage = CATALOG_ROUTE_PACKAGE)
-    public static class Config {}
-
-    /**
-     * Spring configuration to establish admin metadata for the domain extension.
-     */
-    @Configuration
-    @ConditionalOnBean(CatalogMetadataProperties.class)
-    @RequiredArgsConstructor
-    public static class AdminConfig {
-
-        private final CatalogMetadataProperties properties;
+    public static class Config {
 
         @Bean
-        public ComponentSource myProductMetadataComponents() {
+        public ComponentSource myProductMetadataComponents(
+                @Nullable CatalogMetadataProperties properties) {
             return registry -> {
+                // Discover the active product types
                 List<DefaultProductType> types = Arrays.stream(values())
-                        .filter(t -> properties.getActiveProductTypes().contains(t.name()))
+                        .filter(t -> ((Optional.ofNullable(properties))
+                                .map(item -> item.getActiveProductTypes().contains(t.name()))
+                                .orElse(false)))
                         .collect(Collectors.toList());
                 for (DefaultProductType type : types) {
+                    // For each product type, add the new field to the create and update forms
                     Arrays.asList(
                             (EntityView<?>) registry
                                     .get(String.format(ProductIds.CREATE, type.name())),
@@ -76,7 +72,6 @@ public class ProductExtensionOnly {
                 }
             };
         }
-
     }
 
     /**
