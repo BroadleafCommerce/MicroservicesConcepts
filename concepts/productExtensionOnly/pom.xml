@@ -1,22 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.broadleafcommerce.microservices</groupId>
-        <artifactId>broadleaf-concepts-parent</artifactId>
+        <artifactId>broadleaf-microservices-project-root</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../root/pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-product-extension-only-parent</artifactId>
-    <name>Product Extension Only Parent</name>
-    <description>Product Extension Only Parent</description>
-    <packaging>pom</packaging>
+    <artifactId>broadleaf-concept-product-extension-only</artifactId>
+    <name>Product Extension Only</name>
+    <description>Product Extension Only</description>
 
-    <modules>
-        <module>catalog</module>
-        <module>app</module>
-    </modules>
+    <properties>
+        <!-- This value is used during liquibase schema generation when
+            the project is compiled using `mvn clean install -Pschema` -->
+        <service-key>catalog</service-key>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.broadleafdemo</groupId>
+            <artifactId>demo-catalog-services</artifactId>
+            <version>${demo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-build-utilities</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>app</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.broadleafcommerce.microservices</groupId>
+                    <artifactId>broadleaf-min-core</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

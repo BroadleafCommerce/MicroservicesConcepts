@@ -12,7 +12,7 @@ import lombok.Data;
 
 import static com.broadleafcommerce.catalog.provider.RouteConstants.Persistence.CATALOG_ROUTE_PACKAGE;
 
-public class Tutorial {
+public class ProductExtensionOnly {
 
     @Configuration
     @JpaEntityScan(basePackages = "com.tutorial", routePackage = CATALOG_ROUTE_PACKAGE)

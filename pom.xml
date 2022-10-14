@@ -35,10 +35,6 @@
     </scm>
 
     <modules>
-        <module>root</module>
-        <module>base</module>
-        <module>core</module>
-        <module>utilities</module>
         <module>concepts</module>
     </modules>
 
