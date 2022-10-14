@@ -138,18 +138,11 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>standard-tests</id>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
-                                <phase>test</phase>
-                            </execution>
-                            <execution>
                                 <id>build-liquibase-schema</id>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
-                                <phase>generate-resources</phase>
+                                <phase>compile</phase>
                                 <configuration>
                                     <dependenciesToScan>
                                         <dependency>
@@ -176,6 +169,20 @@
                                         </include>
                                     </includes>
                                 </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>copy-liquibase-schema</id>
+                                <goals>
+                                    <goal>resources</goal>
+                                </goals>
+                                <phase>compile</phase>
                             </execution>
                         </executions>
                     </plugin>

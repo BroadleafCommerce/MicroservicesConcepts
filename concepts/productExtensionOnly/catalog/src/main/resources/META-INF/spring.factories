@@ -1,2 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.broadleafdemo.config.Config
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.tutorial.Tutorial.Config
         
