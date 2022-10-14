@@ -199,7 +199,7 @@ broadleaf:
   modelmapper:
     cache:
       load:
-        enabled: true
+        enabled: false
   notification:
     liquibase:
       change-log: 'classpath:/db/changelog/notification.flexdemo.postgresql.changelog-master.yaml'
