@@ -17,7 +17,6 @@
     </description>
 
     <properties>
-        <tutorial-base-version>1.0.0-SNAPSHOT</tutorial-base-version>
         <!-- This value is used during liquibase schema generation when
            the project is compiled using the `schema` maven profile -->
         <service-key>catalog</service-key>
