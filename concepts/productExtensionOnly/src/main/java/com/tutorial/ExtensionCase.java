@@ -1,5 +1,6 @@
 package com.tutorial;
 
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
@@ -8,8 +9,8 @@ import com.broadleafcommerce.catalog.metadata.support.DefaultProductType;
 import com.broadleafcommerce.catalog.metadata.support.ProductGroups;
 import com.broadleafcommerce.catalog.metadata.support.ProductIds;
 import com.broadleafcommerce.catalog.provider.jpa.domain.product.JpaProduct;
+import com.broadleafcommerce.common.jpa.autoconfigure.CommonJpaAutoConfiguration;
 import com.broadleafcommerce.common.jpa.data.entity.JpaEntityScan;
-import com.broadleafcommerce.data.tracking.core.mapping.AutoConfigureProjectionMapping;
 import com.broadleafcommerce.metadata.dsl.core.extension.views.details.EntityView;
 import com.broadleafcommerce.metadata.dsl.core.utils.Fields;
 import com.broadleafcommerce.metadata.dsl.registry.ComponentSource;
@@ -41,6 +42,7 @@ import static com.broadleafcommerce.catalog.provider.RouteConstants.Persistence.
  * configuration.
  */
 @Configuration
+@AutoConfigureBefore(CommonJpaAutoConfiguration.class)
 public class ExtensionCase {
 
     /**
@@ -52,7 +54,7 @@ public class ExtensionCase {
     public static class Config {
 
         @Bean
-        public ComponentSource myProductMetadataComponents(
+        public ComponentSource tutorialProductAdminMetadata(
                 @Nullable CatalogMetadataProperties properties) {
             return registry -> {
                 // Discover the active product types
@@ -86,7 +88,6 @@ public class ExtensionCase {
     @Table(name = "TUTORIAL_PRODUCT")
     @Inheritance(strategy = InheritanceType.JOINED)
     @Data
-    @AutoConfigureProjectionMapping
     public static class TutorialProduct extends JpaProduct {
 
         @Column(name = "COLOR")
