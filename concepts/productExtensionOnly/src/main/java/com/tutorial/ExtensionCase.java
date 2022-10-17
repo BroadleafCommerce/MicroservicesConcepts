@@ -46,6 +46,20 @@ import static com.broadleafcommerce.catalog.provider.RouteConstants.Persistence.
 public class ExtensionCase {
 
     /**
+     * Simple column domain extension
+     */
+    @Entity
+    @Table(name = "ELECTRIC_CAR")
+    @Inheritance(strategy = InheritanceType.JOINED)
+    @Data
+    public static class ElectricCar extends JpaProduct {
+
+        @Column(name = "COLOR")
+        private String color;
+
+    }
+
+    /**
      * Spring configuration to wire the extension and establish admin metadata for the domain
      * extension.
      */
@@ -66,10 +80,10 @@ public class ExtensionCase {
                 for (DefaultProductType type : types) {
                     // For each product type, add the new field to the create and update forms
                     Arrays.asList(
-                            (EntityView<?>) registry
-                                    .get(String.format(ProductIds.CREATE, type.name())),
-                            (EntityView<?>) registry
-                                    .get(String.format(ProductIds.UPDATE, type.name())))
+                                    (EntityView<?>) registry
+                                            .get(String.format(ProductIds.CREATE, type.name())),
+                                    (EntityView<?>) registry
+                                            .get(String.format(ProductIds.UPDATE, type.name())))
                             .forEach(view -> view.getGeneralForm()
                                     .getGroup(ProductGroups.BASIC_INFORMATION)
                                     .addField(Fields.colorPicker()
@@ -79,20 +93,6 @@ public class ExtensionCase {
                 }
             };
         }
-    }
-
-    /**
-     * Simple column domain extension
-     */
-    @Entity
-    @Table(name = "TUTORIAL_PRODUCT")
-    @Inheritance(strategy = InheritanceType.JOINED)
-    @Data
-    public static class TutorialProduct extends JpaProduct {
-
-        @Column(name = "COLOR")
-        private String color;
-
     }
 
 }
