@@ -16,4 +16,9 @@
         JSON
     </description>
 
+    <properties>
+        <!-- The autoconfiguration class for this concept -->
+        <auto-config-target>com.tutorial.ProductExtensionComplexJson</auto-config-target>
+    </properties>
+
 </project>

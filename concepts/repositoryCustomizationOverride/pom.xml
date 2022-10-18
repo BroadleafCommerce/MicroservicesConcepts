@@ -14,4 +14,20 @@
     <name>Repository Customization Override</name>
     <description>Add new repository implementation fragments that override out-of-the-box behavior</description>
 
+    <properties>
+        <!-- The autoconfiguration class for this concept -->
+        <auto-config-target>com.tutorial.RepositoryCustomizationOverride</auto-config-target>
+        <!-- Schema contributed by other concept - no need to run here -->
+        <skip-schema>true</skip-schema>
+    </properties>
+
+    <dependencies>
+        <!-- Leverage the complex product extension that already exists -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-concept-product-extension-complex-json</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

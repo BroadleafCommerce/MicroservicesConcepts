@@ -14,4 +14,9 @@
     <name>Product Extension Only</name>
     <description>Product extension only with a simple field addition</description>
 
+    <properties>
+        <!-- The autoconfiguration class for this library -->
+        <auto-config-target>com.tutorial.ProductExtensionOnly</auto-config-target>
+    </properties>
+
 </project>
