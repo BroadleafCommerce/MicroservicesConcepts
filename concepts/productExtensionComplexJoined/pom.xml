@@ -10,10 +10,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-product-extension-complex-json</artifactId>
-    <name>Product Extension Complex Json</name>
+    <artifactId>broadleaf-concept-product-extension-complex-joined</artifactId>
+    <name>Product Extension Complex Joined</name>
     <description>Product extension with embedded complex associations and collections represented as
-        JSON
+        joined ToMany associations
     </description>
 
 </project>

@@ -10,10 +10,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-product-extension-complex-json</artifactId>
-    <name>Product Extension Complex Json</name>
-    <description>Product extension with embedded complex associations and collections represented as
-        JSON
+    <artifactId>broadleaf-concept-business-logic-customization</artifactId>
+    <name>Business Logic Customization</name>
+    <description>Simple customization of out-of-the-box business logic
     </description>
 
 </project>

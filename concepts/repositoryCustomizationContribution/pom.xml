@@ -10,10 +10,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-product-extension-complex-json</artifactId>
-    <name>Product Extension Complex Json</name>
-    <description>Product extension with embedded complex associations and collections represented as
-        JSON
-    </description>
+    <artifactId>broadleaf-concept-repository-customization-contribution</artifactId>
+    <name>Repository Customization Contribution</name>
+    <description>Add new repository fragments informing new query methods or new fragment implementations</description>
 
 </project>

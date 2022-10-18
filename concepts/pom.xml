@@ -16,8 +16,19 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>productExtensionOnly</module>
+        <module>businessLogicCustomization</module>
+        <module>endpointCustomization</module>
+        <module>productExtensionBusinessLogicCustomizationAutoProjection</module>
+        <module>productExtensionBusinessLogicCustomizationExplicitProjection</module>
+        <module>productExtensionComplexJoined</module>
         <module>productExtensionComplexJson</module>
+        <module>productExtensionCustomMapping</module>
+        <module>productExtensionEndpointCustomizationAutoProjection</module>
+        <module>productExtensionEndpointCustomizationExplicitProjection</module>
+        <module>productExtensionExplicitProjection</module>
+        <module>productExtensionOnly</module>
+        <module>repositoryCustomizationContribution</module>
+        <module>repositoryCustomizationOverride</module>
     </modules>
 
 </project>

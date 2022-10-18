@@ -10,10 +10,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-product-extension-complex-json</artifactId>
-    <name>Product Extension Complex Json</name>
-    <description>Product extension with embedded complex associations and collections represented as
-        JSON
+    <artifactId>broadleaf-concept-product-extension-endpoint-customization-auto-projection</artifactId>
+    <name>Product Extension Endpoint Customization Auto Projection</name>
+    <description>Product extension using auto projection leveraged in an endpoint customization
     </description>
 
 </project>

@@ -12,6 +12,6 @@
 
     <artifactId>broadleaf-concept-product-extension-only</artifactId>
     <name>Product Extension Only</name>
-    <description>Product Extension Only</description>
+    <description>Product extension only with a simple field addition</description>
 
 </project>
