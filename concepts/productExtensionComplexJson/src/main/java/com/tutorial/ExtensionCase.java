@@ -1,5 +1,6 @@
 package com.tutorial;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +15,12 @@ import com.broadleafcommerce.catalog.provider.jpa.domain.product.JpaProduct;
 import com.broadleafcommerce.common.jpa.JpaConstants;
 import com.broadleafcommerce.common.jpa.autoconfigure.CommonJpaAutoConfiguration;
 import com.broadleafcommerce.common.jpa.converter.AbstractListConverter;
-import com.broadleafcommerce.common.jpa.converter.ObjectMapConverter;
+import com.broadleafcommerce.common.jpa.converter.AbstractMapConverter;
 import com.broadleafcommerce.common.jpa.data.entity.JpaEntityScan;
+import com.broadleafcommerce.metadata.dsl.core.Group;
+import com.broadleafcommerce.metadata.dsl.core.extension.fields.DefaultField;
+import com.broadleafcommerce.metadata.dsl.core.extension.fields.DefaultResidentGridField;
+import com.broadleafcommerce.metadata.dsl.core.extension.fields.DefaultResidentMapField;
 import com.broadleafcommerce.metadata.dsl.core.extension.fields.SelectOption;
 import com.broadleafcommerce.metadata.dsl.core.extension.views.details.EntityView;
 import com.broadleafcommerce.metadata.dsl.core.utils.Columns;
@@ -75,60 +80,95 @@ public class ExtensionCase {
          * Map horse power value to car run mode (e.g. efficiency, comfort, performance)
          */
         @Column(name = "HORSE_POWER", length = JpaConstants.MEDIUM_TEXT_LENGTH)
-        @Convert(converter = ObjectMapConverter.class)
-        private Map<String, Integer> horsePowerByMode;
+        @Convert(converter = HorsepowerMapConverter.class)
+        private Map<String, HorsePower> horsePowerByMode;
 
         /**
          * Series of range and charge times based on the ambient temperature
          */
         @Column(name = "THROUGHPUT", length = JpaConstants.MEDIUM_TEXT_LENGTH)
-        @Convert(converter = ObjectMapConverter.class)
-        private Map<Integer, ElecticityThroughput> throughputByTempFahrenheit;
+        @Convert(converter = EfficiencyMapConverter.class)
+        private Map<String, Efficiency> efficiencyByTempFahrenheit;
 
         /**
          * Car features (e.g. seats, headlamps, wheels, etc...). Includes materials where relevant
          * (e.g. vegan seat materials).
          */
         @Column(name = "FEATURES", length = JpaConstants.MEDIUM_TEXT_LENGTH)
-        @Convert(converter = ObjectListConverter.class)
+        @Convert(converter = FeatureListConverter.class)
         private List<Feature> features;
 
     }
 
+
+    /**
+     * Zero arg constructor required
+     */
     @Data
     @EqualsAndHashCode
-    public static class ElecticityThroughput implements Serializable {
+    public static class Efficiency implements Serializable {
 
-        private final BigDecimal rangeMiles;
-        private final Long chargeTime;
+        private BigDecimal rangeMiles;
+        private Long chargeTimeMinutes;
 
     }
 
+    /**
+     * Zero arg constructor required
+     */
+    @Data
+    @EqualsAndHashCode
+    public static class HorsePower implements Serializable {
+
+        private Integer value;
+
+    }
+
+    /**
+     * Zero arg constructor required
+     */
     @Data
     @EqualsAndHashCode
     public static class Feature implements Serializable {
 
-        private final String name;
-        private final String description;
-        private final BigDecimal msrp;
-        private final List<Material> materials = new ArrayList<>();
+        private String name;
+        private String description;
+        private List<Material> materials = new ArrayList<>();
 
     }
 
+    /**
+     * Zero arg constructor required
+     */
     @Data
     @EqualsAndHashCode
     public static class Material implements Serializable {
 
-        private final String name;
-        private final String description;
-        private final String supplier;
+        private String name;
+        private String description;
+        private String supplier;
 
     }
 
-    public static class ObjectListConverter extends AbstractListConverter<Object> {
-        public ObjectListConverter(
+    public static class FeatureListConverter extends AbstractListConverter<Feature> {
+        public FeatureListConverter(
                 @Nullable @Qualifier("converterObjectMapper") ObjectMapper objectMapper) {
-            super(Object.class, objectMapper);
+            super(Feature.class, objectMapper);
+        }
+    }
+
+    public static class EfficiencyMapConverter
+            extends AbstractMapConverter<String, Efficiency> {
+        public EfficiencyMapConverter(
+                @Nullable @Qualifier("converterObjectMapper") ObjectMapper objectMapper) {
+            super(String.class, Efficiency.class, objectMapper);
+        }
+    }
+
+    public static class HorsepowerMapConverter extends AbstractMapConverter<String, HorsePower> {
+        public HorsepowerMapConverter(
+                @Nullable @Qualifier("converterObjectMapper") ObjectMapper objectMapper) {
+            super(String.class, HorsePower.class, objectMapper);
         }
     }
 
@@ -157,43 +197,142 @@ public class ExtensionCase {
                                     .get(String.format(ProductIds.CREATE, type.name())),
                             (EntityView<?>) registry
                                     .get(String.format(ProductIds.UPDATE, type.name())))
-                            .forEach(view -> view.getGeneralForm()
-                                    .getGroup(ProductGroups.BASIC_INFORMATION)
-                                    .addField(Fields.colorPicker()
-                                            .name("color")
-                                            .label("color")
-                                            .defaultValue("#ffffff"))
-                                    .addField(Fields.residentMap()
-                                            .name("horsePower")
-                                            .label("horsePower")
-                                            .notCollapsedByDefault()
-                                            .emptyMessage("Horse power by run mode")
-                                            .addColumn("value", Columns.integer()
-                                                    .label("value")
-                                                    .order(1000))
-                                            .createAction(create -> create
-                                                    .label("create")
-                                                    .addEntryKeyField(Fields.select()
-                                                            .label("key")
-                                                            .options(RunModeOptionEnum.toOptions())
-                                                            .required())
-                                                    .addField("value", Fields.integer()
-                                                            .label("value")
-                                                            .required()
-                                                            .order(1000)))
-                                            .deleteAction(delete -> delete
-                                                    .label("delete")
-                                                    .order(1000))
-                                            .updateAction(update -> update
-                                                    .label("update")
-                                                    .addField("value", Fields.integer()
-                                                            .label("value")
-                                                            .required()
-                                                            .order(1000))
-                                                    .order(2000))));
+                            .forEach(this::customizeView);
                 }
-                // TODO add support for the complex extensions
             };
+        }
+
+        @NotNull
+        private Group<?> customizeView(EntityView<? extends EntityView<?>> view) {
+            return view.getGeneralForm()
+                    .getGroup(ProductGroups.BASIC_INFORMATION)
+                    .addField(colorField())
+                    .addField(horsePowerField())
+                    .addField(efficiencyField())
+                    .addField(featuresField());
+        }
+
+        @NotNull
+        private DefaultResidentGridField featuresField() {
+            return Fields.residentGrid()
+                    .name("features")
+                    .label("features")
+                    .addColumn("name", Columns.string().order(1000))
+                    .addColumn("description", Columns.string().order(2000))
+                    .createAction(createForm -> createForm
+                            .label("create")
+                            .addField("name",
+                                    Fields.string().required().order(1000))
+                            .addField("description",
+                                    Fields.string().order(2000))
+                            .addField("materials", materialsField())
+                            .order(1000))
+                    .updateAction(updateForm -> updateForm
+                            .label("update")
+                            .addField("name",
+                                    Fields.string().required().order(1000))
+                            .addField("description",
+                                    Fields.string().order(2000))
+                            .addField("materials", materialsField())
+                            .order(1000))
+                    .deleteLabel(
+                            "delete");
+        }
+
+        @NotNull
+        private DefaultResidentMapField efficiencyField() {
+            return Fields.residentMap()
+                    .name("efficiencyByTempFahrenheit")
+                    .label("efficiency")
+                    .notCollapsedByDefault()
+                    .emptyMessage("Efficiency By Temperature")
+                    .addColumn("rangeMiles", Columns.decimal()
+                            .order(1000).label("range"))
+                    .addColumn("chargeTimeMinutes", Columns.longInteger()
+                            .order(2000).label("chargeTime"))
+                    .createAction(create -> create
+                            .label("create")
+                            .addEntryKeyField(Fields.select()
+                                    .label("temperature")
+                                    .options(TemperatureOptionEnum.toOptions())
+                                    .required())
+                            .addField("rangeMiles", Fields.decimal()
+                                    .required()
+                                    .order(1000).label("range"))
+                            .addField("chargeTimeMinutes", Fields.longInteger()
+                                    .required()
+                                    .order(2000).label("chargeTime")))
+                    .deleteAction(delete -> delete
+                            .label("delete")
+                            .order(1000))
+                    .updateAction(update -> update
+                            .label("update")
+                            .addField("rangeMiles", Fields.decimal()
+                                    .required()
+                                    .order(1000).label("range"))
+                            .addField("chargeTimeMinutes", Fields.longInteger()
+                                    .required()
+                                    .order(2000).label("chargeTime")));
+        }
+
+        @NotNull
+        private DefaultResidentMapField horsePowerField() {
+            return Fields.residentMap()
+                    .name("horsePowerByMode")
+                    .label("horsePower")
+                    .notCollapsedByDefault()
+                    .emptyMessage("Horse power by run mode")
+                    .addColumn("value", Columns.integer()
+                            .order(1000).label("value"))
+                    .createAction(create -> create
+                            .label("create")
+                            .addEntryKeyField(Fields.select()
+                                    .label("key")
+                                    .options(RunModeOptionEnum.toOptions())
+                                    .required())
+                            .addField("value", Fields.integer()
+                                    .required()
+                                    .order(1000)))
+                    .deleteAction(delete -> delete
+                            .label("delete")
+                            .order(1000))
+                    .updateAction(update -> update
+                            .label("update")
+                            .addField("value", Fields.integer()
+                                    .required()
+                                    .order(1000))
+                            .order(2000));
+        }
+
+        @NotNull
+        private DefaultField colorField() {
+            return Fields.colorPicker()
+                    .name("color")
+                    .label("color")
+                    .defaultValue("#ffffff");
+        }
+
+        @NotNull
+        private DefaultResidentGridField materialsField() {
+            return Fields.residentGrid()
+                    .label("materials")
+                    .addColumn("name", Columns.string().order(1000))
+                    .addColumn("description", Columns.string().order(2000))
+                    .addColumn("supplier", Columns.string().order(3000))
+                    .createAction(
+                            nestedCreate -> nestedCreate
+                                    .label("create")
+                                    .addField("name", Fields.string().required().order(1000))
+                                    .addField("description", Fields.string().required().order(2000))
+                                    .addField("supplier", Fields.string().required().order(3000)))
+                    .updateAction(
+                            nestedUpdate -> nestedUpdate
+                                    .label("update")
+                                    .addField("name", Fields.string().required().order(1000))
+                                    .addField("description", Fields.string().required().order(2000))
+                                    .addField("supplier", Fields.string().required().order(3000)))
+                    .deleteLabel("delete")
+                    .order(3000);
         }
     }
 
@@ -204,6 +343,27 @@ public class ExtensionCase {
         private String label;
 
         RunModeOptionEnum(String label) {
+            this.label = label;
+        }
+
+        @Override
+        @NonNull
+        public String label() {
+            return label;
+        }
+
+        public static List<SelectOption> toOptions() {
+            return SelectOption.fromEnums(values());
+        }
+    }
+
+    public enum TemperatureOptionEnum implements SelectOption.SelectOptionEnum {
+
+        LOW("Low"), STANDARD("Standard"), HIGH("High");
+
+        private String label;
+
+        TemperatureOptionEnum(String label) {
             this.label = label;
         }
 
