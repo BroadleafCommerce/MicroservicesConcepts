@@ -18,6 +18,10 @@ import com.broadleafcommerce.common.jpa.converter.AbstractListConverter;
 import com.broadleafcommerce.common.jpa.converter.AbstractMapConverter;
 import com.broadleafcommerce.common.jpa.data.entity.JpaEntityScan;
 import com.broadleafcommerce.metadata.dsl.core.Group;
+import com.broadleafcommerce.metadata.dsl.core.extension.actions.CreateModalFormAction;
+import com.broadleafcommerce.metadata.dsl.core.extension.actions.FormAction;
+import com.broadleafcommerce.metadata.dsl.core.extension.actions.ModalFormAction;
+import com.broadleafcommerce.metadata.dsl.core.extension.actions.ResidentMapCreateAction;
 import com.broadleafcommerce.metadata.dsl.core.extension.fields.DefaultField;
 import com.broadleafcommerce.metadata.dsl.core.extension.fields.DefaultResidentGridField;
 import com.broadleafcommerce.metadata.dsl.core.extension.fields.DefaultResidentMapField;
@@ -65,7 +69,7 @@ import static com.broadleafcommerce.catalog.provider.RouteConstants.Persistence.
 public class ExtensionCase {
 
     /**
-     * Complex domain extension
+     * Domain extension with complex fields using embedded JSON
      */
     @Entity
     @Table(name = "ELECTRIC_CAR")
@@ -86,7 +90,7 @@ public class ExtensionCase {
         /**
          * Series of range and charge times based on the ambient temperature
          */
-        @Column(name = "THROUGHPUT", length = JpaConstants.MEDIUM_TEXT_LENGTH)
+        @Column(name = "EFFICIENCY", length = JpaConstants.MEDIUM_TEXT_LENGTH)
         @Convert(converter = EfficiencyMapConverter.class)
         private Map<String, Efficiency> efficiencyByTempFahrenheit;
 
@@ -150,6 +154,10 @@ public class ExtensionCase {
 
     }
 
+
+    /**
+     * Convert to/from JSON
+     */
     public static class FeatureListConverter extends AbstractListConverter<Feature> {
         public FeatureListConverter(
                 @Nullable @Qualifier("converterObjectMapper") ObjectMapper objectMapper) {
@@ -157,6 +165,9 @@ public class ExtensionCase {
         }
     }
 
+    /**
+     * Convert to/from JSON
+     */
     public static class EfficiencyMapConverter
             extends AbstractMapConverter<String, Efficiency> {
         public EfficiencyMapConverter(
@@ -165,6 +176,9 @@ public class ExtensionCase {
         }
     }
 
+    /**
+     * Convert to/from JSON
+     */
     public static class HorsepowerMapConverter extends AbstractMapConverter<String, HorsePower> {
         public HorsepowerMapConverter(
                 @Nullable @Qualifier("converterObjectMapper") ObjectMapper objectMapper) {
@@ -219,24 +233,27 @@ public class ExtensionCase {
                     .label("features")
                     .addColumn("name", Columns.string().order(1000))
                     .addColumn("description", Columns.string().order(2000))
-                    .createAction(createForm -> createForm
-                            .label("create")
-                            .addField("name",
-                                    Fields.string().required().order(1000))
-                            .addField("description",
-                                    Fields.string().order(2000))
-                            .addField("materials", materialsField())
-                            .order(1000))
-                    .updateAction(updateForm -> updateForm
-                            .label("update")
-                            .addField("name",
-                                    Fields.string().required().order(1000))
-                            .addField("description",
-                                    Fields.string().order(2000))
-                            .addField("materials", materialsField())
-                            .order(1000))
+                    .createAction(createForm -> {
+                        CreateModalFormAction<?> response = createForm.label("create");
+                        setupFeatureFields(response);
+                        return response;
+                    })
+                    .updateAction(updateForm -> {
+                        ModalFormAction<?> response = updateForm.label("update");
+                        setupFeatureFields(response);
+                        return response;
+                    })
                     .deleteLabel(
                             "delete");
+        }
+
+        private void setupFeatureFields(FormAction<?> action) {
+            action.addField("name",
+                    Fields.string().required().order(1000))
+                    .addField("description",
+                            Fields.string().order(2000))
+                    .addField("materials", materialsField())
+                    .order(3000);
         }
 
         @NotNull
@@ -250,29 +267,33 @@ public class ExtensionCase {
                             .order(1000).label("range"))
                     .addColumn("chargeTimeMinutes", Columns.longInteger()
                             .order(2000).label("chargeTime"))
-                    .createAction(create -> create
-                            .label("create")
-                            .addEntryKeyField(Fields.select()
-                                    .label("temperature")
-                                    .options(TemperatureOptionEnum.toOptions())
-                                    .required())
-                            .addField("rangeMiles", Fields.decimal()
-                                    .required()
-                                    .order(1000).label("range"))
-                            .addField("chargeTimeMinutes", Fields.longInteger()
-                                    .required()
-                                    .order(2000).label("chargeTime")))
+                    .createAction(create -> {
+                        ResidentMapCreateAction<?> response = create
+                                .label("create")
+                                .addEntryKeyField(Fields.select()
+                                        .label("temperature")
+                                        .options(TemperatureOptionEnum.toOptions())
+                                        .required());
+                        setupEfficiencyFields(response);
+                        return response;
+                    })
                     .deleteAction(delete -> delete
                             .label("delete")
                             .order(1000))
-                    .updateAction(update -> update
-                            .label("update")
-                            .addField("rangeMiles", Fields.decimal()
-                                    .required()
-                                    .order(1000).label("range"))
-                            .addField("chargeTimeMinutes", Fields.longInteger()
-                                    .required()
-                                    .order(2000).label("chargeTime")));
+                    .updateAction(update -> {
+                        ModalFormAction<?> response = update.label("update");
+                        setupEfficiencyFields(response);
+                        return response;
+                    });
+        }
+
+        private void setupEfficiencyFields(FormAction<?> action) {
+            action.addField("rangeMiles", Fields.decimal()
+                    .required()
+                    .order(1000).label("range"))
+                    .addField("chargeTimeMinutes", Fields.longInteger()
+                            .required()
+                            .order(2000).label("chargeTime"));
         }
 
         @NotNull
@@ -284,24 +305,27 @@ public class ExtensionCase {
                     .emptyMessage("Horse power by run mode")
                     .addColumn("value", Columns.integer()
                             .order(1000).label("value"))
-                    .createAction(create -> create
-                            .label("create")
-                            .addEntryKeyField(Fields.select()
-                                    .label("key")
-                                    .options(RunModeOptionEnum.toOptions())
-                                    .required())
-                            .addField("value", Fields.integer()
-                                    .required()
-                                    .order(1000)))
+                    .createAction(create -> {
+                        ResidentMapCreateAction<?> response = create.label("create")
+                                .addEntryKeyField(Fields.select()
+                                        .label("key")
+                                        .options(RunModeOptionEnum.toOptions())
+                                        .required());
+                        setupHorsePowerFields(response);
+                        return response;
+                    })
                     .deleteAction(delete -> delete
                             .label("delete")
                             .order(1000))
-                    .updateAction(update -> update
-                            .label("update")
-                            .addField("value", Fields.integer()
-                                    .required()
-                                    .order(1000))
-                            .order(2000));
+                    .updateAction(update -> {
+                        ModalFormAction<?> response = update.label("update");
+                        setupHorsePowerFields(response);
+                        return response;
+                    });
+        }
+
+        private void setupHorsePowerFields(FormAction<?> action) {
+            action.addField("value", Fields.integer().required().order(1000));
         }
 
         @NotNull
