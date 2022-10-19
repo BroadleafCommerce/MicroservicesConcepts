@@ -16,19 +16,19 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>businessLogicCustomization</module>
-        <module>endpointCustomization</module>
-        <module>productExtensionBusinessLogicCustomizationAutoProjection</module>
-        <module>productExtensionBusinessLogicCustomizationExplicitProjection</module>
-        <module>productExtensionComplexJoined</module>
-        <module>productExtensionComplexJson</module>
-        <module>productExtensionCustomMapping</module>
-        <module>productExtensionEndpointCustomizationAutoProjection</module>
-        <module>productExtensionEndpointCustomizationExplicitProjection</module>
-        <module>productExtensionExplicitProjection</module>
-        <module>productExtensionOnly</module>
-        <module>repositoryCustomizationContribution</module>
-        <module>repositoryCustomizationOverride</module>
+        <module>00100-productExtensionOnly</module>
+        <module>00200-productExtensionComplexJson</module>
+        <module>00300-productExtensionComplexJoined</module>
+        <module>00400-productExtensionExplicitProjection</module>
+        <module>00500-productExtensionCustomMapping</module>
+        <module>00600-repositoryCustomizationOverride</module>
+        <module>00700-repositoryCustomizationContribution</module>
+        <module>00800-businessLogicCustomization</module>
+        <module>00900-productExtensionBusinessLogicCustomizationAutoProjection</module>
+        <module>01000-productExtensionBusinessLogicCustomizationExplicitProjection</module>
+        <module>01100-endpointCustomization</module>
+        <module>01200-productExtensionEndpointCustomizationAutoProjection</module>
+        <module>01300-productExtensionEndpointCustomizationExplicitProjection</module>
     </modules>
 
 </project>
