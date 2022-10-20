@@ -22,12 +22,4 @@
         <skip-schema>false</skip-schema>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-core-test</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>
