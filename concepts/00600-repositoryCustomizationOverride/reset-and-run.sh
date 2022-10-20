@@ -10,7 +10,7 @@ printf "\n"
 printf "***** Building App And Generating Schema *****"
 printf "\n"
 cd ../../
-mvn clean install -pl :broadleaf-concept-repository-customization-override -am
+mvn clean install -pl :broadleaf-concept-repository-customization-override -am -D skipTests
 printf "\n"
 printf "***** Launching Supporting Components *****"
 printf "\n"

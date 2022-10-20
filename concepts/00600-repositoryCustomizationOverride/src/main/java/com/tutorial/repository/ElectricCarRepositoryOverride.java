@@ -15,7 +15,7 @@ import java.util.List;
  * method declarations automatically inherit any {@link Policy} behavior declared on the original
  * (e.g. {@code JpaTrackableRepository}).
  */
-public interface ElectricCarOverrideRepositoryContribution {
+public interface ElectricCarRepositoryOverride {
 
     /**
      * Serves as override for {@link JpaTrackableRepository#save(Trackable, ContextInfo)}

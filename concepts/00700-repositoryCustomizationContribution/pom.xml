@@ -14,4 +14,20 @@
     <name>Repository Customization Contribution</name>
     <description>Add new repository fragments informing new query methods or new fragment implementations</description>
 
+    <properties>
+        <!-- The autoconfiguration class for this concept -->
+        <auto-config-target>com.tutorial.RepositoryCustomizationContribution</auto-config-target>
+        <skip-reset-resources>false</skip-reset-resources>
+        <skip-gen-spring-factories>false</skip-gen-spring-factories>
+    </properties>
+
+    <dependencies>
+        <!-- Leverage the complex product extension that already exists -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-concept-product-extension-complex-json</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

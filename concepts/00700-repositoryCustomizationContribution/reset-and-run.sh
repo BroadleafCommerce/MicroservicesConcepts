@@ -10,7 +10,7 @@ printf "\n"
 printf "***** Building App And Generating Schema *****"
 printf "\n"
 cd ../../
-mvn clean install -pl :broadleaf-concept-product-extension-only -am -D skipTests
+mvn clean install -pl :broadleaf-concept-repository-customization-contribution -am -D skipTests
 printf "\n"
 printf "***** Launching Supporting Components *****"
 printf "\n"
@@ -18,7 +18,7 @@ cd docker
 docker-compose down
 docker-compose pull
 docker-compose up -d
-cd ../concepts/productExtensionOnly
+cd ../concepts/00700-repositoryCustomizationContribution
 printf "\n"
 printf "***** Launching App *****"
 printf "\n"

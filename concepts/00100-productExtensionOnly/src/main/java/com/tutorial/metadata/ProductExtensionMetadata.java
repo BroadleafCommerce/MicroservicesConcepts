@@ -2,6 +2,7 @@ package com.tutorial.metadata;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.lang.Nullable;
 import com.broadleafcommerce.catalog.metadata.autoconfigure.CatalogMetadataProperties;
 import com.broadleafcommerce.catalog.metadata.support.DefaultProductType;

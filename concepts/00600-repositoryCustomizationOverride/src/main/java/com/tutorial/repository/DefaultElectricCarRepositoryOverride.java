@@ -14,8 +14,8 @@ import javax.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DefaultElectricCarOverrideOverrideRepositoryContribution
-        implements ElectricCarOverrideRepositoryContribution {
+public class DefaultElectricCarRepositoryOverride
+        implements ElectricCarRepositoryOverride {
 
     private final JpaTrackableRepositoryDelegateSupplier<ElectricCar> supplier;
 
