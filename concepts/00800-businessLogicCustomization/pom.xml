@@ -15,4 +15,10 @@
     <description>Simple customization of out-of-the-box business logic
     </description>
 
+    <properties>
+        <auto-config-target>com.tutorial.BusinessLogicCustomization</auto-config-target>
+        <skip-reset-resources>false</skip-reset-resources>
+        <skip-gen-spring-factories>false</skip-gen-spring-factories>
+    </properties>
+
 </project>

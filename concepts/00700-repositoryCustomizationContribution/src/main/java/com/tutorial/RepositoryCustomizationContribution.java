@@ -10,7 +10,7 @@ import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrack
 import com.tutorial.domain.ElectricCar;
 import com.tutorial.repository.DefaultElectricCarRepositoryConcreteContribution;
 import com.tutorial.repository.ElectricCarRepositoryConcreteContribution;
-import com.tutorial.repository.ElectricCarAdditionRepositoryDynamicContribution;
+import com.tutorial.repository.ElectricCarRepositoryDynamicContribution;
 
 import java.util.Collections;
 
@@ -42,7 +42,7 @@ public class RepositoryCustomizationContribution {
                                 ElectricCarRepositoryConcreteContribution.class,
                                 fragment))
                 .withQueryFragments(Collections
-                        .singletonList(ElectricCarAdditionRepositoryDynamicContribution.class));
+                        .singletonList(ElectricCarRepositoryDynamicContribution.class));
     }
 
 }

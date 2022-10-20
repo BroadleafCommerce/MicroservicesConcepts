@@ -1,41 +1,41 @@
 package com.tutorial;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
+import com.broadleafcommerce.catalog.service.product.ProductService;
+import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.common.jpa.autoconfigure.AutoConfigureTestDb;
-import com.broadleafcommerce.data.tracking.core.type.TrackingLevel;
-import com.broadleafcommerce.data.tracking.jpa.filtering.domain.CatalogJpaTracking;
 import com.tutorial.domain.ElectricCar;
+import com.tutorial.service.ElectricCarService;
 
+import java.time.Instant;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import io.azam.ulidj.ULID;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Confirm the override fragments are registered with {@link JpaProductRepository} and that they are
- * effective.
+ * Confirm the extension of {@link ProductService} is registered with Spring and is effective. This
+ * example focuses on basic customization of service business logic using out-of-the-box domain and
+ * repository.
  */
 @SpringBootTest
 @AutoConfigureTestDb
 @TestPropertySource(properties = "broadleaf.default.data.route=catalog")
-class RepositoryCustomizationOverrideIT {
+class BusinessLogicCustomizationAutoProjectionIT {
 
     @Autowired
-    protected JpaProductRepository<ElectricCar> repo;
+    private ElectricCarService service;
 
     @PersistenceContext
     private EntityManager em;
@@ -48,23 +48,23 @@ class RepositoryCustomizationOverrideIT {
         template.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
-                em.createQuery("DELETE FROM ElectricCar").executeUpdate();
+                em.createQuery("DELETE FROM JpaProduct").executeUpdate();
             }
         });
     }
 
     @Test
     void testRepositoryOverride() {
-        ElectricCar car = new ElectricCar();
-        car.setContextId(ULID.random());
+        Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
+        ElectricCar car = projection.expose();
+        car.setName("test");
+        car.setSku("test");
+        car.setActiveStartDate(Instant.now());
         car.setModel("test");
-        CatalogJpaTracking tracking = new CatalogJpaTracking();
-        tracking.setLevel(TrackingLevel.PRODUCTION.getLevel());
-        car.setTracking(tracking);
-        repo.save(car, null);
-
-        List<ElectricCar> cars = repo.findAll(null);
-        assertThat(cars).hasSize(1).extracting("model").contains("test Modified");
+        car.setDefaultPrice(Money.of(12, "USD"));
+        service.create(projection.as(), null);
+        List<Projection<ElectricCar>> cars = service.readUsingModel("test", null);
+        assertThat(cars).hasSize(1).extracting("model").contains("test");
     }
 
 }

@@ -15,7 +15,6 @@
     <description>Add new repository implementation fragments that override out-of-the-box behavior</description>
 
     <properties>
-        <!-- The autoconfiguration class for this concept -->
         <auto-config-target>com.tutorial.RepositoryCustomizationOverride</auto-config-target>
         <skip-reset-resources>false</skip-reset-resources>
         <skip-gen-spring-factories>false</skip-gen-spring-factories>

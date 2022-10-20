@@ -15,7 +15,6 @@
     <description>Product extension only with a simple field addition</description>
 
     <properties>
-        <!-- The autoconfiguration class for this library -->
         <auto-config-target>com.tutorial.ProductExtensionOnly</auto-config-target>
         <skip-reset-resources>false</skip-reset-resources>
         <skip-gen-spring-factories>false</skip-gen-spring-factories>

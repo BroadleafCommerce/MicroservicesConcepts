@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.TransactionStatus;
@@ -17,7 +16,7 @@ import com.broadleafcommerce.common.jpa.autoconfigure.AutoConfigureTestDb;
 import com.broadleafcommerce.data.tracking.core.type.TrackingLevel;
 import com.broadleafcommerce.data.tracking.jpa.filtering.domain.CatalogJpaTracking;
 import com.tutorial.domain.ElectricCar;
-import com.tutorial.repository.ElectricCarAdditionRepositoryDynamicContribution;
+import com.tutorial.repository.ElectricCarRepositoryDynamicContribution;
 import com.tutorial.repository.ElectricCarRepositoryConcreteContribution;
 
 import java.util.List;
@@ -33,7 +32,6 @@ import io.azam.ulidj.ULID;
  */
 @SpringBootTest
 @AutoConfigureTestDb
-@AutoConfigureMockMvc
 @TestPropertySource(properties = "broadleaf.default.data.route=catalog")
 class RepositoryCustomizationContributionIT {
 
@@ -70,7 +68,7 @@ class RepositoryCustomizationContributionIT {
                 ((ElectricCarRepositoryConcreteContribution) repo).findUsingModel("test", null);
         assertThat(cars).hasSize(1).extracting("model").contains("test");
 
-        cars = ((ElectricCarAdditionRepositoryDynamicContribution) repo)
+        cars = ((ElectricCarRepositoryDynamicContribution) repo)
                 .findAllByModelContainingIgnoreCase("te", null);
         assertThat(cars).hasSize(1).extracting("model").contains("test");
     }

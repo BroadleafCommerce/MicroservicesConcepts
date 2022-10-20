@@ -16,4 +16,19 @@
         customization
     </description>
 
+    <properties>
+        <auto-config-target>com.tutorial.BusinessLogicCustomizationAutoProjection</auto-config-target>
+        <skip-reset-resources>false</skip-reset-resources>
+        <skip-gen-spring-factories>false</skip-gen-spring-factories>
+    </properties>
+
+    <dependencies>
+        <!-- Leverage the repository contribution, and transitive complex domain extension -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-concept-repository-customization-contribution</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>
