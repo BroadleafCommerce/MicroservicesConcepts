@@ -1,5 +1,7 @@
 package com.tutorial.repository;
 
+import org.springframework.transaction.annotation.Transactional;
+import com.broadleafcommerce.data.tracking.core.Trackable;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.JpaNarrowingHelper;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateSupplier;
@@ -12,7 +14,8 @@ import javax.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DefaultElectricCarRepositoryContribution implements ElectricCarRepositoryContribution {
+public class DefaultElectricCarOverrideOverrideRepositoryContribution
+        implements ElectricCarOverrideRepositoryContribution {
 
     private final JpaTrackableRepositoryDelegateSupplier<ElectricCar> supplier;
 
@@ -20,19 +23,22 @@ public class DefaultElectricCarRepositoryContribution implements ElectricCarRepo
     private EntityManager em;
 
     /**
-     * Delegate to Broadleaf implementation when appropriate
+     * Delegate to Broadleaf implementation when appropriate. Need to re-declare the
+     * {@link Transactional} annotation for the persistence - even if it was already declared on the
+     * original method.
      */
     @Override
-    public ElectricCar save(ElectricCar entity, ContextInfo contextInfo) {
-        entity.setModel(entity.getModel() + " Modified");
-        return supplier.getRepository().save(entity, contextInfo);
+    @Transactional
+    public Trackable save(Trackable entity, ContextInfo contextInfo) {
+        ((ElectricCar) entity).setModel(((ElectricCar) entity).getModel() + " Modified");
+        return supplier.getRepository().save((ElectricCar) entity, contextInfo);
     }
 
     /**
-     * Or, create your own implementation
+     * Or, create your own override implementation
      */
     @Override
-    public List<ElectricCar> findAll(ContextInfo contextInfo) {
+    public List<Trackable> findAll(ContextInfo contextInfo) {
         CriteriaQuery<ElectricCar> query =
                 em.getCriteriaBuilder().createQuery(ElectricCar.class);
         Root<ElectricCar> root = query.from(ElectricCar.class);

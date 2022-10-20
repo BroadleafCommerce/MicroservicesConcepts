@@ -17,6 +17,6 @@ import com.tutorial.metadata.ProductExtensionMetadata;
  */
 @Configuration
 @AutoConfigureBefore(CommonJpaAutoConfiguration.class)
-@JpaEntityScan(basePackages = "com.tutorial")
+@JpaEntityScan(basePackages = "com.tutorial.domain")
 @Import(ProductExtensionMetadata.class)
 public class ProductExtensionComplexJson {}

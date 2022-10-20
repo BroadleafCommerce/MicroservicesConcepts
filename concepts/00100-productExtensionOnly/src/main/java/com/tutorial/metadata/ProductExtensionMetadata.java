@@ -39,10 +39,9 @@ public class ProductExtensionMetadata {
                                         .get(String.format(ProductIds.UPDATE, type.name())))
                         .forEach(view -> view.getGeneralForm()
                                 .getGroup(ProductGroups.BASIC_INFORMATION)
-                                .addField(Fields.colorPicker()
-                                        .name("color")
-                                        .label("color")
-                                        .defaultValue("#ffffff")));
+                                .addField(Fields.string()
+                                        .name("model")
+                                        .label("model")));
             }
         };
     }

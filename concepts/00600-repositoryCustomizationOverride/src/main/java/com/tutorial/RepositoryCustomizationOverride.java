@@ -7,8 +7,8 @@ import com.broadleafcommerce.data.tracking.core.RepositoryContribution;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.DefaultJpaTrackableRepositoryDelegateSupplier;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateSupplier;
 import com.tutorial.domain.ElectricCar;
-import com.tutorial.repository.DefaultElectricCarRepositoryContribution;
-import com.tutorial.repository.ElectricCarRepositoryContribution;
+import com.tutorial.repository.DefaultElectricCarOverrideOverrideRepositoryContribution;
+import com.tutorial.repository.ElectricCarOverrideRepositoryContribution;
 import java.util.Collections;
 
 /**
@@ -24,17 +24,17 @@ public class RepositoryCustomizationOverride {
     }
 
     @Bean
-    public ElectricCarRepositoryContribution fragment(
+    public ElectricCarOverrideRepositoryContribution fragment(
             JpaTrackableRepositoryDelegateSupplier<ElectricCar> delegateSupplier) {
-        return new DefaultElectricCarRepositoryContribution(delegateSupplier);
+        return new DefaultElectricCarOverrideOverrideRepositoryContribution(delegateSupplier);
     }
 
     @Bean
-    public RepositoryContribution contribution(ElectricCarRepositoryContribution fragment) {
+    public RepositoryContribution contribution(ElectricCarOverrideRepositoryContribution fragment) {
         return new RepositoryContribution()
                 .withBaseRepositoryInterface(JpaProductRepository.class)
                 .withConcreteFragments(
-                        Collections.singletonMap(ElectricCarRepositoryContribution.class,
+                        Collections.singletonMap(ElectricCarOverrideRepositoryContribution.class,
                                 fragment));
     }
 

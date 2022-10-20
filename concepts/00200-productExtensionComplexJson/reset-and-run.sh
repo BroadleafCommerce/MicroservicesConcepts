@@ -6,8 +6,6 @@ function exitfn (){
 }
 
 trap "exitfn" INT
-rm -rf ./src/main/resources/db
-rm -rf ./src/main/resources/application*
 printf "\n"
 printf "***** Building App And Generating Schema *****"
 printf "\n"

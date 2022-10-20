@@ -17,8 +17,8 @@
     <properties>
         <!-- The autoconfiguration class for this concept -->
         <auto-config-target>com.tutorial.RepositoryCustomizationOverride</auto-config-target>
-        <!-- Schema contributed by other concept - no need to run here -->
-        <skip-schema>true</skip-schema>
+        <skip-reset-resources>false</skip-reset-resources>
+        <skip-gen-spring-factories>false</skip-gen-spring-factories>
     </properties>
 
     <dependencies>

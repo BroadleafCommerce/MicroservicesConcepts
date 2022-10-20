@@ -58,7 +58,7 @@ public class ProductExtensionMetadata {
     private Group<?> customizeView(EntityView<? extends EntityView<?>> view) {
         return view.getGeneralForm()
                 .getGroup(ProductGroups.BASIC_INFORMATION)
-                .addField(colorField())
+                .addField(modelField())
                 .addField(horsePowerField())
                 .addField(efficiencyField())
                 .addField(featuresField());
@@ -167,11 +167,10 @@ public class ProductExtensionMetadata {
     }
 
     @NotNull
-    private DefaultField colorField() {
-        return Fields.colorPicker()
-                .name("color")
-                .label("color")
-                .defaultValue("#ffffff");
+    private DefaultField modelField() {
+        return Fields.string()
+                .name("model")
+                .label("model");
     }
 
     @NotNull
