@@ -1,13 +1,26 @@
 package com.tutorial;
 
+import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.util.collections.Sets;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.MediaType;
 
 import com.broadleafcommerce.catalog.domain.product.Product;
 import com.broadleafcommerce.catalog.service.product.ProductService;
 import com.broadleafcommerce.catalog.web.endpoint.ProductEndpoint;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
+
+import java.time.Instant;
+
+import static com.broadleafcommerce.data.tracking.test.BaseSandboxIntegrationTest.X_CONTEXT_REQUEST;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Confirm the extension of {@link ProductEndpoint} is registered with Spring and is effective. This
@@ -27,15 +40,25 @@ class EndpointCustomizationIT extends AbstractMockMvcIT {
 
     @Test
     void testEndpointCustomization() throws Exception {
-        // TODO Finish this test
-//        mockMvc.perform(
-//                        post("/products")
-//                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                                .content(toJsonExcludeNull(navMenuItemToCreate))
-//                                .with(mockMvcUtil.withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
-//                .andExpect(status().is2xxSuccessful())
-//                .andExpect(jsonPath("$.content", hasSize(1)))
-//                .andExpect(jsonPath("$.content[0].model").value("test"));
+        getMockMvc().perform(
+                post("/products")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(toJsonExcludeNull(projection()))
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful());
+        verify(productService, times(1)).create(any(),
+                argThat(info -> info.getAdditionalProperties().containsKey("MyValue")));
+    }
+
+    private Product projection() {
+        Product projection = new Product();
+        projection.setName("test");
+        projection.setSku("test");
+        projection.setActiveStartDate(Instant.now());
+        projection.setDefaultPrice(Money.of(12, "USD"));
+        return projection;
     }
 
 }
