@@ -24,11 +24,11 @@
         <module>00600-repositoryCustomizationOverride</module>
         <module>00700-repositoryCustomizationContribution</module>
         <module>00800-businessLogicCustomization</module>
-        <module>00900-productExtensionBusinessLogicCustomizationAutoProjection</module>
-        <module>01000-productExtensionBusinessLogicCustomizationExplicitProjection</module>
+        <module>00900-businessLogicCustomizationAutoProjection</module>
+        <module>01000-businessLogicCustomizationExplicitProjection</module>
         <module>01100-endpointCustomization</module>
-        <module>01200-productExtensionEndpointCustomizationAutoProjection</module>
-        <module>01300-productExtensionEndpointCustomizationExplicitProjection</module>
+        <module>01200-endpointCustomizationAutoProjection</module>
+        <module>01300-endpointCustomizationExplicitProjection</module>
     </modules>
 
 </project>

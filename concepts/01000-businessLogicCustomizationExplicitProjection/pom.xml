@@ -10,9 +10,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-product-extension-endpoint-customization-auto-projection</artifactId>
-    <name>Product Extension Endpoint Customization Auto Projection</name>
-    <description>Product extension using auto projection leveraged in an endpoint customization
+    <artifactId>
+        broadleaf-concept-business-logic-customization-explicit-projection
+    </artifactId>
+    <name>Business Logic Customization Explicit Projection</name>
+    <description>Product extension using an explicit projection leveraged in a business logic
+        customization
     </description>
 
 </project>
