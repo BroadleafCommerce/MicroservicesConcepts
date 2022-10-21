@@ -1,5 +1,3 @@
 #!/bin/bash
 
-cd ../../docker
-docker-compose down
-cd ../concepts/productExtensionOnly
+source ../../script/stop-docker-source.sh
