@@ -2,6 +2,7 @@ package com.tutorial.service;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 import com.broadleafcommerce.catalog.domain.CategoryProduct;
 import com.broadleafcommerce.catalog.domain.product.Product;
 import com.broadleafcommerce.catalog.domain.product.Variant;
@@ -22,14 +23,15 @@ import com.tutorial.repository.ElectricCarRepositoryConcreteContribution;
 import java.util.List;
 import cz.jirutka.rsql.parser.ast.Node;
 
+@Component
 public class ElectricCarService extends DefaultProductService<Product> {
 
     public ElectricCarService(ProductRepository<Trackable> repository,
             RsqlCrudEntityHelper helper,
             VariantService<Variant> variantService,
             CategoryProductService<CategoryProduct> categoryProductService,
-            CacheStateManager cacheStateManager,
-            FilterParser<Node> parser,
+            @Nullable CacheStateManager cacheStateManager,
+            @Nullable FilterParser<Node> parser,
             TypeFactory typeFactory) {
         super(repository, helper, variantService, categoryProductService, cacheStateManager, parser,
                 typeFactory);

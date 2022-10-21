@@ -2,6 +2,7 @@ package com.tutorial;
 
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 
@@ -24,25 +25,6 @@ import cz.jirutka.rsql.parser.ast.Node;
  * Setup components for the extension case.
  */
 @Configuration
+@ComponentScan(basePackageClasses = ElectricCarService.class)
 @AutoConfigureBefore(CatalogServiceAutoConfiguration.class)
-public class BusinessLogicCustomizationAutoProjection {
-
-    @Bean
-    public ElectricCarService productService(
-            ProductRepository<Trackable> productRepository,
-            RsqlCrudEntityHelper helper,
-            VariantService<Variant> variantService,
-            CategoryProductService<CategoryProduct> categoryProductService,
-            @Nullable CacheStateManager cacheStateManager,
-            @Nullable FilterParser<Node> parser,
-            TypeFactory typeFactory) {
-        return new ElectricCarService(productRepository,
-                helper,
-                variantService,
-                categoryProductService,
-                cacheStateManager,
-                parser,
-                typeFactory);
-    }
-
-}
+public class BusinessLogicCustomizationAutoProjection {}

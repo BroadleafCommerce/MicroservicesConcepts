@@ -1,8 +1,10 @@
 package com.tutorial.service;
 
+import org.springframework.stereotype.Component;
 import com.broadleafcommerce.catalog.domain.product.Product;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Component
 public class MyIntegrationService {
 
     AtomicInteger registrationCount = new AtomicInteger(0);

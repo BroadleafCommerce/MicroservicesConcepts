@@ -1,70 +1,66 @@
 package com.tutorial;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.broadleafcommerce.data.tracking.test.BaseSandboxIntegrationTest.X_CONTEXT_REQUEST;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.AfterEach;
+import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
+import org.mockito.internal.util.collections.Sets;
+import org.springframework.http.MediaType;
 
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
-import com.broadleafcommerce.common.jpa.autoconfigure.AutoConfigureTestDb;
-import com.broadleafcommerce.data.tracking.core.type.TrackingLevel;
-import com.broadleafcommerce.data.tracking.jpa.filtering.domain.CatalogJpaTracking;
+import com.broadleafcommerce.common.extension.projection.Projection;
+import com.broadleafcommerce.microservices.AbstractMockMvcIT;
+import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
 import com.tutorial.domain.ElectricCar;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import io.azam.ulidj.ULID;
+import java.time.Instant;
 
 /**
  * Confirm the override fragments are registered with {@link JpaProductRepository} and that they are
  * effective.
  */
-@SpringBootTest
-@AutoConfigureTestDb
-@TestPropertySource(properties = "broadleaf.default.data.route=catalog")
-class RepositoryCustomizationOverrideIT {
+@TestCatalogRouted
+class RepositoryCustomizationOverrideIT extends AbstractMockMvcIT {
 
-    @Autowired
-    protected JpaProductRepository<ElectricCar> repo;
-
-    @PersistenceContext
-    private EntityManager em;
-
-    @Autowired
-    private TransactionTemplate template;
-
-    @AfterEach
-    private void tearDown() {
-        template.execute(new TransactionCallbackWithoutResult() {
-            @Override
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                em.createQuery("DELETE FROM ElectricCar").executeUpdate();
-            }
-        });
+    @Override
+    protected void transactionalTeardown() {
+        getEntityManager().createQuery("DELETE FROM ElectricCar").executeUpdate();
     }
 
     @Test
-    void testRepositoryOverride() {
-        ElectricCar car = new ElectricCar();
-        car.setContextId(ULID.random());
-        car.setModel("test");
-        CatalogJpaTracking tracking = new CatalogJpaTracking();
-        tracking.setLevel(TrackingLevel.PRODUCTION.getLevel());
-        car.setTracking(tracking);
-        repo.save(car, null);
+    void testRepositoryCustomizationOverride() throws Exception {
+        getMockMvc().perform(
+                post("/products")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(toJsonExcludeNull(projection()))
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful());
 
-        List<ElectricCar> cars = repo.findAll(null);
-        assertThat(cars).hasSize(1).extracting("model").contains("test Modified");
+        getMockMvc().perform(
+                get("/products")
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].model").value("test Modified"));
     }
 
+    private Projection<ElectricCar> projection() {
+        Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
+        ElectricCar car = projection.expose();
+        car.setName("test");
+        car.setSku("test");
+        car.setActiveStartDate(Instant.now());
+        car.setModel("test");
+        car.setDefaultPrice(Money.of(12, "USD"));
+        return projection;
+    }
 }

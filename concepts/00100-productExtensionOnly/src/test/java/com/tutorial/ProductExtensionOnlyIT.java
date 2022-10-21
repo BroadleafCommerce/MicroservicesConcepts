@@ -1,89 +1,66 @@
 package com.tutorial;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.util.collections.Sets;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
-import com.broadleafcommerce.common.jpa.autoconfigure.AutoConfigureTestDb;
-import com.broadleafcommerce.data.tracking.core.type.TrackingLevel;
-import com.broadleafcommerce.data.tracking.jpa.filtering.domain.CatalogJpaTracking;
-import com.broadleafcommerce.oauth2.resource.security.test.MockMvcOAuth2AuthenticationUtil;
+import com.broadleafcommerce.common.extension.projection.Projection;
+import com.broadleafcommerce.microservices.AbstractMockMvcIT;
+import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
 import com.tutorial.domain.ElectricCar;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import io.azam.ulidj.ULID;
+import java.time.Instant;
 
+import static com.broadleafcommerce.data.tracking.test.BaseSandboxIntegrationTest.X_CONTEXT_REQUEST;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Confirm the extended type is targeted by {@link JpaProductRepository}, and that the auto
- * generated projection is serialized out through the API call.
+ * generated projection is used in/out with the API call.
  */
-@SpringBootTest
-@AutoConfigureTestDb
-@AutoConfigureMockMvc
-@TestPropertySource(properties = "broadleaf.default.data.route=catalog")
-class ProductExtensionOnlyIT {
+@TestCatalogRouted
+class ProductExtensionOnlyIT extends AbstractMockMvcIT {
 
-    @Autowired
-    protected MockMvc mockMvc;
-
-    @Autowired
-    protected MockMvcOAuth2AuthenticationUtil mockMvcUtil;
-
-    @PersistenceContext
-    private EntityManager em;
-
-    @Autowired
-    private TransactionTemplate template;
-
-    @BeforeEach
-    private void init() {
-        ElectricCar car = new ElectricCar();
-        car.setContextId(ULID.random());
-        car.setModel("test");
-        CatalogJpaTracking tracking = new CatalogJpaTracking();
-        tracking.setLevel(TrackingLevel.PRODUCTION.getLevel());
-        car.setTracking(tracking);
-        template.execute(new TransactionCallbackWithoutResult() {
-            @Override
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                em.persist(car);
-            }
-        });
-    }
-
-    @AfterEach
-    private void tearDown() {
-        template.execute(new TransactionCallbackWithoutResult() {
-            @Override
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                em.createQuery("DELETE FROM ElectricCar").executeUpdate();
-            }
-        });
+    @Override
+    protected void transactionalTeardown() {
+        getEntityManager().createQuery("DELETE FROM ElectricCar").executeUpdate();
     }
 
     @Test
-    void testDomainExtension() throws Exception {
-        mockMvc.perform(
+    void testProductExtensionOnly() throws Exception {
+        getMockMvc().perform(
+                post("/products")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(toJsonExcludeNull(projection()))
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful());
+
+        getMockMvc().perform(
                 get("/products")
-                        .with(mockMvcUtil.withAuthorities(Sets.newSet("READ_PRODUCT"))))
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].model").value("test"));
+    }
+
+    private Projection<ElectricCar> projection() {
+        Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
+        ElectricCar car = projection.expose();
+        car.setName("test");
+        car.setSku("test");
+        car.setActiveStartDate(Instant.now());
+        car.setModel("test");
+        car.setDefaultPrice(Money.of(12, "USD"));
+        return projection;
     }
 
 }
