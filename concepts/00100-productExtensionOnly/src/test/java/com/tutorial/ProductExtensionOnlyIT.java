@@ -21,7 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Confirm the extended type is targeted by {@link JpaProductRepository}, and that the auto
- * generated projection is used in/out with the API call.
+ * generated projection is used in/out with the API call. Also demonstrate RSQL filtering on the
+ * extended property.
  */
 @TestCatalogRouted
 class ProductExtensionOnlyIT extends AbstractMockMvcIT {
@@ -50,6 +51,37 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].model").value("test"));
+    }
+
+    @Test
+    void testRSQLForExtendedProperty() throws Exception {
+        getMockMvc().perform(
+                post("/products")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(toJsonExcludeNull(projection()))
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful());
+
+        getMockMvc().perform(
+                get("/products")
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .param("cq", "model=='test'")
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].model").value("test"));
+
+        getMockMvc().perform(
+                get("/products")
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .param("cq", "model=='wrong'")
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.content", hasSize(0)));
     }
 
     private Projection<ElectricCar> projection() {

@@ -86,7 +86,8 @@ public class ElectricCarEndpoint extends ProductEndpoint {
      * Using a different path to avoid having to override all super mappings at `/`. Note, in this
      * case, searching by the `model` property could have also been achieved using RSQL syntax and
      * {@link ProductEndpoint#readAllProducts(ContextInfo, String, boolean, Node, Pageable)} without
-     * requiring an endpoint, service, or repository customization.
+     * requiring an endpoint, service, or repository customization. See
+     * {@code com.tutorial.ProductExtensionOnlyIT#testRSQLForExtendedProperty()}.
      */
     @RequestMapping(path = "/modeled", method = RequestMethod.GET)
     @Policy(permissionRoots = {"PRODUCT"})
