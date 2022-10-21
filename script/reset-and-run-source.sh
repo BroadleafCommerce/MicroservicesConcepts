@@ -38,7 +38,17 @@ _messages=(
 banner_multi_line
 mvn clean install -f ../../pom.xml -pl :$artifactId -am -DskipTests
 _messages=(
-  "Launching Supporting Components"
+  "Launching Supporting Components In Docker"
+  "- admingateway"
+  "- adminweb"
+  "- auth"
+  "- commercegateway"
+  "- commerceweb"
+  "- kafka"
+  "- solr"
+  "- openapi"
+  "- zookeeper"
+  "- postgres"
 )
 banner_multi_line
 docker-compose -f ../../docker/docker-compose.yml -f ../../docker/docker-compose.override.yml down
