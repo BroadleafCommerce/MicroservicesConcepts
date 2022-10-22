@@ -44,7 +44,7 @@ class EndpointCustomizationAutoProjectionIT extends AbstractMockMvcIT {
 
         // new endpoint works
         getMockMvc().perform(
-                get("/products/modeled")
+                get("/products")
                         .param("model", "test")
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, true)))
@@ -77,7 +77,7 @@ class EndpointCustomizationAutoProjectionIT extends AbstractMockMvcIT {
 
         // new endpoint works for non-match
         getMockMvc().perform(
-                get("/products/modeled")
+                get("/products")
                         .param("model", "thing")
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, true)))
@@ -87,7 +87,7 @@ class EndpointCustomizationAutoProjectionIT extends AbstractMockMvcIT {
 
         // new endpoint is protected
         getMockMvc().perform(
-                get("/products/modeled")
+                get("/products")
                         .param("model", "thing")
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, true)))
