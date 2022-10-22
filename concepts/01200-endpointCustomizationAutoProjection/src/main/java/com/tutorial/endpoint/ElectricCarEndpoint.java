@@ -22,6 +22,7 @@ import com.broadleafcommerce.data.tracking.core.policy.Policy;
 import com.tutorial.domain.ElectricCar;
 import com.tutorial.service.ElectricCarService;
 
+import java.util.Objects;
 import cz.jirutka.rsql.parser.ast.Node;
 import lombok.RequiredArgsConstructor;
 
@@ -46,8 +47,8 @@ public class ElectricCarEndpoint {
     private final ProductHydrationService productHydrationService;
 
     /**
-     * Using a different path to avoid having to override all super mappings at `/`. Note, in this
-     * case, searching by the `model` property could have also been achieved using RSQL syntax and
+     * Note, in this case, searching by the `model` property could have also been achieved using
+     * RSQL syntax and
      * {@link ProductEndpoint#readAllProducts(ContextInfo, String, boolean, Node, Pageable)} without
      * requiring an endpoint, service, or repository customization. See
      * {@code com.tutorial.ProductExtensionOnlyIT#testRSQLForExtendedProperty()}.
@@ -69,7 +70,8 @@ public class ElectricCarEndpoint {
         }
         if (hydratePrimaryAssets) {
             return Projection.cast(productHydrationService
-                    .hydratePrimaryAssets(Projection.cast(results), context));
+                    .hydratePrimaryAssets(Objects.requireNonNull(Projection.cast(results)),
+                            context));
         } else {
             return results;
         }
