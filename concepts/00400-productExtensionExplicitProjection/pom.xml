@@ -12,7 +12,7 @@
 
     <artifactId>broadleaf-concept-product-extension-explicit-projection</artifactId>
     <name>Product Extension Explicit Projection</name>
-    <description>Product extension with explicit extended projection
+    <description>Product extension with explicit extended projection and custom mapping
     </description>
 
     <properties>
