@@ -15,4 +15,18 @@
     <description>Product extension using explicit projection leveraged in an endpoint customization
     </description>
 
+    <properties>
+        <auto-config-target>com.tutorial.EndpointCustomizationExplicitProjection</auto-config-target>
+        <skip-reset-resources>false</skip-reset-resources>
+        <skip-gen-spring-factories>false</skip-gen-spring-factories>
+    </properties>
+
+    <dependencies>
+        <!-- Leverage the transitive customizations -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-concept-business-logic-customization-explicit-projection</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.broadleafcommerce.catalog.domain.product.Product;
 import com.broadleafcommerce.catalog.service.product.ProductService;
-import com.broadleafcommerce.catalog.service.product.hydration.ProductHydrationService;
 import com.broadleafcommerce.catalog.web.endpoint.ProductEndpoint;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.core.context.ContextOperation;
 import com.broadleafcommerce.data.tracking.core.policy.Policy;
 import com.broadleafcommerce.data.tracking.core.type.OperationType;
+import com.tutorial.projection.ElectricCarProjection;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,14 +29,13 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping({"/products"})
 @RequiredArgsConstructor
-public class ExtendedProductEndpoint {
+public class ElectricCarEndpoint {
 
     private final ProductService<Product> productSvc;
-    private final ProductHydrationService productHydrationService;
 
     @RequestMapping(method = RequestMethod.POST, consumes = {"application/json"})
     @Policy(permissionRoots = {"PRODUCT"})
-    public Product createProduct(HttpServletRequest request,
+    public ElectricCarProjection createProduct(HttpServletRequest request,
             @ContextOperation(OperationType.CREATE) ContextInfo context,
             @RequestBody Product req) {
         /**
@@ -44,7 +43,9 @@ public class ExtendedProductEndpoint {
          * across multiple request types.
          */
         context.getAdditionalProperties().put("MyValue", "Test");
-        Product created = productSvc.create(req, context);
-        return productHydrationService.hydrate(created, context);
+        return (ElectricCarProjection) productSvc.create(req, context); // omitted the hydration
+                                                                        // that normally takes place
+                                                                        // in this method in the
+                                                                        // parent implementation
     }
 }
