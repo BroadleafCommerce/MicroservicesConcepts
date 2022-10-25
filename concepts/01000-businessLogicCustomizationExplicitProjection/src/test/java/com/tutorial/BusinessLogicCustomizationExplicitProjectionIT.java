@@ -14,7 +14,6 @@ import org.mockito.internal.util.collections.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import com.broadleafcommerce.catalog.domain.product.Product;
 import com.broadleafcommerce.catalog.service.product.ProductService;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;

@@ -3,7 +3,6 @@ package com.tutorial.service;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import com.broadleafcommerce.catalog.domain.product.Product;
 import com.tutorial.projection.ElectricCarProjection;
 
 import java.util.concurrent.atomic.AtomicInteger;
