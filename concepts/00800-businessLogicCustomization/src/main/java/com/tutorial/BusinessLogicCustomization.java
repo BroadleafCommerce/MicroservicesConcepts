@@ -5,12 +5,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.broadleafcommerce.catalog.service.autoconfigure.CatalogServiceAutoConfiguration;
-import com.tutorial.service.ElectricCarService;
+import com.tutorial.service.ExtendedProductService;
 
 /**
  * Setup components for the extension case.
  */
 @Configuration
 @AutoConfigureBefore(CatalogServiceAutoConfiguration.class)
-@ComponentScan(basePackageClasses = ElectricCarService.class)
+@ComponentScan(basePackageClasses = ExtendedProductService.class)
 public class BusinessLogicCustomization {}
