@@ -3,6 +3,7 @@ package com.tutorial.service;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+
 import com.broadleafcommerce.catalog.domain.CategoryProduct;
 import com.broadleafcommerce.catalog.domain.product.Product;
 import com.broadleafcommerce.catalog.domain.product.Variant;
@@ -21,6 +22,7 @@ import com.tutorial.domain.ElectricCar;
 import com.tutorial.repository.ElectricCarRepositoryConcreteContribution;
 
 import java.util.List;
+
 import cz.jirutka.rsql.parser.ast.Node;
 
 @Component

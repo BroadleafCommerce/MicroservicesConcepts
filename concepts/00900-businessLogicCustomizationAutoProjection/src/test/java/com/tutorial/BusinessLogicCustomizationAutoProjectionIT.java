@@ -1,5 +1,7 @@
 package com.tutorial;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,6 @@ import com.tutorial.service.ElectricCarService;
 
 import java.time.Instant;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Confirm the extension of {@link ProductService} is registered with Spring and is effective.

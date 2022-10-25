@@ -3,6 +3,7 @@ package com.tutorial;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
 import com.broadleafcommerce.common.jpa.autoconfigure.CommonJpaAutoConfiguration;
 import com.broadleafcommerce.common.jpa.data.entity.JpaEntityScan;
 import com.tutorial.metadata.ProductExtensionMetadata;

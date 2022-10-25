@@ -58,8 +58,8 @@ public class ElectricCar extends JpaProduct {
     private Map<String, Efficiency> efficiencyByTempFahrenheit;
 
     /**
-     * Car features (e.g. seats, headlamps, wheels, etc...). Includes materials where relevant
-     * (e.g. vegan seat materials).
+     * Car features (e.g. seats, headlamps, wheels, etc...). Includes materials where relevant (e.g.
+     * vegan seat materials).
      */
     @Column(name = "FEATURES", length = JpaConstants.MEDIUM_TEXT_LENGTH)
     @Convert(converter = FeatureListConverter.class)

@@ -22,6 +22,7 @@ import com.tutorial.domain.ElectricCar;
 import com.tutorial.service.ElectricCarService;
 
 import java.util.Objects;
+
 import cz.jirutka.rsql.parser.ast.Node;
 import lombok.RequiredArgsConstructor;
 

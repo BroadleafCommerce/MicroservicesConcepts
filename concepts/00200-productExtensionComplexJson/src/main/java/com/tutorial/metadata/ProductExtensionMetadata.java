@@ -1,10 +1,13 @@
 package com.tutorial.metadata;
 
+import static com.broadleafcommerce.catalog.metadata.support.DefaultProductType.values;
+
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+
 import com.broadleafcommerce.catalog.metadata.autoconfigure.CatalogMetadataProperties;
 import com.broadleafcommerce.catalog.metadata.support.DefaultProductType;
 import com.broadleafcommerce.catalog.metadata.support.ProductGroups;
@@ -22,12 +25,11 @@ import com.broadleafcommerce.metadata.dsl.core.extension.views.details.EntityVie
 import com.broadleafcommerce.metadata.dsl.core.utils.Columns;
 import com.broadleafcommerce.metadata.dsl.core.utils.Fields;
 import com.broadleafcommerce.metadata.dsl.registry.ComponentSource;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.broadleafcommerce.catalog.metadata.support.DefaultProductType.values;
 
 @Configuration
 public class ProductExtensionMetadata {

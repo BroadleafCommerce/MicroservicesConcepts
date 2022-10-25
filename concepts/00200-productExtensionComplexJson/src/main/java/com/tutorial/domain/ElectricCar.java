@@ -2,22 +2,26 @@ package com.tutorial.domain;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.Nullable;
+
 import com.broadleafcommerce.catalog.provider.jpa.domain.product.JpaProduct;
 import com.broadleafcommerce.common.jpa.JpaConstants;
 import com.broadleafcommerce.common.jpa.converter.AbstractListConverter;
 import com.broadleafcommerce.common.jpa.converter.AbstractMapConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -48,8 +52,8 @@ public class ElectricCar extends JpaProduct {
     private Map<String, Efficiency> efficiencyByTempFahrenheit;
 
     /**
-     * Car features (e.g. seats, headlamps, wheels, etc...). Includes materials where relevant
-     * (e.g. vegan seat materials).
+     * Car features (e.g. seats, headlamps, wheels, etc...). Includes materials where relevant (e.g.
+     * vegan seat materials).
      */
     @Column(name = "FEATURES", length = JpaConstants.MEDIUM_TEXT_LENGTH)
     @Convert(converter = FeatureListConverter.class)

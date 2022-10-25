@@ -1,13 +1,18 @@
 package com.tutorial.domain;
 
+import static com.broadleafcommerce.common.jpa.JpaConstants.CONTEXT_ID_LENGTH;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.util.Assert;
+
 import com.broadleafcommerce.data.tracking.core.mapping.ExplicitProjectionFieldConfiguration;
 import com.broadleafcommerce.data.tracking.core.mapping.ModelMapperMappable;
 import com.broadleafcommerce.data.tracking.core.mapping.ProjectionPostConvert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,13 +23,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import lombok.Data;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import static com.broadleafcommerce.common.jpa.JpaConstants.CONTEXT_ID_LENGTH;
 
 /**
  * An upgrade specific to this car. Exposing as first-class domain (instead of embedded json) can

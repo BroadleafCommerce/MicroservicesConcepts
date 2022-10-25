@@ -9,8 +9,8 @@ import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductR
 import com.broadleafcommerce.microservices.AbstractStandardIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
 import com.tutorial.domain.ElectricCar;
-import com.tutorial.repository.ElectricCarRepositoryDynamicContribution;
 import com.tutorial.repository.ElectricCarRepositoryConcreteContribution;
+import com.tutorial.repository.ElectricCarRepositoryDynamicContribution;
 
 import java.util.List;
 

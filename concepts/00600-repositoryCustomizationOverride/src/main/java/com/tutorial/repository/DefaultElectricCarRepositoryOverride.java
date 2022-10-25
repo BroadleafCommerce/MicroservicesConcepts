@@ -1,16 +1,20 @@
 package com.tutorial.repository;
 
 import org.springframework.transaction.annotation.Transactional;
+
 import com.broadleafcommerce.data.tracking.core.Trackable;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.JpaNarrowingHelper;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateSupplier;
 import com.tutorial.domain.ElectricCar;
+
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

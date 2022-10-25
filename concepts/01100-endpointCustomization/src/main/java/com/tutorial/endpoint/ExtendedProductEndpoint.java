@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.broadleafcommerce.bulk.domain.BulkUpdate;
 import com.broadleafcommerce.bulk.service.BulkUpdateManager;
 import com.broadleafcommerce.bulk.service.BulkUpdateService;
@@ -31,14 +32,15 @@ import com.broadleafcommerce.catalog.service.product.relation.PromotionalProduct
 import com.broadleafcommerce.catalog.web.endpoint.ProductEndpoint;
 import com.broadleafcommerce.common.extension.TypeFactory;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
-import com.broadleafcommerce.data.tracking.core.context.ContextInfoCustomizer;
 import com.broadleafcommerce.data.tracking.core.context.ContextOperation;
 import com.broadleafcommerce.data.tracking.core.filtering.fetch.rsql.web.RsqlFilterHandlerMethodArgumentResolver;
 import com.broadleafcommerce.data.tracking.core.policy.Policy;
 import com.broadleafcommerce.data.tracking.core.type.OperationType;
 import com.broadleafcommerce.translation.domain.Translation;
 import com.broadleafcommerce.translation.service.TranslationEntityService;
+
 import javax.servlet.http.HttpServletRequest;
+
 import cz.jirutka.rsql.parser.ast.Node;
 
 /**
