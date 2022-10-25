@@ -10,17 +10,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-product-extension-complex-joined</artifactId>
-    <name>Product Extension Complex Joined</name>
-    <description>Product extension with embedded complex associations and collections represented as
-        joined ToMany associations
+    <artifactId>broadleaf-concept-non-jpa-reference-extension</artifactId>
+    <name>Non Jpa Reference Extension</name>
+    <description>Extension of non-jpa domain (converted to json) referenced from collection field in JpaProduct
     </description>
-
-    <properties>
-        <auto-config-target>com.tutorial.ProductExtensionComplexJoined</auto-config-target>
-        <skip-reset-resources>false</skip-reset-resources>
-        <skip-gen-spring-factories>false</skip-gen-spring-factories>
-        <skip-schema>false</skip-schema>
-    </properties>
 
 </project>
