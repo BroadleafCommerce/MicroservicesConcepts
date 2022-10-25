@@ -61,12 +61,15 @@ class ProductExtensionComplexJoinedIT extends AbstractMockMvcIT {
                 .andExpect(jsonPath("$.content[0].efficiencyByTempFahrenheit",
                         hasKey(ProductExtensionMetadata.TemperatureOptionEnum.LOW.label())))
                 .andExpect(jsonPath("$.content[0].upgrades", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].upgrades[0].name").value("upgrade"));
+                .andExpect(jsonPath("$.content[0].upgrades[0].name").value("upgrade"))
+                .andExpect(jsonPath("$.content[0].tags", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].tags[0]").value("test"));
     }
 
     private Projection<ElectricCar> projection() {
         Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
         ElectricCar car = projection.expose();
+        car.setTags(Collections.singletonList("test")); // parent value
         car.setName("test");
         car.setSku("test");
         car.setActiveStartDate(Instant.now());

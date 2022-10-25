@@ -41,8 +41,8 @@ import lombok.ToString;
  * denote a method to establish the bi-directional reference back to the parent for the
  * {@code ManyToOne} association. This is a measure to support ORM requirements for the parent
  * entity {@code OneToMany} collection. When using the auto projection flow (i.e. ElectricCar does
- * not implement {@link ModelMapperMappable}), these annotations come into play. Otherwise, they
- * will be ignored.
+ * not override {@link ModelMapperMappable} methods), these annotations come into play. Otherwise,
+ * they will be ignored.
  */
 @Entity
 @Table(name = "ELECTRIC_CAR_UPGRADES")

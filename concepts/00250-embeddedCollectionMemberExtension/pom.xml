@@ -10,9 +10,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-non-jpa-reference-extension</artifactId>
-    <name>Non Jpa Reference Extension</name>
-    <description>Extension of non-jpa domain (converted to json) referenced from collection field in JpaProduct
-    </description>
+    <artifactId>broadleaf-concept-embedded-collection-member-extension</artifactId>
+    <name>Embedded Collection Member Extension</name>
+    <description>Extension of non-jpa domain embedded collection member</description>
 
 </project>

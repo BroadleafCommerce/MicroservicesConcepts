@@ -14,11 +14,11 @@ import org.mockito.internal.util.collections.Sets;
 import org.springframework.http.MediaType;
 
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
-import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
 import com.tutorial.domain.ElectricCar;
 import com.tutorial.metadata.ProductExtensionMetadata;
+import com.tutorial.projection.ElectricCarProjection;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -26,10 +26,11 @@ import java.util.Collections;
 
 /**
  * Confirm the complex extended type is targeted by {@link JpaProductRepository}, and that the auto
- * generated projection is used in/out with the API call.
+ * generated projection is used in/out with the API call. Also confirm the new aggregation field in
+ * the explicit projection is populated correctly in the response.
  */
 @TestCatalogRouted
-class ProductExtensionComplexJsonIT extends AbstractMockMvcIT {
+class ProductExtensionExplicitProjectionIT extends AbstractMockMvcIT {
 
     @Override
     protected void transactionalTeardown() {
@@ -57,13 +58,14 @@ class ProductExtensionComplexJsonIT extends AbstractMockMvcIT {
                 .andExpect(jsonPath("$.content[0].model").value("test"))
                 .andExpect(jsonPath("$.content[0].efficiencyByTempFahrenheit",
                         hasKey(ProductExtensionMetadata.TemperatureOptionEnum.LOW.label())))
+                .andExpect(jsonPath("$.content[0].allMaterials", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].allMaterials[0].name").value("Vegan Cover"))
                 .andExpect(jsonPath("$.content[0].tags", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].tags[0]").value("test"));
     }
 
-    private Projection<ElectricCar> projection() {
-        Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
-        ElectricCar car = projection.expose();
+    private ElectricCarProjection projection() {
+        ElectricCarProjection car = new ElectricCarProjection();
         car.setTags(Collections.singletonList("test")); // parent value
         car.setName("test");
         car.setSku("test");
@@ -75,7 +77,16 @@ class ProductExtensionComplexJsonIT extends AbstractMockMvcIT {
         efficiency.setRangeMiles(new BigDecimal(300));
         car.setEfficiencyByTempFahrenheit(Collections.singletonMap(
                 ProductExtensionMetadata.TemperatureOptionEnum.LOW.label(), efficiency));
-        return projection;
+        ElectricCar.Feature feature = new ElectricCar.Feature();
+        feature.setName("Bucket Seat");
+        feature.setDescription("Bucket Seat");
+        ElectricCar.Material material = new ElectricCar.Material();
+        material.setName("Vegan Cover");
+        material.setDescription("Durable vegan material simulates suede");
+        material.setSupplier("Dinamica");
+        feature.getMaterials().add(material);
+        car.setFeatures(Collections.singletonList(feature));
+        return car;
     }
 
 }

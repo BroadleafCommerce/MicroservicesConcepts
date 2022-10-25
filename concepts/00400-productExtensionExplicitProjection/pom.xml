@@ -15,4 +15,11 @@
     <description>Product extension with explicit extended projection
     </description>
 
+    <properties>
+        <auto-config-target>com.tutorial.ProductExtensionExplicitProjection</auto-config-target>
+        <skip-reset-resources>false</skip-reset-resources>
+        <skip-gen-spring-factories>false</skip-gen-spring-factories>
+        <skip-schema>false</skip-schema>
+    </properties>
+
 </project>

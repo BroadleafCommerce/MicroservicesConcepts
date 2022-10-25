@@ -19,6 +19,7 @@ import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRout
 import com.tutorial.domain.ElectricCar;
 
 import java.time.Instant;
+import java.util.Collections;
 
 /**
  * Confirm the extended type is targeted by {@link JpaProductRepository}, and that the auto
@@ -51,7 +52,9 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].model").value("test"));
+                .andExpect(jsonPath("$.content[0].model").value("test"))
+                .andExpect(jsonPath("$.content[0].tags", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].tags[0]").value("test"));
     }
 
     @Test
@@ -88,6 +91,7 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
     private Projection<ElectricCar> projection() {
         Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
         ElectricCar car = projection.expose();
+        car.setTags(Collections.singletonList("test")); // parent value
         car.setName("test");
         car.setSku("test");
         car.setActiveStartDate(Instant.now());

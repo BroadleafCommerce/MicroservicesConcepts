@@ -13,7 +13,7 @@
     <artifactId>broadleaf-concept-product-extension-complex-joined</artifactId>
     <name>Product Extension Complex Joined</name>
     <description>Product extension with embedded complex associations and collections represented as
-        joined ToMany associations
+        joined OneToMany associations
     </description>
 
     <properties>
