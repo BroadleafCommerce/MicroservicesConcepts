@@ -18,8 +18,8 @@
     <modules>
         <module>00100-productExtensionOnly</module>
         <module>00200-productExtensionComplexJson</module>
-        <module>00300-productExtensionComplexJoined</module>
-        <module>00400-productExtensionExplicitProjection</module>
+        <module>00400-productExtensionComplexJoined</module>
+        <module>00500-productExtensionExplicitProjection</module>
         <module>00600-repositoryCustomizationOverride</module>
         <module>00700-repositoryCustomizationContribution</module>
         <module>00800-businessLogicCustomization</module>
