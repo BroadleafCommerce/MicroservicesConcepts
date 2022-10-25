@@ -48,7 +48,7 @@ import lombok.ToString;
 @Table(name = "ELECTRIC_CAR_UPGRADES")
 @Inheritance(strategy = InheritanceType.JOINED)
 @ToString
-@EqualsAndHashCode(exclude = {"_id", "car"})
+@EqualsAndHashCode(exclude = {"id", "car"})
 public class Upgrade implements Serializable {
 
     @Id
@@ -57,8 +57,7 @@ public class Upgrade implements Serializable {
     @Type(type = "com.broadleafcommerce.data.tracking.jpa.hibernate.ULidType")
     @Column(name = "ID", nullable = false, length = CONTEXT_ID_LENGTH)
     @ExplicitProjectionFieldConfiguration(ignore = true) // Don't include in projection
-    @SuppressWarnings("squid:S00116")
-    private String _id;
+    private String id;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "ELECTRIC_CAR_ID")
@@ -84,7 +83,7 @@ public class Upgrade implements Serializable {
 
     @ProjectionPostConvert // called after mapping of Projection<ElectricCar> to ElectricCar is
                            // complete
-    public void postConvert(Object parent) {
+    public void postConvert(Object source, Object parent) {
         Assert.isTrue(parent instanceof ElectricCar, "Expected an instance of ElectricCar");
         this.car = (ElectricCar) parent;
     }
