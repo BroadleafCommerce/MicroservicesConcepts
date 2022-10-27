@@ -1,11 +1,13 @@
 package com.tutorial.domain;
 
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.Nullable;
 
 import com.broadleafcommerce.catalog.domain.product.Product;
+import com.broadleafcommerce.catalog.provider.jpa.domain.JpaAttribute;
 import com.broadleafcommerce.catalog.provider.jpa.domain.product.JpaProduct;
 import com.broadleafcommerce.common.jpa.JpaConstants;
 import com.broadleafcommerce.common.jpa.converter.AbstractListConverter;
@@ -29,6 +31,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import liquibase.pro.packaged.J;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -72,7 +75,7 @@ public class ElectricCar extends JpaProduct {
     @Override
     public ModelMapper fromMe() {
         ModelMapper mapper = super.fromMe();
-        // Handle the synthetic property mapping as a post converter
+        // Handle the synthetic property and attribute based property mapping as a post converter
         Converter<ElectricCar, ElectricCarProjection> postConverter = context -> {
             ElectricCar source = context.getSource();
             Set<Material> allMaterials = new HashSet<>();
@@ -80,6 +83,12 @@ public class ElectricCar extends JpaProduct {
                     .forEach(feature -> allMaterials.addAll(feature.getMaterials())));
             ElectricCarProjection destination = context.getDestination();
             destination.setAllMaterials(allMaterials); // map the synthetic aggregation field
+
+            String corporateId = Optional.ofNullable(source.getAttributes().get("corporateId"))
+                    .map(attr -> String.valueOf(attr.getValue())).orElse(null);
+            if (StringUtils.isNotEmpty(corporateId)) {
+                destination.setCorporateId(corporateId);
+            }
             return destination;
         };
         // Handle type map setup for the extended types
@@ -91,9 +100,21 @@ public class ElectricCar extends JpaProduct {
     @Override
     public ModelMapper toMe() {
         ModelMapper mapper = super.toMe();
+        // Handle the attribute based property mapping as a post converter
+        Converter<ElectricCarProjection, ElectricCar> postConverter = context -> {
+            ElectricCarProjection source = context.getSource();
+            ElectricCar destination = context.getDestination();
+            if (StringUtils.isNotEmpty(source.getCorporateId())) {
+                JpaAttribute attribute = new JpaAttribute();
+                attribute.setNameLabel("corporateId");
+                attribute.setValue(source.getCorporateId());
+                destination.getAttributes().put("corporateId", attribute);
+            }
+            return destination;
+        };
         // Handle type map setup for the extended types
         MappingUtils.setupExtensions(mapper, ElectricCarProjection.class, ElectricCar.class,
-                Product.class, JpaProduct.class);
+                Product.class, JpaProduct.class, null, postConverter, false);
         return mapper;
     }
 

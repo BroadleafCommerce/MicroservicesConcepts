@@ -56,6 +56,7 @@ class ProductExtensionExplicitProjectionIT extends AbstractMockMvcIT {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].model").value("test"))
+                .andExpect(jsonPath("$.content[0].corporateId").value("test"))
                 .andExpect(jsonPath("$.content[0].efficiencyByTempFahrenheit",
                         hasKey(ProductExtensionMetadata.TemperatureOptionEnum.LOW.label())))
                 .andExpect(jsonPath("$.content[0].allMaterials", hasSize(1)))
@@ -86,6 +87,7 @@ class ProductExtensionExplicitProjectionIT extends AbstractMockMvcIT {
         material.setSupplier("Dinamica");
         feature.getMaterials().add(material);
         car.setFeatures(Collections.singletonList(feature));
+        car.setCorporateId("test");
         return car;
     }
 

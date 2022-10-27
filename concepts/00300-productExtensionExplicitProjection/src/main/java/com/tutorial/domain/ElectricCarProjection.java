@@ -36,4 +36,7 @@ public class ElectricCarProjection extends Product {
     private Set<ElectricCar.Material> allMaterials; // A new aggregation field achieved through
                                                     // custom mapping
 
+    private String corporateId; // A new field we manage through the attribute map on
+                                // JpaProduct#getAttributes()
+
 }
