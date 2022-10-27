@@ -10,12 +10,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-repository-customization-override</artifactId>
-    <name>Repository Customization Override</name>
-    <description>Add new repository implementation fragments that override out-of-the-box behavior</description>
+    <artifactId>broadleaf-concept-nested-json-member-extension</artifactId>
+    <name>Nested Json Member Extension</name>
+    <description>Extension of nested json collection member</description>
 
     <properties>
-        <auto-config-target>com.tutorial.RepositoryCustomizationOverride</auto-config-target>
+        <auto-config-target>com.tutorial.NestedJsonMemberExtension</auto-config-target>
         <skip-reset-resources>false</skip-reset-resources>
         <skip-gen-spring-factories>false</skip-gen-spring-factories>
     </properties>
@@ -24,7 +24,7 @@
         <!-- Leverage the complex product extension that already exists -->
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-concept-product-extension-complex-field-json</artifactId>
+            <artifactId>broadleaf-concept-product-extension-explicit-projection</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

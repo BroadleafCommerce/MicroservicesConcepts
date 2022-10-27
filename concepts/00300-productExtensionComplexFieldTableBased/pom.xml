@@ -10,23 +10,17 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-repository-customization-override</artifactId>
-    <name>Repository Customization Override</name>
-    <description>Add new repository implementation fragments that override out-of-the-box behavior</description>
+    <artifactId>broadleaf-concept-product-extension-complex-field-table-based</artifactId>
+    <name>Product Extension Complex Joined</name>
+    <description>Product extension with embedded complex associations and collections represented as
+        joined OneToMany associations
+    </description>
 
     <properties>
-        <auto-config-target>com.tutorial.RepositoryCustomizationOverride</auto-config-target>
+        <auto-config-target>com.tutorial.ProductExtensionComplexFieldTableBased</auto-config-target>
         <skip-reset-resources>false</skip-reset-resources>
         <skip-gen-spring-factories>false</skip-gen-spring-factories>
+        <skip-schema>false</skip-schema>
     </properties>
-
-    <dependencies>
-        <!-- Leverage the complex product extension that already exists -->
-        <dependency>
-            <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-concept-product-extension-complex-field-json</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
 
 </project>

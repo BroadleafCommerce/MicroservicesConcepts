@@ -25,7 +25,7 @@
         <!-- Leverage the complex product extension that already exists -->
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-concept-product-extension-complex-json</artifactId>
+            <artifactId>broadleaf-concept-product-extension-complex-field-json</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

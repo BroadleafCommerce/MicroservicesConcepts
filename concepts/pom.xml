@@ -17,10 +17,11 @@
 
     <modules>
         <module>00100-productExtensionOnly</module>
-        <module>00200-productExtensionComplexJson</module>
-        <module>00300-productExtensionComplexJoined</module>
+        <module>00200-productExtensionComplexFieldJson</module>
+        <module>00300-productExtensionComplexFieldTableBased</module>
         <module>00400-productExtensionExplicitProjection</module>
-        <module>00500-embeddedCollectionMemberExtension</module>
+        <module>00500-nestedJsonMemberExtension</module>
+        <module>00600-nestedTableBasedMemberExtension</module>
         <module>00700-repositoryCustomizationOverride</module>
         <module>00800-repositoryCustomizationContribution</module>
         <module>00900-businessLogicCustomization</module>
