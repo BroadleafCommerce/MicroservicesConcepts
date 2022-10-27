@@ -3,7 +3,7 @@ package com.tutorial.service;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import com.tutorial.projection.ElectricCarProjection;
+import com.tutorial.domain.ElectricCarProjection;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

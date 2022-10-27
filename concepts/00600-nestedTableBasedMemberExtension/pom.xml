@@ -15,9 +15,18 @@
     <description>Extension of nested JPA OneToMany association collection member</description>
 
     <properties>
+        <!-- If generating spring.factories, point here as entry point for auto configuration -->
         <auto-config-target>com.tutorial.NestedTableBasedMemberExtension</auto-config-target>
+        <!-- Delete pre-existing liquibase and spring.factories resources upon build. Skipped by default -->
         <skip-reset-resources>false</skip-reset-resources>
+        <!-- Generate spring.factories. Skipped by default -->
         <skip-gen-spring-factories>false</skip-gen-spring-factories>
+        <!-- Generate a liquibase schema. Skipped by default -->
+        <skip-schema>false</skip-schema>
+        <!-- Influence the name signature of the generated liquibase change log file -->
+        <client-prefix>tutorial-nested-table</client-prefix>
+        <!-- Specify the liquibase change log file to use during the ./reset-and-run lifecycle -->
+        <change-log-path>classpath:/db/changelog/catalog.tutorial-nested-table.postgresql.changelog-master.yaml</change-log-path>
     </properties>
 
     <dependencies>

@@ -18,15 +18,15 @@ import com.broadleafcommerce.catalog.domain.product.option.type.DefaultProductOp
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
 import com.tutorial.domain.ElectricCarProductOption;
+import com.tutorial.domain.ElectricCarProjection;
 import com.tutorial.domain.ExtendedFeature;
-import com.tutorial.projection.ElectricCarProjection;
 
 import java.time.Instant;
 import java.util.Collections;
 
 /**
  * Confirm the extended type for JpaProductOption (embedded collection) is recognized and persisted
- * during service input/output. Backing domain extension uses auto projection.
+ * during service input/output.
  */
 @TestCatalogRouted
 class NestedJsonMemberExtensionIT extends AbstractMockMvcIT {

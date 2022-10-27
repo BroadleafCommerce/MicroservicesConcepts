@@ -16,7 +16,7 @@ import com.broadleafcommerce.data.tracking.core.Trackable;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.core.filtering.fetch.FilterParser;
 import com.broadleafcommerce.data.tracking.core.service.RsqlCrudEntityHelper;
-import com.tutorial.projection.ElectricCarProjection;
+import com.tutorial.domain.ElectricCarProjection;
 
 import cz.jirutka.rsql.parser.ast.Node;
 import lombok.NonNull;

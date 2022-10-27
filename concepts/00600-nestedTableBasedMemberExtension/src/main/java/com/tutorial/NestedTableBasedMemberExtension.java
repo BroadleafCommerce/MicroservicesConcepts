@@ -6,15 +6,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import com.broadleafcommerce.catalog.domain.product.option.ProductOption;
-import com.broadleafcommerce.catalog.provider.jpa.domain.product.JpaProduct;
-import com.broadleafcommerce.catalog.provider.jpa.domain.product.option.JpaProductOption;
 import com.broadleafcommerce.common.extension.mapping.ProjectionReferredTypeOverride;
 import com.broadleafcommerce.common.jpa.autoconfigure.CommonJpaAutoConfiguration;
+import com.broadleafcommerce.common.jpa.data.entity.JpaEntityScan;
 import com.tutorial.domain.ElectricCar;
-import com.tutorial.domain.ElectricCarProductOption;
-import com.tutorial.domain.ExtendedFeature;
-import com.tutorial.domain.JpaElectricCarProductOption;
+import com.tutorial.domain.ExtendedUpgrade;
+import com.tutorial.domain.Upgrade;
 import com.tutorial.metadata.ProductNestedExtensionMetadata;
 
 /**
@@ -27,28 +24,14 @@ import com.tutorial.metadata.ProductNestedExtensionMetadata;
  */
 @Configuration
 @AutoConfigureBefore(CommonJpaAutoConfiguration.class)
-@AutoConfigureAfter(ProductExtensionExplicitProjection.class)
+@AutoConfigureAfter(ProductExtensionComplexFieldTableBased.class)
+@JpaEntityScan(basePackages = "com.tutorial.domain")
 @Import(ProductNestedExtensionMetadata.class)
-public class NestedJsonMemberExtension {
+public class NestedTableBasedMemberExtension {
 
     /**
      * Set override for nested member in the {@link ElectricCar} object graph (i.e.
-     * {@link JpaProduct#getOptions()}). This nested type utilizes both a projection and repository
-     * domain counterpart.
-     */
-    @Bean
-    public ProjectionReferredTypeOverride productOptionOverride() {
-        return new ProjectionReferredTypeOverride(
-                ProductOption.class,
-                ElectricCarProductOption.class).withRepositoryMapTo(
-                        JpaProductOption.class,
-                        JpaElectricCarProductOption.class);
-    }
-
-    /**
-     * Set override for nested member in the {@link ElectricCar} object graph (i.e.
-     * {@link ElectricCar#getFeatures()}). This nested type utilizes the same type at both the
-     * ElectricCar projection and repository domain level.
+     * {@link ElectricCar#getUpgrades()}).
      * <p>
      * </p>
      * Note, overriding a nested type contributed by {@code ElectricCar} would normally not be
@@ -57,9 +40,9 @@ public class NestedJsonMemberExtension {
      * by extending our own earlier extension contribution.
      */
     @Bean
-    public ProjectionReferredTypeOverride featureOverride() {
+    public ProjectionReferredTypeOverride upgradeOverride() {
         return new ProjectionReferredTypeOverride(
-                ElectricCar.Feature.class,
-                ExtendedFeature.class);
+                Upgrade.class,
+                ExtendedUpgrade.class);
     }
 }

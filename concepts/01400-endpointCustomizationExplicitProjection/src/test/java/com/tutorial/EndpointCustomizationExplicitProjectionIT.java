@@ -21,8 +21,8 @@ import com.broadleafcommerce.catalog.web.endpoint.ProductEndpoint;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
 import com.tutorial.domain.ElectricCar;
+import com.tutorial.domain.ElectricCarProjection;
 import com.tutorial.metadata.ProductExtensionMetadata;
-import com.tutorial.projection.ElectricCarProjection;
 import com.tutorial.service.ElectricCarService;
 
 import java.math.BigDecimal;
@@ -67,7 +67,7 @@ class EndpointCustomizationExplicitProjectionIT extends AbstractMockMvcIT {
 
     private ElectricCarProjection projection() {
         ElectricCarProjection car = new ElectricCarProjection();
-        car.setTags(Collections.singletonList("test")); // parent value
+        car.setTags(Collections.singletonList("test"));
         car.setName("test");
         car.setSku("test");
         car.setActiveStartDate(Instant.now());

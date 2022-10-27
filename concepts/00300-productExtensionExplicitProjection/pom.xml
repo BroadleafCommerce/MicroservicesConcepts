@@ -10,26 +10,20 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>broadleaf-concept-nested-json-member-extension</artifactId>
-    <name>Nested Json Member Extension</name>
-    <description>Extension of nested json collection member</description>
+    <artifactId>broadleaf-concept-product-extension-explicit-projection</artifactId>
+    <name>Product Extension Explicit Projection</name>
+    <description>Product extension with explicit extended projection and custom mapping
+    </description>
 
     <properties>
         <!-- If generating spring.factories, point here as entry point for auto configuration -->
-        <auto-config-target>com.tutorial.NestedJsonMemberExtension</auto-config-target>
+        <auto-config-target>com.tutorial.ProductExtensionExplicitProjection</auto-config-target>
         <!-- Delete pre-existing liquibase and spring.factories resources upon build. Skipped by default -->
         <skip-reset-resources>false</skip-reset-resources>
         <!-- Generate spring.factories. Skipped by default -->
         <skip-gen-spring-factories>false</skip-gen-spring-factories>
+        <!-- Generate a liquibase schema. Skipped by default -->
+        <skip-schema>false</skip-schema>
     </properties>
-
-    <dependencies>
-        <!-- Leverage the complex product extension that already exists -->
-        <dependency>
-            <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-concept-product-extension-explicit-projection</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
 
 </project>

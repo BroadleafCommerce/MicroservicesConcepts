@@ -14,7 +14,7 @@ import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.core.context.ContextOperation;
 import com.broadleafcommerce.data.tracking.core.policy.Policy;
 import com.broadleafcommerce.data.tracking.core.type.OperationType;
-import com.tutorial.projection.ElectricCarProjection;
+import com.tutorial.domain.ElectricCarProjection;
 
 import javax.servlet.http.HttpServletRequest;
 

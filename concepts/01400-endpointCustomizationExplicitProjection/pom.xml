@@ -16,8 +16,11 @@
     </description>
 
     <properties>
+        <!-- If generating spring.factories, point here as entry point for auto configuration -->
         <auto-config-target>com.tutorial.EndpointCustomizationExplicitProjection</auto-config-target>
+        <!-- Delete pre-existing liquibase and spring.factories resources upon build. Skipped by default -->
         <skip-reset-resources>false</skip-reset-resources>
+        <!-- Generate spring.factories. Skipped by default -->
         <skip-gen-spring-factories>false</skip-gen-spring-factories>
     </properties>
 
