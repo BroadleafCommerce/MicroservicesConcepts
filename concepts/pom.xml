@@ -18,16 +18,17 @@
     <modules>
         <module>00100-productExtensionOnly</module>
         <module>00200-productExtensionComplexJson</module>
-        <module>00400-productExtensionComplexJoined</module>
-        <module>00500-productExtensionExplicitProjection</module>
-        <module>00600-repositoryCustomizationOverride</module>
-        <module>00700-repositoryCustomizationContribution</module>
-        <module>00800-businessLogicCustomization</module>
-        <module>00900-businessLogicCustomizationAutoProjection</module>
-        <module>01000-businessLogicCustomizationExplicitProjection</module>
-        <module>01100-endpointCustomization</module>
-        <module>01200-endpointCustomizationAutoProjection</module>
-        <module>01300-endpointCustomizationExplicitProjection</module>
+        <module>00300-productExtensionComplexJoined</module>
+        <module>00400-productExtensionExplicitProjection</module>
+        <module>00500-embeddedCollectionMemberExtension</module>
+        <module>00700-repositoryCustomizationOverride</module>
+        <module>00800-repositoryCustomizationContribution</module>
+        <module>00900-businessLogicCustomization</module>
+        <module>01000-businessLogicCustomizationAutoProjection</module>
+        <module>01100-businessLogicCustomizationExplicitProjection</module>
+        <module>01200-endpointCustomization</module>
+        <module>01300-endpointCustomizationAutoProjection</module>
+        <module>01400-endpointCustomizationExplicitProjection</module>
     </modules>
 
 </project>

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.internal.util.collections.Sets;
 import org.springframework.http.MediaType;
 
+import com.broadleafcommerce.catalog.domain.product.Product;
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
 import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
@@ -63,13 +64,14 @@ class ProductExtensionComplexJsonIT extends AbstractMockMvcIT {
 
     private Projection<ElectricCar> projection() {
         Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
+        Product asProduct = (Product) projection;
+        asProduct.setTags(Collections.singletonList("test"));
+        asProduct.setName("test");
+        asProduct.setSku("test");
+        asProduct.setActiveStartDate(Instant.now());
+        asProduct.setDefaultPrice(Money.of(12, "USD"));
         ElectricCar car = projection.expose();
-        car.setTags(Collections.singletonList("test")); // parent value
-        car.setName("test");
-        car.setSku("test");
-        car.setActiveStartDate(Instant.now());
         car.setModel("test");
-        car.setDefaultPrice(Money.of(12, "USD"));
         ElectricCar.Efficiency efficiency = new ElectricCar.Efficiency();
         efficiency.setChargeTimeMinutes(8L * 60L);
         efficiency.setRangeMiles(new BigDecimal(300));

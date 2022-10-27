@@ -12,23 +12,24 @@ import org.junit.jupiter.api.Test;
 import org.mockito.internal.util.collections.Sets;
 import org.springframework.http.MediaType;
 
-import com.broadleafcommerce.catalog.domain.product.Product;
-import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
-import com.broadleafcommerce.common.extension.projection.Projection;
+import com.broadleafcommerce.catalog.domain.product.option.AttributeChoice;
+import com.broadleafcommerce.catalog.domain.product.option.type.DefaultAttributeChoiceType;
+import com.broadleafcommerce.catalog.domain.product.option.type.DefaultProductOptionType;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.ElectricCar;
+import com.tutorial.domain.ElectricCarProductOption;
+import com.tutorial.domain.ExtendedFeature;
+import com.tutorial.projection.ElectricCarProjection;
 
 import java.time.Instant;
 import java.util.Collections;
 
 /**
- * Confirm the extended type is targeted by {@link JpaProductRepository}, and that the auto
- * generated projection is used in/out with the API call. Also demonstrate RSQL filtering on the
- * extended property.
+ * Confirm the extended type for JpaProductOption (embedded collection) is recognized and persisted
+ * during service input/output. Backing domain extension uses auto projection.
  */
 @TestCatalogRouted
-class ProductExtensionOnlyIT extends AbstractMockMvcIT {
+class EmbeddedCollectionMemberExtensionIT extends AbstractMockMvcIT {
 
     @Override
     protected void transactionalTeardown() {
@@ -36,11 +37,11 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
     }
 
     @Test
-    void testProductExtensionOnly() throws Exception {
+    void testOptionEmbeddedCollectionMemberExtension() throws Exception {
         getMockMvc().perform(
                 post("/products")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(toJsonExcludeNull(projection()))
+                        .content(toJsonExcludeNull(projection(true)))
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, true)))
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
@@ -53,17 +54,15 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].model").value("test"))
-                .andExpect(jsonPath("$.content[0].tags", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].tags[0]").value("test"));
+                .andExpect(jsonPath("$.content[0].options[0].isDealerOption").value("true"));
     }
 
     @Test
-    void testRSQLForExtendedProperty() throws Exception {
+    void testFeatureEmbeddedCollectionMemberExtension() throws Exception {
         getMockMvc().perform(
                 post("/products")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(toJsonExcludeNull(projection()))
+                        .content(toJsonExcludeNull(projection(false)))
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, true)))
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
@@ -73,32 +72,34 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
                 get("/products")
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, true)))
-                        .param("cq", "model=='test'")
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].model").value("test"));
-
-        getMockMvc().perform(
-                get("/products")
-                        .header(X_CONTEXT_REQUEST,
-                                toJsonExcludeNull(testContextRequest(false, true)))
-                        .param("cq", "model=='wrong'")
-                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", hasSize(0)));
+                .andExpect(jsonPath("$.content[0].features[0].corporateId").value("test"));
     }
 
-    private Projection<ElectricCar> projection() {
-        Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
-        Product asProduct = (Product) projection;
-        asProduct.setTags(Collections.singletonList("test"));
-        asProduct.setName("test");
-        asProduct.setSku("test");
-        asProduct.setActiveStartDate(Instant.now());
-        asProduct.setDefaultPrice(Money.of(12, "USD"));
-        ElectricCar car = projection.expose();
-        car.setModel("test");
+    private ElectricCarProjection projection(boolean testOption) {
+        ElectricCarProjection projection = new ElectricCarProjection();
+        projection.setTags(Collections.singletonList("test"));
+        projection.setName("test");
+        projection.setSku("test");
+        projection.setActiveStartDate(Instant.now());
+        projection.setDefaultPrice(Money.of(12, "USD"));
+        projection.setModel("test");
+        if (testOption) {
+            ElectricCarProductOption option = new ElectricCarProductOption();
+            option.setLabel("monogram");
+            option.setType(DefaultProductOptionType.CART_ITEM_ATTRIBUTE.name());
+            option.setAttributeChoice(
+                    new AttributeChoice("monogram", DefaultAttributeChoiceType.TEXT.name()));
+            option.setIsDealerOption(true);
+            projection.getOptions().add(option);
+        } else {
+            ExtendedFeature feature = new ExtendedFeature();
+            feature.setName("test");
+            feature.setCorporateId("test");
+            projection.setFeatures(Collections.singletonList(feature));
+        }
         return projection;
     }
 

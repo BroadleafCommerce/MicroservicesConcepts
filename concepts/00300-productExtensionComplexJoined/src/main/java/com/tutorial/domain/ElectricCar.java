@@ -1,5 +1,8 @@
 package com.tutorial.domain;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.Nullable;
 
@@ -15,11 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -62,6 +68,15 @@ public class ElectricCar extends JpaProduct {
     @Column(name = "FEATURES", length = JpaConstants.MEDIUM_TEXT_LENGTH)
     @Convert(converter = FeatureListConverter.class)
     private List<Feature> features;
+
+    /**
+     * Upgrades available for this car
+     */
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER,
+            mappedBy = "car")
+    @BatchSize(size = 100)
+    @Fetch(FetchMode.SELECT)
+    private List<Upgrade> upgrades = new ArrayList<>();
 
     /**
      * Zero arg constructor required

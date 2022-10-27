@@ -20,15 +20,13 @@ import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRout
 import com.tutorial.domain.ElectricCar;
 
 import java.time.Instant;
-import java.util.Collections;
 
 /**
- * Confirm the extended type is targeted by {@link JpaProductRepository}, and that the auto
- * generated projection is used in/out with the API call. Also demonstrate RSQL filtering on the
- * extended property.
+ * Confirm the override fragments are registered with {@link JpaProductRepository} and that they are
+ * effective.
  */
 @TestCatalogRouted
-class ProductExtensionOnlyIT extends AbstractMockMvcIT {
+class RepositoryCustomizationOverrideIT extends AbstractMockMvcIT {
 
     @Override
     protected void transactionalTeardown() {
@@ -36,7 +34,7 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
     }
 
     @Test
-    void testProductExtensionOnly() throws Exception {
+    void testRepositoryCustomizationOverride() throws Exception {
         getMockMvc().perform(
                 post("/products")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -53,46 +51,12 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].model").value("test"))
-                .andExpect(jsonPath("$.content[0].tags", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].tags[0]").value("test"));
-    }
-
-    @Test
-    void testRSQLForExtendedProperty() throws Exception {
-        getMockMvc().perform(
-                post("/products")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(toJsonExcludeNull(projection()))
-                        .header(X_CONTEXT_REQUEST,
-                                toJsonExcludeNull(testContextRequest(false, true)))
-                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
-                .andExpect(status().is2xxSuccessful());
-
-        getMockMvc().perform(
-                get("/products")
-                        .header(X_CONTEXT_REQUEST,
-                                toJsonExcludeNull(testContextRequest(false, true)))
-                        .param("cq", "model=='test'")
-                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].model").value("test"));
-
-        getMockMvc().perform(
-                get("/products")
-                        .header(X_CONTEXT_REQUEST,
-                                toJsonExcludeNull(testContextRequest(false, true)))
-                        .param("cq", "model=='wrong'")
-                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", hasSize(0)));
+                .andExpect(jsonPath("$.content[0].model").value("test Modified"));
     }
 
     private Projection<ElectricCar> projection() {
         Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
         Product asProduct = (Product) projection;
-        asProduct.setTags(Collections.singletonList("test"));
         asProduct.setName("test");
         asProduct.setSku("test");
         asProduct.setActiveStartDate(Instant.now());
@@ -101,5 +65,4 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
         car.setModel("test");
         return projection;
     }
-
 }

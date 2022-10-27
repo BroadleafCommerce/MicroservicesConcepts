@@ -13,30 +13,27 @@ import org.mockito.internal.util.collections.Sets;
 import org.springframework.http.MediaType;
 
 import com.broadleafcommerce.catalog.domain.product.Product;
-import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
+import com.broadleafcommerce.catalog.web.endpoint.ProductEndpoint;
 import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
 import com.tutorial.domain.ElectricCar;
 
 import java.time.Instant;
-import java.util.Collections;
 
 /**
- * Confirm the extended type is targeted by {@link JpaProductRepository}, and that the auto
- * generated projection is used in/out with the API call. Also demonstrate RSQL filtering on the
- * extended property.
+ * Confirm the extension of {@link ProductEndpoint} is registered with Spring and is effective.
  */
 @TestCatalogRouted
-class ProductExtensionOnlyIT extends AbstractMockMvcIT {
+class EndpointCustomizationAutoProjectionIT extends AbstractMockMvcIT {
 
     @Override
     protected void transactionalTeardown() {
-        getEntityManager().createQuery("DELETE FROM ElectricCar").executeUpdate();
+        getEntityManager().createQuery("DELETE FROM JpaProduct").executeUpdate();
     }
 
     @Test
-    void testProductExtensionOnly() throws Exception {
+    void testEndpointCustomizationAutoProjection() throws Exception {
         getMockMvc().perform(
                 post("/products")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -46,53 +43,62 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
                 .andExpect(status().is2xxSuccessful());
 
+        // new endpoint works
         getMockMvc().perform(
                 get("/products")
+                        .param("model", "test")
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, true)))
-                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].model").value("test"))
-                .andExpect(jsonPath("$.content[0].tags", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].tags[0]").value("test"));
-    }
-
-    @Test
-    void testRSQLForExtendedProperty() throws Exception {
-        getMockMvc().perform(
-                post("/products")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(toJsonExcludeNull(projection()))
-                        .header(X_CONTEXT_REQUEST,
-                                toJsonExcludeNull(testContextRequest(false, true)))
-                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
-                .andExpect(status().is2xxSuccessful());
-
-        getMockMvc().perform(
-                get("/products")
-                        .header(X_CONTEXT_REQUEST,
-                                toJsonExcludeNull(testContextRequest(false, true)))
-                        .param("cq", "model=='test'")
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].model").value("test"));
 
+        // Original search still works
         getMockMvc().perform(
                 get("/products")
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, true)))
-                        .param("cq", "model=='wrong'")
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].model").value("test"));
+    }
+
+    @Test
+    void testFailureCases() throws Exception {
+        getMockMvc().perform(
+                post("/products")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(toJsonExcludeNull(projection()))
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful());
+
+        // new endpoint works for non-match
+        getMockMvc().perform(
+                get("/products")
+                        .param("model", "thing")
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_PRODUCT"))))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", hasSize(0)));
+
+        // new endpoint is protected
+        getMockMvc().perform(
+                get("/products")
+                        .param("model", "thing")
+                        .header(X_CONTEXT_REQUEST,
+                                toJsonExcludeNull(testContextRequest(false, true)))
+                        .with(getMockMvcUtil().withAuthorities(Sets.newSet("READ_INCORRECT"))))
+                .andExpect(status().isForbidden());
     }
 
     private Projection<ElectricCar> projection() {
         Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
         Product asProduct = (Product) projection;
-        asProduct.setTags(Collections.singletonList("test"));
         asProduct.setName("test");
         asProduct.setSku("test");
         asProduct.setActiveStartDate(Instant.now());
