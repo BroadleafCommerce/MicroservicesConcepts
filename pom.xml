@@ -17,14 +17,18 @@
     </description>
 
     <properties>
-        <!-- This value is used during liquibase schema generation when
-            the project is compiled using the `schema` maven profile -->
+        <!-- This value is used during liquibase schema generation,
+            which is executed by default during the maven build lifecycle -->
         <service-key>catalog</service-key>
     </properties>
 
+    <!-- Housekeeping to establish the connection to source control -->
     <scm>
-        <connection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git</connection>
-        <developerConnection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git</developerConnection>
+        <connection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git
+        </connection>
+        <developerConnection>
+            scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git
+        </developerConnection>
         <url>https://github.com/BroadleafCommerce/MicroservicesTutorialResearch</url>
         <tag>HEAD</tag>
     </scm>
@@ -43,6 +47,20 @@
         </repository>
     </repositories>
 
+    <!-- These are examples and the generated jars should not be deployed during CI -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- This tutorial suite focuses on customization of CatalogServices -->
     <dependencies>
         <dependency>
             <groupId>com.broadleafdemo</groupId>

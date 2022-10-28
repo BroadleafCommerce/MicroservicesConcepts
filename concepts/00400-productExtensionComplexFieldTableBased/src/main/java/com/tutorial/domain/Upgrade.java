@@ -6,8 +6,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.util.Assert;
 
-import com.broadleafcommerce.data.tracking.core.mapping.ExplicitProjectionFieldConfiguration;
-import com.broadleafcommerce.data.tracking.core.mapping.ModelMapperMappable;
 import com.broadleafcommerce.data.tracking.core.mapping.ProjectionPostConvert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,10 +33,9 @@ import lombok.ToString;
  * is buried inside json. However, there is a performance cost to the additional join.
  * <p>
  * </p>
- * The {@link ProjectionPostConvert} annotation is used to
- * denote a method to establish the bi-directional reference back to the parent for the
- * {@code ManyToOne} association. This is a measure to support ORM requirements for the parent
- * entity {@code OneToMany} collection.
+ * The {@link ProjectionPostConvert} annotation is used to denote a method to establish the
+ * bi-directional reference back to the parent for the {@code ManyToOne} association. This is a
+ * measure to support ORM requirements for the parent entity {@code OneToMany} collection.
  */
 @Entity
 @Table(name = "ELECTRIC_CAR_UPGRADES")
