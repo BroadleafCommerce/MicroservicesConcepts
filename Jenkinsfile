@@ -1,0 +1,3 @@
+mavenBuild {
+    sonarAnalysis = 'skip'
+}

@@ -55,6 +55,12 @@ public class NestedJsonMemberExtension {
      * necessary, since {@code ElectricCar} is already at the override level. However,
      * {@code JpaProduct} does not have a nested type matching this use case, so we're improvising
      * by extending our own earlier extension contribution.
+     * <p>
+     * </p>
+     * Finally, it is not a requirement that top-level extension exist (e.g. ElectricCar extends
+     * JpaProduct) to use {@link ProjectionReferredTypeOverride}. You could just as easily provide a
+     * nested structure extension that will be consumed directly by JpaProduct without an extension
+     * of JpaProduct.
      */
     @Bean
     public ProjectionReferredTypeOverride featureOverride() {

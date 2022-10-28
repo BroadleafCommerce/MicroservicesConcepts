@@ -35,14 +35,10 @@ import lombok.ToString;
  * is buried inside json. However, there is a performance cost to the additional join.
  * <p>
  * </p>
- * The use of several auto projection related annotations is also notable here.
- * {@link ExplicitProjectionFieldConfiguration} is used to remove several repository domain fields
- * that are only relevant to the ORM. Also, the {@link ProjectionPostConvert} annotation is used to
+ * The {@link ProjectionPostConvert} annotation is used to
  * denote a method to establish the bi-directional reference back to the parent for the
  * {@code ManyToOne} association. This is a measure to support ORM requirements for the parent
- * entity {@code OneToMany} collection. When using the auto projection flow (i.e. ElectricCar does
- * not override {@link ModelMapperMappable} methods), these annotations come into play. Otherwise,
- * they will be ignored.
+ * entity {@code OneToMany} collection.
  */
 @Entity
 @Table(name = "ELECTRIC_CAR_UPGRADES")
@@ -56,14 +52,12 @@ public class Upgrade implements Serializable {
     @GenericGenerator(name = "blcid", strategy = "blcid")
     @Type(type = "com.broadleafcommerce.data.tracking.jpa.hibernate.ULidType")
     @Column(name = "ID", nullable = false, length = CONTEXT_ID_LENGTH)
-    @ExplicitProjectionFieldConfiguration(ignore = true) // Don't include in projection
     private String id;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "ELECTRIC_CAR_ID")
     @ToString.Exclude // Avoid infinite recursion in toString()
     @JsonIgnore // Avoid infinite recursion in data tracking
-    @ExplicitProjectionFieldConfiguration(ignore = true) // Don't include in projection
     private ElectricCar car;
 
     @Column(name = "NAME")
