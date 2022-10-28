@@ -23,10 +23,12 @@ import com.tutorial.metadata.ProductNestedExtensionMetadata;
  * relevant locations.
  */
 @Configuration
-@AutoConfigureBefore(CommonJpaAutoConfiguration.class)
-@AutoConfigureAfter(ProductExtensionComplexFieldTableBased.class)
-@JpaEntityScan(basePackages = "com.tutorial.domain")
-@Import(ProductNestedExtensionMetadata.class)
+@AutoConfigureBefore(CommonJpaAutoConfiguration.class) // Run this config before JPA configuration.
+                                                       // Makes sure our entity scans are included
+@AutoConfigureAfter(ProductExtensionComplexFieldTableBased.class) // Configure after our earlier
+                                                                  // dependent concept
+@JpaEntityScan(basePackages = "com.tutorial.domain") // Scan for our extended domain
+@Import(ProductNestedExtensionMetadata.class) // Include our admin customizations
 public class NestedTableBasedMemberExtension {
 
     /**

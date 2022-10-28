@@ -29,7 +29,8 @@ import java.util.Collections;
  * generated projection is used in/out with the API call. Also confirm the new aggregation field in
  * the explicit projection is populated correctly in the response.
  */
-@TestCatalogRouted
+@TestCatalogRouted // Notifies the system that catalog data routing will be employed during the
+                   // scope of this test. This is a requirement of Broadleaf data tracking.
 class ProductExtensionExplicitProjectionIT extends AbstractMockMvcIT {
 
     @Override

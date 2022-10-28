@@ -11,6 +11,8 @@ import com.tutorial.service.ExtendedProductService;
  * Setup components for the extension case.
  */
 @Configuration
-@AutoConfigureBefore(CatalogServiceAutoConfiguration.class)
-@ComponentScan(basePackageClasses = ExtendedProductService.class)
+@AutoConfigureBefore(CatalogServiceAutoConfiguration.class) // Configure before Broadleaf so we can
+                                                            // override the service
+@ComponentScan(basePackageClasses = ExtendedProductService.class) // Component scan for our service
+                                                                  // customization
 public class BusinessLogicCustomization {}

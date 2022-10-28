@@ -13,6 +13,7 @@ import com.tutorial.endpoint.ElectricCarEndpoint;
  * Setup components for the extension case.
  */
 @Configuration
-@ComponentScan(basePackageClasses = ElectricCarEndpoint.class)
-@AutoConfigureBefore(CatalogServiceAutoConfiguration.class)
+@ComponentScan(basePackageClasses = ElectricCarEndpoint.class) // scan for our customized endpoint
+@AutoConfigureBefore(CatalogServiceAutoConfiguration.class) // configure before Broadleaf so we can
+                                                            // override the endpoint
 public class EndpointCustomizationAutoProjection {}

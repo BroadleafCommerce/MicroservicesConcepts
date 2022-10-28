@@ -28,7 +28,8 @@ import java.util.Collections;
  * Confirm the extended type for JpaProductOption (embedded collection) is recognized and persisted
  * during service input/output.
  */
-@TestCatalogRouted
+@TestCatalogRouted // Notifies the system that catalog data routing will be employed during the
+                   // scope of this test. This is a requirement of Broadleaf data tracking.
 class NestedJsonMemberExtensionIT extends AbstractMockMvcIT {
 
     @Override

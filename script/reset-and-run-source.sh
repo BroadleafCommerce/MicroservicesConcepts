@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Source script for linux based dev environments. This powers the reset-and-run.sh
+#script in the concept projects
+
 function exitfn (){
     echo "Early Termination"
     exit

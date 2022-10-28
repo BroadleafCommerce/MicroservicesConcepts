@@ -23,6 +23,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Customize the admin UI for our domain extension. Utilize the metadata DSL.
+ */
 @Configuration
 public class ProductNestedExtensionMetadata {
 

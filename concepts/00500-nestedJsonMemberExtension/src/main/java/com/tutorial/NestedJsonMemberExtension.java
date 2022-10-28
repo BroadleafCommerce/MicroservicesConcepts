@@ -26,9 +26,11 @@ import com.tutorial.metadata.ProductNestedExtensionMetadata;
  * relevant locations.
  */
 @Configuration
-@AutoConfigureBefore(CommonJpaAutoConfiguration.class)
-@AutoConfigureAfter(ProductExtensionExplicitProjection.class)
-@Import(ProductNestedExtensionMetadata.class)
+@AutoConfigureBefore(CommonJpaAutoConfiguration.class) // Run this config before JPA configuration.
+                                                       // Makes sure our entity scans are included
+@AutoConfigureAfter(ProductExtensionExplicitProjection.class) // Configure after our earlier
+                                                              // dependent concept
+@Import(ProductNestedExtensionMetadata.class) // Include our admin customizations
 public class NestedJsonMemberExtension {
 
     /**

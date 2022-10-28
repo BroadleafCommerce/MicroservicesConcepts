@@ -27,7 +27,8 @@ import java.time.Instant;
  * example focuses on basic customization of endpoint logic using out-of-the-box business,
  * repository, and domain tiers.
  */
-@TestCatalogRouted
+@TestCatalogRouted // Notifies the system that catalog data routing will be employed during the
+                   // scope of this test. This is a requirement of Broadleaf data tracking.
 class EndpointCustomizationIT extends AbstractMockMvcIT {
 
     @SpyBean

@@ -32,7 +32,8 @@ import java.util.Collections;
 /**
  * Confirm the extension of {@link ProductEndpoint} is registered with Spring and is effective.
  */
-@TestCatalogRouted
+@TestCatalogRouted // Notifies the system that catalog data routing will be employed during the
+                   // scope of this test. This is a requirement of Broadleaf data tracking.
 class EndpointCustomizationExplicitProjectionIT extends AbstractMockMvcIT {
 
     @SpyBean

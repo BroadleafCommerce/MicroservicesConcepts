@@ -12,6 +12,8 @@ import com.tutorial.service.ElectricCarService;
  * Setup components for the extension case.
  */
 @Configuration
-@ComponentScan(basePackageClasses = ElectricCarService.class)
-@AutoConfigureBefore(CatalogServiceAutoConfiguration.class)
+@ComponentScan(basePackageClasses = ElectricCarService.class) // Component scan for our service
+                                                              // customization
+@AutoConfigureBefore(CatalogServiceAutoConfiguration.class) // Configure before Broadleaf so we can
+                                                            // override the service
 public class BusinessLogicCustomizationExplicitProjection {}

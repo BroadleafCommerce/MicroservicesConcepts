@@ -24,7 +24,8 @@ import java.time.Instant;
  * example focuses on basic customization of service business logic using out-of-the-box domain and
  * repository.
  */
-@TestCatalogRouted
+@TestCatalogRouted // Notifies the system that catalog data routing will be employed during the
+                   // scope of this test. This is a requirement of Broadleaf data tracking.
 class BusinessLogicCustomizationIT extends AbstractMockMvcIT {
 
     @Autowired

@@ -29,7 +29,8 @@ import java.util.Collections;
  * Confirm the complex extended type is targeted by {@link JpaProductRepository}, and that the auto
  * generated projection is used in/out with the API call.
  */
-@TestCatalogRouted
+@TestCatalogRouted // Notifies the system that catalog data routing will be employed during the
+                   // scope of this test. This is a requirement of Broadleaf data tracking.
 class ProductExtensionComplexFieldJsonIT extends AbstractMockMvcIT {
 
     @Override

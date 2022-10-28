@@ -19,6 +19,9 @@ package com.tutorial;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
+/**
+ * Setup spring boot testing requirement for auto configuration discovery
+ */
 @SpringBootConfiguration
 @EnableAutoConfiguration
 public class TestBootConfiguration {}

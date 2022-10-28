@@ -24,7 +24,8 @@ import java.util.Collections;
  * Confirm the extended type for Upgrade (table based collection) is recognized and persisted during
  * service input/output. Backing domain extension uses auto projection.
  */
-@TestCatalogRouted
+@TestCatalogRouted // Notifies the system that catalog data routing will be employed during the
+                   // scope of this test. This is a requirement of Broadleaf data tracking.
 class NestedTableBasedMemberExtensionIT extends AbstractMockMvcIT {
 
     @Override

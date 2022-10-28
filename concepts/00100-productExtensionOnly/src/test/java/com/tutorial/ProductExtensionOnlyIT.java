@@ -27,7 +27,8 @@ import java.util.Collections;
  * generated projection is used in/out with the API call. Also demonstrate RSQL filtering on the
  * extended property.
  */
-@TestCatalogRouted
+@TestCatalogRouted // Notifies the system that catalog data routing will be employed during the
+                   // scope of this test. This is a requirement of Broadleaf data tracking.
 class ProductExtensionOnlyIT extends AbstractMockMvcIT {
 
     @Override
