@@ -22,6 +22,20 @@
         <service-key>catalog</service-key>
     </properties>
 
+    <scm>
+        <connection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git</connection>
+        <developerConnection>scm:git:git@github.com:BroadleafCommerce/MicroservicesTutorialResearch.git</developerConnection>
+        <url>https://github.com/BroadleafCommerce/MicroservicesTutorialResearch</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>broadleaf-microservices</id>
+            <url>https://repository.broadleafcommerce.com/repository/microservices/</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>broadleaf-microservices</id>
