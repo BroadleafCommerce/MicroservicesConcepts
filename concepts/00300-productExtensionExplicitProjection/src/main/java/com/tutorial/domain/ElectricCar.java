@@ -33,6 +33,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Domain extension with complex fields using embedded JSON. Also explicitly declares handling for
@@ -42,8 +43,9 @@ import lombok.EqualsAndHashCode;
 @Table(name = "ELECTRIC_CAR")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
-@EqualsAndHashCode // The Data annotation includes @EqualsAndHashCode, so we should override it here
-                   // to make sure we're calling super for our extension
+@EqualsAndHashCode(callSuper = true) // The Data annotation includes @EqualsAndHashCode and
+@ToString(callSuper = true) // @ToString, so we should override them here to make sure we're
+                            // calling super for our extension
 public class ElectricCar extends JpaProduct {
 
     @Column(name = "MODEL")
