@@ -37,7 +37,6 @@ call docker-compose "-f" "%CD%\..\..\docker\docker-compose.yml" "-f" "%CD%\..\..
 ECHO -------------------------------------------------------
 ECHO Launching App
 ECHO -------------------------------------------------------
-@ECHO OFF
 call mvn "install" "-f" "%CD%\..\..\pom.xml" "-pl" ":%artifactId%" "-am" "-DskipTests" "-Papp" "-PnoSchema"
 set NO_GCE_CHECK=true
 set BROADLEAF_CATALOG_LIQUIBASE_CHANGELOG=%changeLog%
