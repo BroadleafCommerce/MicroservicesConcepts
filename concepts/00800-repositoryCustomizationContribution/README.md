@@ -4,6 +4,8 @@ Introduces new repository methods that contribute new persistence related behavi
 
 Goals:
 
+- Demonstrate new query method fragment contribution (interface only)
+- Demonstrate new concrete method implementation fragment contribution
 - Show concrete fragment contribution example overriding JpaTrackableRepository methods for JpaProductRepository.
 - Demonstrate the use of JpaTrackableRepositoryDelegateSupplier to use in the fragment for extension via composition
 

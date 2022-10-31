@@ -4,13 +4,12 @@ Adds a new repository implementation fragment overriding out-of-the-box behavior
 
 Goals:
 
-- Demonstrate new query method fragment contribution (interface only)
-- Demonstrate new concrete method implementation fragment contribution
-- Demonstrate new functionality of the resulting repository
-- Demonstrate casting the resulting repository to the different fragment interfaces
+- Show concrete fragment contribution example overriding JpaTrackableRepository methods for JpaProductRepository.
+- Demonstrate the use of JpaTrackableRepositoryDelegateSupplier to use in the fragment for extension via composition
 
 Builds On:
 
+0700-repositoryCustomizationOverride
 00200-productExtensionComplexFieldJson
 
 
