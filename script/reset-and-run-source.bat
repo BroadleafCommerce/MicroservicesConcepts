@@ -37,7 +37,7 @@ call docker-compose "-f" "%CD%\..\..\docker\docker-compose.yml" "-f" "%CD%\..\..
 ECHO -------------------------------------------------------
 ECHO Launching App
 ECHO -------------------------------------------------------
-call mvn "install" "-f" "%CD%\..\..\pom.xml" "-pl" ":%artifactId%" "-am" "-DskipTests" "-Papp" "-PnoSchema"
+call mvn "install" "-f" "%CD%\..\..\pom.xml" "-pl" ":%artifactId%" "-am" "-DskipTests" "-Papp,mapperCache" "-PnoSchema"
 set NO_GCE_CHECK=true
 set BROADLEAF_CATALOG_LIQUIBASE_CHANGELOG=%changeLog%
 call java "-jar" "target/%artifactId%-%version%.jar"
