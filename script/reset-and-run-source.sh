@@ -61,4 +61,4 @@ _messages=(
   "Launching App"
 )
 banner_multi_line
-mvn spring-boot:run -Papp -DskipTests -Dskip-schema=true -Dskip-reset-resources=true -Dskip-gen-spring-factories=true
+mvn spring-boot:run -Papp,mapperCache -DskipTests -Dskip-schema=true -Dskip-reset-resources=true -Dskip-gen-spring-factories=true
