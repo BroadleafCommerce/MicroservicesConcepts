@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.broadleafcommerce.microservices</groupId>
+        <artifactId>broadleaf-concepts-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>broadleaf-concept-new-domain-only</artifactId>
+    <name>New Domain Only</name>
+    <description>Introduce entirely new domain without explicit projection or any other explicit
+        plumbing
+    </description>
+
+    <properties>
+        <!-- If generating spring.factories, point here as entry point for auto configuration -->
+        <auto-config-target>com.tutorial.NewDomainOnly</auto-config-target>
+        <!-- Delete pre-existing liquibase and spring.factories resources upon build. Skipped by default -->
+        <skip-reset-resources>false</skip-reset-resources>
+        <!-- Generate spring.factories. Skipped by default -->
+        <skip-gen-spring-factories>false</skip-gen-spring-factories>
+    </properties>
+
+</project>

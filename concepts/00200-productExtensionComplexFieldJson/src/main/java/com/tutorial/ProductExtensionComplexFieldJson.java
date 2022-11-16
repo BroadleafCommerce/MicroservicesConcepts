@@ -18,7 +18,7 @@ import com.tutorial.metadata.ProductExtensionMetadata;
  */
 @Configuration
 @AutoConfigureBefore(CommonJpaAutoConfiguration.class) // Run this config before JPA configuration.
-                                                        // Makes sure our entity scans are included
+                                                       // Makes sure our entity scans are included
 @JpaEntityScan(basePackages = "com.tutorial.domain") // Scan for our extended domain
 @Import(ProductExtensionMetadata.class) // Include our admin customizations
 public class ProductExtensionComplexFieldJson {}
