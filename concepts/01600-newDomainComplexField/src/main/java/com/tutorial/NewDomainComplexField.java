@@ -16,4 +16,4 @@ import com.tutorial.domain.ChargingStation;
 @EnableJpaTrackableFlow(
         entityClass = ChargingStation.class,
         routeKey = DataRoutes.CATALOG) // Auto establishes all plumbing for this domain
-public class NewDomainOnly {}
+public class NewDomainComplexField {}

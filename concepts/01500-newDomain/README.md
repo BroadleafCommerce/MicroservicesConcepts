@@ -7,7 +7,6 @@ Goals:
 
 - Demonstrate the simplest type of domain introduction
 - Show full lifecycle support (json in/out) for the endpoint API
-- Show supporting admin customization
 
 Builds On:
 
