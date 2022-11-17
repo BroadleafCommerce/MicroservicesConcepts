@@ -32,6 +32,7 @@
         <module>01400-endpointCustomizationExplicitProjection</module>
         <module>01500-newDomain</module>
         <module>01600-newDomainComplexField</module>
+        <module>01700-newDomainFineTuneAutoProjection</module>
     </modules>
 
 </project>

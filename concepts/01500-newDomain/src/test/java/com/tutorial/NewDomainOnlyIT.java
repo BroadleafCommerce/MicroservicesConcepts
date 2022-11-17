@@ -25,7 +25,7 @@ class NewDomainOnlyIT extends AbstractMockMvcIT {
 
     @Override
     protected void transactionalTeardown() {
-        // getEntityManager().createQuery("DELETE FROM ChargingStation").executeUpdate();
+        getEntityManager().createQuery("DELETE FROM ChargingStation").executeUpdate();
     }
 
     @Test
