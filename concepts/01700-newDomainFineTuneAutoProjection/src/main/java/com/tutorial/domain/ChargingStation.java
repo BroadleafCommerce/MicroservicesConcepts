@@ -64,16 +64,15 @@ public class ChargingStation
     @Column(name = "ID", nullable = false, length = CONTEXT_ID_LENGTH)
     private String contextId;
 
-    // Generic sample location information
-
     @Column(name = "ADDRESS_1")
     private String address1;
 
-    @ExplicitProjectionFieldConfiguration(ignore = true)
+    @ExplicitProjectionFieldConfiguration(ignore = true) // Remove the field from the projection
     @Column(name = "ADDRESS_2")
     private String address2;
 
-    @ExplicitProjectionFieldConfiguration(responseOnly = true)
+    @ExplicitProjectionFieldConfiguration(responseOnly = true) // Ignore this field value during
+                                                               // update/replace
     @Column(name = "CITY")
     private String city;
 

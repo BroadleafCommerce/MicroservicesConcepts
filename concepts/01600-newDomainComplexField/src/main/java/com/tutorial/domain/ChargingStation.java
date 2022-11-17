@@ -63,8 +63,6 @@ public class ChargingStation
     @Column(name = "ID", nullable = false, length = CONTEXT_ID_LENGTH)
     private String contextId;
 
-    // Generic sample location information
-
     @Column(name = "ADDRESS_1")
     private String address1;
 
