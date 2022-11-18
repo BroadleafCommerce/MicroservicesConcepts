@@ -39,7 +39,7 @@ class NewDomainExplicitProjectionIT extends AbstractMockMvcIT {
     @Test
     void testNewDomainExplicitProjection() throws Exception {
         getMockMvc().perform(
-                post("/chargingStations") // review EnableJpaTrackableFlow.rootPath for automatic
+                post("/charging-stations") // review EnableJpaTrackableFlow.rootPath for automatic
                                           // naming behavior
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(toJsonExcludeNull(projection()))
@@ -55,7 +55,7 @@ class NewDomainExplicitProjectionIT extends AbstractMockMvcIT {
                 .andExpect(status().is2xxSuccessful());
 
         getMockMvc().perform(
-                get("/chargingStations") // review EnableJpaTrackableFlow.rootPath for automatic
+                get("/charging-stations") // review EnableJpaTrackableFlow.rootPath for automatic
                                          // naming behavior
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, false)))

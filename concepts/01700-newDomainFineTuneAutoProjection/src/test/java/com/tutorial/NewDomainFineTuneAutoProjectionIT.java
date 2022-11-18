@@ -48,7 +48,7 @@ class NewDomainFineTuneAutoProjectionIT extends AbstractMockMvcIT {
     @Test
     void testNewDomainFineTuneAutoProjection() throws Exception {
         getMockMvc().perform(
-                post("/chargingStations") // review EnableJpaTrackableFlow.rootPath for automatic
+                post("/charging-stations") // review EnableJpaTrackableFlow.rootPath for automatic
                                           // naming behavior
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(toJsonExcludeNull(projection()))
@@ -64,7 +64,7 @@ class NewDomainFineTuneAutoProjectionIT extends AbstractMockMvcIT {
                 .andExpect(status().is2xxSuccessful());
 
         getMockMvc().perform(
-                patch("/chargingStations/one")
+                patch("/charging-stations/one")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(toJsonExcludeNull(mutate()))
                         .header(X_CONTEXT_REQUEST,
@@ -76,7 +76,7 @@ class NewDomainFineTuneAutoProjectionIT extends AbstractMockMvcIT {
                 .andExpect(status().is2xxSuccessful());
 
         getMockMvc().perform(
-                get("/chargingStations") // review EnableJpaTrackableFlow.rootPath for automatic
+                get("/charging-stations") // review EnableJpaTrackableFlow.rootPath for automatic
                                          // naming behavior
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, false)))
