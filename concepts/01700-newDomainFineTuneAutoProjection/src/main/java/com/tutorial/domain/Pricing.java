@@ -1,10 +1,8 @@
 package com.tutorial.domain;
 
-import com.broadleafcommerce.data.tracking.core.mapping.ExplicitProjectionFieldConfiguration;
-import com.broadleafcommerce.money.jackson.CurrencyAwareBigDecimalSerializer;
-import com.broadleafcommerce.money.jackson.OptionalMonetaryAmountDeserializer;
 
-import java.math.BigDecimal;
+
+import javax.money.MonetaryAmount;
 
 import lombok.Data;
 
@@ -17,11 +15,6 @@ import lombok.Data;
 public class Pricing {
 
     private Integer maxPower;
-
-    @ExplicitProjectionFieldConfiguration(
-            usingDeserializer = OptionalMonetaryAmountDeserializer.class,
-            usingSerializer = CurrencyAwareBigDecimalSerializer.class) // Exposes MonetaryAmount on
-                                                                       // the API
-    private BigDecimal pricePerMinute;
+    private MonetaryAmount pricePerMinute;
 
 }

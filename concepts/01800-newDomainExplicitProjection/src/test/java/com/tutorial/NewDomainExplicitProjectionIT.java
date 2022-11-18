@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.util.collections.Sets;
 import org.springframework.http.MediaType;
@@ -95,13 +96,13 @@ class NewDomainExplicitProjectionIT extends AbstractMockMvcIT {
         {
             PricingProjection pricing = new PricingProjection();
             pricing.setMaxPower(90);
-            pricing.setPricePerMinute(new BigDecimal("0.16"));
+            pricing.setPricePerMinute(Money.of(new BigDecimal("0.16"), "USD"));
             projection.getPricing().add(pricing);
         }
         {
             PricingProjection pricing = new PricingProjection();
             pricing.setMaxPower(350);
-            pricing.setPricePerMinute(new BigDecimal("0.32"));
+            pricing.setPricePerMinute(Money.of(new BigDecimal("0.32"), "USD"));
             projection.getPricing().add(pricing);
         }
         return projection;

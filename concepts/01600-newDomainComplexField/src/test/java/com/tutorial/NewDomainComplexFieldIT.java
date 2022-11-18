@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.util.collections.Sets;
 import org.springframework.http.MediaType;
@@ -67,7 +68,9 @@ class NewDomainComplexFieldIT extends AbstractMockMvcIT {
                 .andExpect(jsonPath("$.content[0].chargers[0].watts").value("150"))
                 .andExpect(jsonPath("$.content[0].chargers[1].connectorType").value("CCS"))
                 .andExpect(jsonPath("$.content[0].pricing[0].maxPower").value("90"))
-                .andExpect(jsonPath("$.content[0].pricing[1].pricePerMinute").value("0.32"));
+                .andExpect(jsonPath("$.content[0].pricing[1].pricePerMinute.amount").value("0.32"))
+                .andExpect(
+                        jsonPath("$.content[0].pricing[1].pricePerMinute.currency").value("USD"));
     }
 
     private Projection<ChargingStation> projection() {
@@ -98,13 +101,13 @@ class NewDomainComplexFieldIT extends AbstractMockMvcIT {
         {
             Pricing pricing = new Pricing();
             pricing.setMaxPower(90);
-            pricing.setPricePerMinute(new BigDecimal("0.16"));
+            pricing.setPricePerMinute(Money.of(new BigDecimal("0.16"), "USD"));
             asChargingStation.getPricing().add(pricing);
         }
         {
             Pricing pricing = new Pricing();
             pricing.setMaxPower(350);
-            pricing.setPricePerMinute(new BigDecimal("0.32"));
+            pricing.setPricePerMinute(Money.of(new BigDecimal("0.32"), "USD"));
             asChargingStation.getPricing().add(pricing);
         }
         return projection;

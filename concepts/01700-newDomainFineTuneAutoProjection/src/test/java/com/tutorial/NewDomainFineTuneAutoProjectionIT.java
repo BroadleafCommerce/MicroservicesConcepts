@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.util.collections.Sets;
 import org.springframework.http.MediaType;
@@ -135,13 +136,13 @@ class NewDomainFineTuneAutoProjectionIT extends AbstractMockMvcIT {
         {
             Pricing pricing = new Pricing();
             pricing.setMaxPower(90);
-            pricing.setPricePerMinute(new BigDecimal("0.16"));
+            pricing.setPricePerMinute(Money.of(new BigDecimal("0.16"), "USD"));
             asChargingStation.getPricing().add(pricing);
         }
         {
             Pricing pricing = new Pricing();
             pricing.setMaxPower(350);
-            pricing.setPricePerMinute(new BigDecimal("0.32"));
+            pricing.setPricePerMinute(Money.of(new BigDecimal("0.32"), "USD"));
             asChargingStation.getPricing().add(pricing);
         }
         return projection;

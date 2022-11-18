@@ -1,6 +1,7 @@
 package com.tutorial.domain;
 
-import java.math.BigDecimal;
+
+import javax.money.MonetaryAmount;
 
 import lombok.Data;
 
@@ -13,6 +14,6 @@ import lombok.Data;
 public class Pricing {
 
     private Integer maxPower;
-    private BigDecimal pricePerMinute;
+    private MonetaryAmount pricePerMinute;
 
 }
