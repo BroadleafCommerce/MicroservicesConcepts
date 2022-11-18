@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.broadleafcommerce.data.tracking.core.Trackable;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.JpaNarrowingHelper;
-import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateSupplier;
+import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateHelper;
 import com.tutorial.domain.ElectricCar;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class DefaultElectricCarRepositoryOverride
         implements ElectricCarRepositoryOverride {
 
-    private final JpaTrackableRepositoryDelegateSupplier<ElectricCar> supplier;
+    private final JpaTrackableRepositoryDelegateHelper<ElectricCar> supplier;
 
     @PersistenceContext
     private EntityManager em;
