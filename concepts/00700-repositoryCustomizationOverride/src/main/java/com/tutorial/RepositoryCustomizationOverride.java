@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
 import com.broadleafcommerce.data.tracking.core.RepositoryContribution;
-import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.DefaultJpaTrackableRepositoryDelegateSupplier;
-import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateSupplier;
+import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.DefaultJpaTrackableRepositoryDelegateHelper;
+import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateHelper;
 import com.tutorial.domain.ElectricCar;
 import com.tutorial.repository.DefaultElectricCarRepositoryOverride;
 import com.tutorial.repository.ElectricCarRepositoryOverride;
@@ -20,14 +20,14 @@ import java.util.Collections;
 public class RepositoryCustomizationOverride {
 
     @Bean
-    public JpaTrackableRepositoryDelegateSupplier<ElectricCar> delegateSupplier() {
-        return new DefaultJpaTrackableRepositoryDelegateSupplier<>(ElectricCar.class,
+    public JpaTrackableRepositoryDelegateHelper<ElectricCar> delegateSupplier() {
+        return new DefaultJpaTrackableRepositoryDelegateHelper<>(ElectricCar.class,
                 JpaProductRepository.class);
     }
 
     @Bean
     public ElectricCarRepositoryOverride fragment(
-            JpaTrackableRepositoryDelegateSupplier<ElectricCar> delegateSupplier) {
+            JpaTrackableRepositoryDelegateHelper<ElectricCar> delegateSupplier) {
         return new DefaultElectricCarRepositoryOverride(delegateSupplier);
     }
 

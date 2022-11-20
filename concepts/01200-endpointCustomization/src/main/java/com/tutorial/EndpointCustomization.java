@@ -13,5 +13,6 @@ import com.tutorial.endpoint.ExtendedProductEndpoint;
 @Configuration
 @ComponentScan(basePackageClasses = ExtendedProductEndpoint.class) // scan for our customized
                                                                    // endpoint
-@AutoConfigureBefore(CatalogServiceAutoConfiguration.class) // configure before Broadleaf so we can override the endpoint
+@AutoConfigureBefore(CatalogServiceAutoConfiguration.class) // configure before Broadleaf so we can
+                                                            // override the endpoint
 public class EndpointCustomization {}

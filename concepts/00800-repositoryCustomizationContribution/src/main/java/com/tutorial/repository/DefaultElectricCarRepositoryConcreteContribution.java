@@ -5,7 +5,7 @@ import org.springframework.lang.Nullable;
 
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.JpaNarrowingHelper;
-import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateSupplier;
+import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateHelper;
 import com.tutorial.domain.ElectricCar;
 
 import java.util.HashMap;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class DefaultElectricCarRepositoryConcreteContribution
         implements ElectricCarRepositoryConcreteContribution {
 
-    private final JpaTrackableRepositoryDelegateSupplier<ElectricCar> supplier;
+    private final JpaTrackableRepositoryDelegateHelper<ElectricCar> supplier;
 
     @PersistenceContext
     private EntityManager em;
