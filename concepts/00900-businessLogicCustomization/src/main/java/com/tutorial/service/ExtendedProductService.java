@@ -41,7 +41,11 @@ public class ExtendedProductService extends DefaultProductService<Product> {
     @Override
     public Product create(@NonNull Product businessInstance, ContextInfo context) {
         Product created = super.create(businessInstance, context);
-        myIntegrationService.register(created);
+        try {
+            myIntegrationService.register(created);
+        } catch (Exception e) {
+            // Compensating transaction to rollback the product creation
+        }
         return created;
     }
 
