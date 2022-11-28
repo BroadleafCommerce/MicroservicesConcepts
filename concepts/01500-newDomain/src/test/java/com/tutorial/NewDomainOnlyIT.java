@@ -32,7 +32,7 @@ class NewDomainOnlyIT extends AbstractMockMvcIT {
     void testNewDomainOnly() throws Exception {
         getMockMvc().perform(
                 post("/charging-stations") // review EnableJpaTrackableFlow.rootPath for automatic
-                                          // naming behavior
+                                           // naming behavior
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(toJsonExcludeNull(projection()))
                         .header(X_CONTEXT_REQUEST,
@@ -48,7 +48,7 @@ class NewDomainOnlyIT extends AbstractMockMvcIT {
 
         getMockMvc().perform(
                 get("/charging-stations") // review EnableJpaTrackableFlow.rootPath for automatic
-                                         // naming behavior
+                                          // naming behavior
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, false)))
                         .with(getMockMvcUtil()

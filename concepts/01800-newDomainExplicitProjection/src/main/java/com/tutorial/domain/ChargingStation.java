@@ -15,11 +15,11 @@ import org.springframework.lang.Nullable;
 import com.broadleafcommerce.common.extension.mapping.ModelMapperConfigurationHelper;
 import com.broadleafcommerce.common.jpa.JpaConstants;
 import com.broadleafcommerce.common.jpa.converter.AbstractListConverter;
-import com.broadleafcommerce.data.tracking.core.SandboxTrackable;
+import com.broadleafcommerce.data.tracking.core.TenantTrackable;
 import com.broadleafcommerce.data.tracking.core.mapping.BusinessTypeAware;
 import com.broadleafcommerce.data.tracking.core.mapping.ModelMapperMappable;
 import com.broadleafcommerce.data.tracking.jpa.filtering.TrackingListener;
-import com.broadleafcommerce.data.tracking.jpa.filtering.domain.SandboxJpaTracking;
+import com.broadleafcommerce.data.tracking.jpa.filtering.domain.TenantJpaTracking;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.Serializable;
@@ -61,7 +61,7 @@ import lombok.ToString;
 @EntityListeners(TrackingListener.class) // Broadleaf DataTracking requirement
 public class ChargingStation implements
         Serializable,
-        SandboxTrackable<SandboxJpaTracking>, // DataTracking requirement
+        TenantTrackable<TenantJpaTracking>, // DataTracking requirement
         ModelMapperMappable, // Provide the toMe and fromMe implementations for ModelMapper
         BusinessTypeAware { // Report the explicit projection type
 
@@ -100,7 +100,7 @@ public class ChargingStation implements
     // Broadleaf DataTracking requirement - matches Trackable interface generics
 
     @Embedded
-    private SandboxJpaTracking tracking;
+    private TenantJpaTracking tracking;
 
     @Override
     public Class<?> getBusinessDomainType() {

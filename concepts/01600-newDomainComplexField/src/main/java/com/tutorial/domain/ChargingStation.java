@@ -12,9 +12,9 @@ import org.springframework.lang.Nullable;
 
 import com.broadleafcommerce.common.jpa.JpaConstants;
 import com.broadleafcommerce.common.jpa.converter.AbstractListConverter;
-import com.broadleafcommerce.data.tracking.core.SandboxTrackable;
+import com.broadleafcommerce.data.tracking.core.TenantTrackable;
 import com.broadleafcommerce.data.tracking.jpa.filtering.TrackingListener;
-import com.broadleafcommerce.data.tracking.jpa.filtering.domain.SandboxJpaTracking;
+import com.broadleafcommerce.data.tracking.jpa.filtering.domain.TenantJpaTracking;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.Serializable;
@@ -51,10 +51,10 @@ import lombok.ToString;
 @ToString
 @EntityListeners(TrackingListener.class) // Broadleaf DataTracking requirement
 public class ChargingStation
-        implements Serializable, SandboxTrackable<SandboxJpaTracking> { // Broadleaf DataTracking
-                                                                        // requirement.
-                                                                        // Multiple tracking types
-                                                                        // available.
+        implements Serializable, TenantTrackable<TenantJpaTracking> { // Broadleaf DataTracking
+                                                                      // requirement.
+                                                                      // Multiple tracking types
+                                                                      // available.
 
     @Id
     @GeneratedValue(generator = "blcid")
@@ -91,7 +91,7 @@ public class ChargingStation
     // Broadleaf DataTracking requirement - matches Trackable interface generics
 
     @Embedded
-    private SandboxJpaTracking tracking;
+    private TenantJpaTracking tracking;
 
     public static class PricingConverter extends AbstractListConverter<Pricing> {
         public PricingConverter(

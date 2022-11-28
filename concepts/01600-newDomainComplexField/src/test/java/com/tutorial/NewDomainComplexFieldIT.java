@@ -38,7 +38,7 @@ class NewDomainComplexFieldIT extends AbstractMockMvcIT {
     void testNewDomainComplexField() throws Exception {
         getMockMvc().perform(
                 post("/charging-stations") // review EnableJpaTrackableFlow.rootPath for automatic
-                                          // naming behavior
+                                           // naming behavior
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(toJsonExcludeNull(projection()))
                         .header(X_CONTEXT_REQUEST,
@@ -54,7 +54,7 @@ class NewDomainComplexFieldIT extends AbstractMockMvcIT {
 
         getMockMvc().perform(
                 get("/charging-stations") // review EnableJpaTrackableFlow.rootPath for automatic
-                                         // naming behavior
+                                          // naming behavior
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, false)))
                         .with(getMockMvcUtil()
