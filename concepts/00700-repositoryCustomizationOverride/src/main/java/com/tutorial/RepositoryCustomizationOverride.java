@@ -7,9 +7,9 @@ import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductR
 import com.broadleafcommerce.data.tracking.core.RepositoryContribution;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.DefaultJpaTrackableRepositoryDelegateHelper;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateHelper;
-import com.tutorial.domain.ElectricCar;
-import com.tutorial.repository.DefaultElectricCarRepositoryOverride;
-import com.tutorial.repository.ElectricCarRepositoryOverride;
+import com.tutorial.domain.MyAutoCoProduct;
+import com.tutorial.repository.DefaultMyAutoCoProductRepositoryOverride;
+import com.tutorial.repository.MyAutoCoProductRepositoryOverride;
 
 import java.util.Collections;
 
@@ -20,23 +20,23 @@ import java.util.Collections;
 public class RepositoryCustomizationOverride {
 
     @Bean
-    public JpaTrackableRepositoryDelegateHelper<ElectricCar> delegateSupplier() {
-        return new DefaultJpaTrackableRepositoryDelegateHelper<>(ElectricCar.class,
+    public JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateSupplier() {
+        return new DefaultJpaTrackableRepositoryDelegateHelper<>(MyAutoCoProduct.class,
                 JpaProductRepository.class);
     }
 
     @Bean
-    public ElectricCarRepositoryOverride fragment(
-            JpaTrackableRepositoryDelegateHelper<ElectricCar> delegateSupplier) {
-        return new DefaultElectricCarRepositoryOverride(delegateSupplier);
+    public MyAutoCoProductRepositoryOverride fragment(
+            JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateSupplier) {
+        return new DefaultMyAutoCoProductRepositoryOverride(delegateSupplier);
     }
 
     @Bean
-    public RepositoryContribution contribution(ElectricCarRepositoryOverride fragment) {
+    public RepositoryContribution contribution(MyAutoCoProductRepositoryOverride fragment) {
         return new RepositoryContribution()
                 .withBaseRepositoryInterface(JpaProductRepository.class)
                 .withConcreteFragments(
-                        Collections.singletonMap(ElectricCarRepositoryOverride.class,
+                        Collections.singletonMap(MyAutoCoProductRepositoryOverride.class,
                                 fragment));
     }
 

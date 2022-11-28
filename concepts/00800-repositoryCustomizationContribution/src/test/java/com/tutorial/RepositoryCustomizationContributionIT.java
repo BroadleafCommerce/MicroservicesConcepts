@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
 import com.broadleafcommerce.microservices.AbstractStandardIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.ElectricCar;
-import com.tutorial.repository.ElectricCarRepositoryConcreteContribution;
-import com.tutorial.repository.ElectricCarRepositoryDynamicContribution;
+import com.tutorial.domain.MyAutoCoProduct;
+import com.tutorial.repository.MyAutoCoProductRepositoryConcreteContribution;
+import com.tutorial.repository.MyAutoCoProductRepositoryDynamicContribution;
 
 import java.util.List;
 
@@ -25,25 +25,25 @@ import io.azam.ulidj.ULID;
 class RepositoryCustomizationContributionIT extends AbstractStandardIT {
 
     @Autowired
-    protected JpaProductRepository<ElectricCar> repo;
+    protected JpaProductRepository<MyAutoCoProduct> repo;
 
     @Override
     protected void transactionalTeardown() {
-        getEntityManager().createQuery("DELETE FROM ElectricCar").executeUpdate();
+        getEntityManager().createQuery("DELETE FROM MyAutoCoProduct").executeUpdate();
     }
 
     @Test
     void testRepositoryOverride() {
-        ElectricCar car = new ElectricCar();
+        MyAutoCoProduct car = new MyAutoCoProduct();
         car.setContextId(ULID.random());
         car.setModel("test");
         repo.save(car, null);
 
-        List<ElectricCar> cars =
-                ((ElectricCarRepositoryConcreteContribution) repo).findUsingModel("test", null);
+        List<MyAutoCoProduct> cars =
+                ((MyAutoCoProductRepositoryConcreteContribution) repo).findUsingModel("test", null);
         assertThat(cars).hasSize(1).extracting("model").contains("test");
 
-        cars = ((ElectricCarRepositoryDynamicContribution) repo)
+        cars = ((MyAutoCoProductRepositoryDynamicContribution) repo)
                 .findAllByModelContainingIgnoreCase("te", null);
         assertThat(cars).hasSize(1).extracting("model").contains("test");
     }

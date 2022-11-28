@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.ElectricCarProjection;
+import com.tutorial.domain.MyAutoCoProductProjection;
 import com.tutorial.domain.Upgrade;
 
 import java.time.Instant;
@@ -33,7 +33,7 @@ class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
     @Override
     protected void transactionalTeardown() {
         getEntityManager().createQuery("DELETE FROM Upgrade").executeUpdate();
-        getEntityManager().createQuery("DELETE FROM ElectricCar").executeUpdate();
+        getEntityManager().createQuery("DELETE FROM MyAutoCoProduct").executeUpdate();
     }
 
     @Test
@@ -61,8 +61,8 @@ class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
                 .andExpect(jsonPath("$.content[0].tags[0]").value("test"));
     }
 
-    private ElectricCarProjection projection() {
-        ElectricCarProjection car = new ElectricCarProjection();
+    private MyAutoCoProductProjection projection() {
+        MyAutoCoProductProjection car = new MyAutoCoProductProjection();
         car.setTags(Collections.singletonList("test"));
         car.setName("test");
         car.setSku("test");

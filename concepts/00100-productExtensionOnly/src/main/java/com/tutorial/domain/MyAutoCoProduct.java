@@ -22,7 +22,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true) // The Data annotation includes @EqualsAndHashCode and
 @ToString(callSuper = true) // @ToString, so we should override them here to make sure we're
                             // calling super for our extension
-public class ElectricCar extends JpaProduct {
+public class MyAutoCoProduct extends JpaProduct {
 
     @Column(name = "MODEL")
     private String model;

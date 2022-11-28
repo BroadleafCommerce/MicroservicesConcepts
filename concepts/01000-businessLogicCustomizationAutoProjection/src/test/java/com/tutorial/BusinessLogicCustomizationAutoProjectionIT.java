@@ -11,8 +11,8 @@ import com.broadleafcommerce.catalog.service.product.ProductService;
 import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.microservices.AbstractStandardIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.ElectricCar;
-import com.tutorial.service.ElectricCarService;
+import com.tutorial.domain.MyAutoCoProduct;
+import com.tutorial.service.MyAutoCoProductService;
 
 import java.time.Instant;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
 class BusinessLogicCustomizationAutoProjectionIT extends AbstractStandardIT {
 
     @Autowired
-    private ElectricCarService service;
+    private MyAutoCoProductService service;
 
     @Override
     protected void transactionalTeardown() {
@@ -35,18 +35,18 @@ class BusinessLogicCustomizationAutoProjectionIT extends AbstractStandardIT {
     @Test
     void testBusinessLogicCustomizationAutoProjection() {
         service.create(projection().as(), null);
-        List<Projection<ElectricCar>> cars = service.readUsingModel("test", null);
+        List<Projection<MyAutoCoProduct>> cars = service.readUsingModel("test", null);
         assertThat(cars).hasSize(1).extracting("model").contains("test");
     }
 
-    private Projection<ElectricCar> projection() {
-        Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
+    private Projection<MyAutoCoProduct> projection() {
+        Projection<MyAutoCoProduct> projection = Projection.get(MyAutoCoProduct.class);
         Product asProduct = (Product) projection;
         asProduct.setName("test");
         asProduct.setSku("test");
         asProduct.setActiveStartDate(Instant.now());
         asProduct.setDefaultPrice(Money.of(12, "USD"));
-        ElectricCar car = projection.expose();
+        MyAutoCoProduct car = projection.expose();
         car.setModel("test");
         return projection;
     }

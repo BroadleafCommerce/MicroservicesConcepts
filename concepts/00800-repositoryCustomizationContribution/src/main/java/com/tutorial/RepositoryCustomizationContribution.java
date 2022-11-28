@@ -7,10 +7,10 @@ import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductR
 import com.broadleafcommerce.data.tracking.core.RepositoryContribution;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.DefaultJpaTrackableRepositoryDelegateHelper;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateHelper;
-import com.tutorial.domain.ElectricCar;
-import com.tutorial.repository.DefaultElectricCarRepositoryConcreteContribution;
-import com.tutorial.repository.ElectricCarRepositoryConcreteContribution;
-import com.tutorial.repository.ElectricCarRepositoryDynamicContribution;
+import com.tutorial.domain.MyAutoCoProduct;
+import com.tutorial.repository.DefaultMyAutoCoProductRepositoryConcreteContribution;
+import com.tutorial.repository.MyAutoCoProductRepositoryConcreteContribution;
+import com.tutorial.repository.MyAutoCoProductRepositoryDynamicContribution;
 
 import java.util.Collections;
 
@@ -21,28 +21,28 @@ import java.util.Collections;
 public class RepositoryCustomizationContribution {
 
     @Bean
-    public JpaTrackableRepositoryDelegateHelper<ElectricCar> delegateSupplier() {
-        return new DefaultJpaTrackableRepositoryDelegateHelper<>(ElectricCar.class,
+    public JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateSupplier() {
+        return new DefaultJpaTrackableRepositoryDelegateHelper<>(MyAutoCoProduct.class,
                 JpaProductRepository.class);
     }
 
     @Bean
-    public ElectricCarRepositoryConcreteContribution fragment(
-            JpaTrackableRepositoryDelegateHelper<ElectricCar> delegateSupplier) {
-        return new DefaultElectricCarRepositoryConcreteContribution(delegateSupplier);
+    public MyAutoCoProductRepositoryConcreteContribution fragment(
+            JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateSupplier) {
+        return new DefaultMyAutoCoProductRepositoryConcreteContribution(delegateSupplier);
     }
 
     @Bean
     public RepositoryContribution contribution(
-            ElectricCarRepositoryConcreteContribution fragment) {
+            MyAutoCoProductRepositoryConcreteContribution fragment) {
         return new RepositoryContribution()
                 .withBaseRepositoryInterface(JpaProductRepository.class)
                 .withConcreteFragments(
                         Collections.singletonMap(
-                                ElectricCarRepositoryConcreteContribution.class,
+                                MyAutoCoProductRepositoryConcreteContribution.class,
                                 fragment))
                 .withQueryFragments(Collections
-                        .singletonList(ElectricCarRepositoryDynamicContribution.class));
+                        .singletonList(MyAutoCoProductRepositoryDynamicContribution.class));
     }
 
 }

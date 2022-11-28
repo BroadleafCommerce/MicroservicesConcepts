@@ -1,6 +1,5 @@
 package com.tutorial.service;
 
-import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -13,37 +12,48 @@ import com.broadleafcommerce.catalog.service.product.DefaultProductService;
 import com.broadleafcommerce.catalog.service.product.VariantService;
 import com.broadleafcommerce.common.extension.TypeFactory;
 import com.broadleafcommerce.common.extension.cache.CacheStateManager;
-import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.data.tracking.core.Trackable;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.core.filtering.fetch.FilterParser;
 import com.broadleafcommerce.data.tracking.core.service.RsqlCrudEntityHelper;
-import com.tutorial.domain.ElectricCar;
-import com.tutorial.repository.ElectricCarRepositoryConcreteContribution;
-
-import java.util.List;
+import com.tutorial.domain.MyAutoCoProductProjection;
 
 import cz.jirutka.rsql.parser.ast.Node;
+import lombok.NonNull;
 
+/**
+ * It is useful in this service extension to cast to the more derived projection when needed.
+ * However, the generics should be left with the parent type in order to guarantee proper bean type
+ * recognition by spring during application context refresh.
+ */
 @Component
-public class ElectricCarService extends DefaultProductService<Product> {
+public class MyAutoCoProductService extends DefaultProductService<Product> {
 
-    public ElectricCarService(ProductRepository<Trackable> repository,
+    private MyIntegrationService myIntegrationService;
+
+    public MyAutoCoProductService(ProductRepository<Trackable> repository,
             RsqlCrudEntityHelper helper,
             VariantService<Variant> variantService,
             CategoryProductService<CategoryProduct> categoryProductService,
             @Nullable CacheStateManager cacheStateManager,
             @Nullable FilterParser<Node> parser,
-            TypeFactory typeFactory) {
+            TypeFactory typeFactory,
+            MyIntegrationService integrationService) {
         super(repository, helper, variantService, categoryProductService, cacheStateManager, parser,
                 typeFactory);
+        this.myIntegrationService = integrationService;
     }
 
-    public List<Projection<ElectricCar>> readUsingModel(@NonNull String model,
-            @Nullable ContextInfo contextInfo) {
-        return this.getHelper().getMapper()
-                .process(((ElectricCarRepositoryConcreteContribution) getRepository())
-                        .findUsingModel(model, contextInfo), contextInfo);
+    @Override
+    public Product create(@NonNull Product businessInstance, ContextInfo context) {
+        MyAutoCoProductProjection created =
+                (MyAutoCoProductProjection) super.create(businessInstance, context);
+        try {
+            myIntegrationService.register(created);
+        } catch (Exception e) {
+            // Compensating transaction to rollback the product creation
+        }
+        return created;
     }
 
 }

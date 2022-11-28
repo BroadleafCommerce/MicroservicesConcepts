@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 import com.broadleafcommerce.common.extension.mapping.ProjectionReferredTypeOverride;
 import com.broadleafcommerce.common.jpa.autoconfigure.CommonJpaAutoConfiguration;
 import com.broadleafcommerce.common.jpa.data.entity.JpaEntityScan;
-import com.tutorial.domain.ElectricCar;
+import com.tutorial.domain.MyAutoCoProduct;
 import com.tutorial.domain.ExtendedUpgrade;
 import com.tutorial.domain.Upgrade;
 import com.tutorial.metadata.ProductNestedExtensionMetadata;
@@ -32,12 +32,12 @@ import com.tutorial.metadata.ProductNestedExtensionMetadata;
 public class NestedTableBasedMemberExtension {
 
     /**
-     * Set override for nested member in the {@link ElectricCar} object graph (i.e.
-     * {@link ElectricCar#getUpgrades()}).
+     * Set override for nested member in the {@link MyAutoCoProduct} object graph (i.e.
+     * {@link MyAutoCoProduct#getUpgrades()}).
      * <p>
      * </p>
-     * Note, overriding a nested type contributed by {@code ElectricCar} would normally not be
-     * necessary, since {@code ElectricCar} is already at the override level. However,
+     * Note, overriding a nested type contributed by {@code MyAutoCoProduct} would normally not be
+     * necessary, since {@code MyAutoCoProduct} is already at the override level. However,
      * {@code JpaProduct} does not have a nested type matching this use case, so we're improvising
      * by extending our own earlier extension contribution.
      */

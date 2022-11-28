@@ -18,8 +18,8 @@ import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.core.context.ContextOperation;
 import com.broadleafcommerce.data.tracking.core.policy.Policy;
-import com.tutorial.domain.ElectricCar;
-import com.tutorial.service.ElectricCarService;
+import com.tutorial.domain.MyAutoCoProduct;
+import com.tutorial.service.MyAutoCoProductService;
 
 import java.util.Objects;
 
@@ -41,9 +41,9 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping({"/products"})
 @RequiredArgsConstructor
-public class ElectricCarEndpoint {
+public class MyAutoCoProductEndpoint {
 
-    private final ElectricCarService productSvc;
+    private final MyAutoCoProductService productSvc;
     private final ProductHydrationService productHydrationService;
 
     /**
@@ -55,14 +55,14 @@ public class ElectricCarEndpoint {
      */
     @GetMapping
     @Policy(permissionRoots = "PRODUCT")
-    public Page<Projection<ElectricCar>> readAllProducts(@ContextOperation ContextInfo context,
+    public Page<Projection<MyAutoCoProduct>> readAllProducts(@ContextOperation ContextInfo context,
             @RequestParam(value = "q", required = false) String query,
             @RequestParam(value = "model", required = false) String model,
             @RequestParam(value = "hydratePrimaryAssets",
                     defaultValue = "true") boolean hydratePrimaryAssets,
             Node filters,
             @PageableDefault(size = 50) Pageable page) {
-        Page<Projection<ElectricCar>> results;
+        Page<Projection<MyAutoCoProduct>> results;
         if (StringUtils.isNotEmpty(model)) {
             results = new PageImpl<>(productSvc.readUsingModel(model, context));
         } else {

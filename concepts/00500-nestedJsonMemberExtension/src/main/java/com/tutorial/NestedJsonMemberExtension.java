@@ -11,10 +11,10 @@ import com.broadleafcommerce.catalog.provider.jpa.domain.product.JpaProduct;
 import com.broadleafcommerce.catalog.provider.jpa.domain.product.option.JpaProductOption;
 import com.broadleafcommerce.common.extension.mapping.ProjectionReferredTypeOverride;
 import com.broadleafcommerce.common.jpa.autoconfigure.CommonJpaAutoConfiguration;
-import com.tutorial.domain.ElectricCar;
-import com.tutorial.domain.ElectricCarProductOption;
+import com.tutorial.domain.MyAutoCoProduct;
+import com.tutorial.domain.MyAutoCoProductOption;
 import com.tutorial.domain.ExtendedFeature;
-import com.tutorial.domain.JpaElectricCarProductOption;
+import com.tutorial.domain.JpaMyAutoCoProductOption;
 import com.tutorial.metadata.ProductNestedExtensionMetadata;
 
 /**
@@ -34,7 +34,7 @@ import com.tutorial.metadata.ProductNestedExtensionMetadata;
 public class NestedJsonMemberExtension {
 
     /**
-     * Set override for nested member in the {@link ElectricCar} object graph (i.e.
+     * Set override for nested member in the {@link MyAutoCoProduct} object graph (i.e.
      * {@link JpaProduct#getOptions()}). This nested type utilizes both a projection and repository
      * domain counterpart.
      */
@@ -42,24 +42,24 @@ public class NestedJsonMemberExtension {
     public ProjectionReferredTypeOverride productOptionOverride() {
         return new ProjectionReferredTypeOverride(
                 ProductOption.class,
-                ElectricCarProductOption.class).withRepositoryMapTo(
+                MyAutoCoProductOption.class).withRepositoryMapTo(
                         JpaProductOption.class,
-                        JpaElectricCarProductOption.class);
+                        JpaMyAutoCoProductOption.class);
     }
 
     /**
-     * Set override for nested member in the {@link ElectricCar} object graph (i.e.
-     * {@link ElectricCar#getFeatures()}). This nested type utilizes the same type at both the
-     * ElectricCar projection and repository domain level.
+     * Set override for nested member in the {@link MyAutoCoProduct} object graph (i.e.
+     * {@link MyAutoCoProduct#getFeatures()}). This nested type utilizes the same type at both the
+     * MyAutoCoProduct projection and repository domain level.
      * <p>
      * </p>
-     * Note, overriding a nested type contributed by {@code ElectricCar} would normally not be
-     * necessary, since {@code ElectricCar} is already at the override level. However,
+     * Note, overriding a nested type contributed by {@code MyAutoCoProduct} would normally not be
+     * necessary, since {@code MyAutoCoProduct} is already at the override level. However,
      * {@code JpaProduct} does not have a nested type matching this use case, so we're improvising
      * by extending our own earlier extension contribution.
      * <p>
      * </p>
-     * Finally, it is not a requirement that top-level extension exist (e.g. ElectricCar extends
+     * Finally, it is not a requirement that top-level extension exist (e.g. MyAutoCoProduct extends
      * JpaProduct) to use {@link ProjectionReferredTypeOverride}. You could just as easily provide a
      * nested structure extension that will be consumed directly by JpaProduct without an extension
      * of JpaProduct.
@@ -67,7 +67,7 @@ public class NestedJsonMemberExtension {
     @Bean
     public ProjectionReferredTypeOverride featureOverride() {
         return new ProjectionReferredTypeOverride(
-                ElectricCar.Feature.class,
+                MyAutoCoProduct.Feature.class,
                 ExtendedFeature.class);
     }
 }

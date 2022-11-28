@@ -14,7 +14,7 @@ import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.core.context.ContextOperation;
 import com.broadleafcommerce.data.tracking.core.policy.Policy;
 import com.broadleafcommerce.data.tracking.core.type.OperationType;
-import com.tutorial.domain.ElectricCarProjection;
+import com.tutorial.domain.MyAutoCoProductProjection;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,13 +29,13 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping({"/products"})
 @RequiredArgsConstructor
-public class ElectricCarEndpoint {
+public class MyAutoCoProductEndpoint {
 
     private final ProductService<Product> productSvc;
 
     @RequestMapping(method = RequestMethod.POST, consumes = {"application/json"})
     @Policy(permissionRoots = {"PRODUCT"})
-    public ElectricCarProjection createProduct(HttpServletRequest request,
+    public MyAutoCoProductProjection createProduct(HttpServletRequest request,
             @ContextOperation(OperationType.CREATE) ContextInfo context,
             @RequestBody Product req) {
         /**
@@ -43,7 +43,7 @@ public class ElectricCarEndpoint {
          * across multiple request types.
          */
         context.getAdditionalProperties().put("MyValue", "Test");
-        return (ElectricCarProjection) productSvc.create(req, context); // omitted the hydration
+        return (MyAutoCoProductProjection) productSvc.create(req, context); // omitted the hydration
                                                                         // that normally takes place
                                                                         // in this method in the
                                                                         // parent implementation

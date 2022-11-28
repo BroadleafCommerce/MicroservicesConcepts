@@ -17,7 +17,7 @@ import com.broadleafcommerce.catalog.web.endpoint.ProductEndpoint;
 import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.ElectricCar;
+import com.tutorial.domain.MyAutoCoProduct;
 
 import java.time.Instant;
 
@@ -97,14 +97,14 @@ class EndpointCustomizationAutoProjectionIT extends AbstractMockMvcIT {
                 .andExpect(status().isForbidden());
     }
 
-    private Projection<ElectricCar> projection() {
-        Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
+    private Projection<MyAutoCoProduct> projection() {
+        Projection<MyAutoCoProduct> projection = Projection.get(MyAutoCoProduct.class);
         Product asProduct = (Product) projection;
         asProduct.setName("test");
         asProduct.setSku("test");
         asProduct.setActiveStartDate(Instant.now());
         asProduct.setDefaultPrice(Money.of(12, "USD"));
-        ElectricCar car = projection.expose();
+        MyAutoCoProduct car = projection.expose();
         car.setModel("test");
         return projection;
     }

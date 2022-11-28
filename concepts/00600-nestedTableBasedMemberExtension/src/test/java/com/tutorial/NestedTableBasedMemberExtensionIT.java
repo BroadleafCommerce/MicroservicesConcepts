@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.ElectricCarProjection;
+import com.tutorial.domain.MyAutoCoProductProjection;
 import com.tutorial.domain.ExtendedUpgrade;
 
 import java.time.Instant;
@@ -31,7 +31,7 @@ class NestedTableBasedMemberExtensionIT extends AbstractMockMvcIT {
     @Override
     protected void transactionalTeardown() {
         getEntityManager().createQuery("DELETE FROM ExtendedUpgrade").executeUpdate();
-        getEntityManager().createQuery("DELETE FROM ElectricCar").executeUpdate();
+        getEntityManager().createQuery("DELETE FROM MyAutoCoProduct").executeUpdate();
     }
 
     @Test
@@ -55,8 +55,8 @@ class NestedTableBasedMemberExtensionIT extends AbstractMockMvcIT {
                 .andExpect(jsonPath("$.content[0].upgrades[0].corporateId").value("test"));
     }
 
-    private ElectricCarProjection projection() {
-        ElectricCarProjection car = new ElectricCarProjection();
+    private MyAutoCoProductProjection projection() {
+        MyAutoCoProductProjection car = new MyAutoCoProductProjection();
         car.setTags(Collections.singletonList("test"));
         car.setName("test");
         car.setSku("test");

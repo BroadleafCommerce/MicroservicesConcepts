@@ -6,7 +6,7 @@ import com.broadleafcommerce.data.tracking.core.Trackable;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.JpaNarrowingHelper;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateHelper;
-import com.tutorial.domain.ElectricCar;
+import com.tutorial.domain.MyAutoCoProduct;
 
 import java.util.List;
 
@@ -18,10 +18,10 @@ import javax.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DefaultElectricCarRepositoryOverride
-        implements ElectricCarRepositoryOverride {
+public class DefaultMyAutoCoProductRepositoryOverride
+        implements MyAutoCoProductRepositoryOverride {
 
-    private final JpaTrackableRepositoryDelegateHelper<ElectricCar> supplier;
+    private final JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> supplier;
 
     @PersistenceContext
     private EntityManager em;
@@ -34,8 +34,8 @@ public class DefaultElectricCarRepositoryOverride
     @Override
     @Transactional
     public Trackable save(Trackable entity, ContextInfo contextInfo) {
-        ((ElectricCar) entity).setModel(((ElectricCar) entity).getModel() + " Modified");
-        return supplier.getRepository().save((ElectricCar) entity, contextInfo);
+        ((MyAutoCoProduct) entity).setModel(((MyAutoCoProduct) entity).getModel() + " Modified");
+        return supplier.getRepository().save((MyAutoCoProduct) entity, contextInfo);
     }
 
     /**
@@ -43,12 +43,12 @@ public class DefaultElectricCarRepositoryOverride
      */
     @Override
     public List<Trackable> findAll(ContextInfo contextInfo) {
-        CriteriaQuery<ElectricCar> query =
-                em.getCriteriaBuilder().createQuery(ElectricCar.class);
-        Root<ElectricCar> root = query.from(ElectricCar.class);
+        CriteriaQuery<MyAutoCoProduct> query =
+                em.getCriteriaBuilder().createQuery(MyAutoCoProduct.class);
+        Root<MyAutoCoProduct> root = query.from(MyAutoCoProduct.class);
         query.select(root);
         return supplier.getHelper().fetchAll(new JpaNarrowingHelper.JpaCriterias<>(query),
-                ElectricCar.class, null, contextInfo);
+                MyAutoCoProduct.class, null, contextInfo);
     }
 
 }

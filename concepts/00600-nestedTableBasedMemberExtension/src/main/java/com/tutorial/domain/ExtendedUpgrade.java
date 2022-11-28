@@ -13,7 +13,7 @@ import lombok.ToString;
 
 /**
  * Extension to upgrades on the electric car. These exist in a table-based @OneToMany collection in
- * {@link ElectricCar#getUpgrades()}.
+ * {@link MyAutoCoProduct#getUpgrades()}.
  */
 @Entity
 @Table(name = "EXT_ELECTRIC_CAR_UPGRADES")

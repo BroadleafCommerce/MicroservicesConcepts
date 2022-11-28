@@ -17,8 +17,8 @@ import com.broadleafcommerce.catalog.domain.product.option.type.DefaultAttribute
 import com.broadleafcommerce.catalog.domain.product.option.type.DefaultProductOptionType;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.ElectricCarProductOption;
-import com.tutorial.domain.ElectricCarProjection;
+import com.tutorial.domain.MyAutoCoProductOption;
+import com.tutorial.domain.MyAutoCoProductProjection;
 import com.tutorial.domain.ExtendedFeature;
 
 import java.time.Instant;
@@ -34,7 +34,7 @@ class NestedJsonMemberExtensionIT extends AbstractMockMvcIT {
 
     @Override
     protected void transactionalTeardown() {
-        getEntityManager().createQuery("DELETE FROM ElectricCar").executeUpdate();
+        getEntityManager().createQuery("DELETE FROM MyAutoCoProduct").executeUpdate();
     }
 
     @Test
@@ -79,8 +79,8 @@ class NestedJsonMemberExtensionIT extends AbstractMockMvcIT {
                 .andExpect(jsonPath("$.content[0].features[0].corporateId").value("test"));
     }
 
-    private ElectricCarProjection projection(boolean testOption) {
-        ElectricCarProjection projection = new ElectricCarProjection();
+    private MyAutoCoProductProjection projection(boolean testOption) {
+        MyAutoCoProductProjection projection = new MyAutoCoProductProjection();
         projection.setTags(Collections.singletonList("test"));
         projection.setName("test");
         projection.setSku("test");
@@ -88,7 +88,7 @@ class NestedJsonMemberExtensionIT extends AbstractMockMvcIT {
         projection.setDefaultPrice(Money.of(12, "USD"));
         projection.setModel("test");
         if (testOption) {
-            ElectricCarProductOption option = new ElectricCarProductOption();
+            MyAutoCoProductOption option = new MyAutoCoProductOption();
             option.setLabel("monogram");
             option.setType(DefaultProductOptionType.CART_ITEM_ATTRIBUTE.name());
             option.setAttributeChoice(

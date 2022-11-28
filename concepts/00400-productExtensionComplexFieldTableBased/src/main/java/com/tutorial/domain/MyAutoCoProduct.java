@@ -36,7 +36,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true) // The Data annotation includes @EqualsAndHashCode and
 @ToString(callSuper = true) // @ToString, so we should override them here to make sure we're
                             // calling super for our extension
-public class ElectricCar extends JpaProduct {
+public class MyAutoCoProduct extends JpaProduct {
 
     @Column(name = "MODEL")
     private String model;
@@ -54,7 +54,7 @@ public class ElectricCar extends JpaProduct {
     public ModelMapper fromMe() {
         ModelMapper mapper = super.fromMe();
         // Handle type map setup for the extended types
-        MappingUtils.setupExtensions(mapper, ElectricCar.class, ElectricCarProjection.class,
+        MappingUtils.setupExtensions(mapper, MyAutoCoProduct.class, MyAutoCoProductProjection.class,
                 JpaProduct.class, Product.class);
         return mapper;
     }
@@ -63,14 +63,14 @@ public class ElectricCar extends JpaProduct {
     public ModelMapper toMe() {
         ModelMapper mapper = super.toMe();
         // Handle type map setup for the extended types
-        MappingUtils.setupExtensions(mapper, ElectricCarProjection.class, ElectricCar.class,
+        MappingUtils.setupExtensions(mapper, MyAutoCoProductProjection.class, MyAutoCoProduct.class,
                 Product.class, JpaProduct.class);
         return mapper;
     }
 
     @Override
     public Class<?> getBusinessDomainType() {
-        return ElectricCarProjection.class;
+        return MyAutoCoProductProjection.class;
     }
 
 }

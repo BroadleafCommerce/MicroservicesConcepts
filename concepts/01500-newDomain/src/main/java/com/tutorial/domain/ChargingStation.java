@@ -27,7 +27,7 @@ import lombok.ToString;
 
 /**
  * New domain (not extending from Broadleaf domain). Represents a charging location for electric
- * cars (see {@code ElectricCar} domain in earlier tutorial).
+ * cars (see {@code MyAutoCoProduct} domain in earlier tutorial).
  */
 @Entity
 @Table(name = "CHARGING_STATION")

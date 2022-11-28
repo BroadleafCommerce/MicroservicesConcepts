@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.broadleafcommerce.catalog.service.autoconfigure.CatalogServiceAutoConfiguration;
-import com.tutorial.endpoint.ElectricCarEndpoint;
+import com.tutorial.endpoint.MyAutoCoProductEndpoint;
 
 
 
@@ -13,7 +13,7 @@ import com.tutorial.endpoint.ElectricCarEndpoint;
  * Setup components for the extension case.
  */
 @Configuration
-@ComponentScan(basePackageClasses = ElectricCarEndpoint.class) // scan for our customized endpoint
+@ComponentScan(basePackageClasses = MyAutoCoProductEndpoint.class) // scan for our customized endpoint
 @AutoConfigureBefore(CatalogServiceAutoConfiguration.class) // configure before Broadleaf so we can
                                                             // override the endpoint
 public class EndpointCustomizationAutoProjection {}

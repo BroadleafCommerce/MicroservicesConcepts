@@ -49,7 +49,7 @@ import lombok.ToString;
 
 /**
  * New domain (not extending from Broadleaf domain). Represents a charging location for electric
- * cars (see {@code ElectricCar} domain in earlier tutorial). This implementation includes and
+ * cars (see {@code MyAutoCoProduct} domain in earlier tutorial). This implementation includes and
  * explicit projection and explicit mapping to/from hook points.
  */
 @Entity

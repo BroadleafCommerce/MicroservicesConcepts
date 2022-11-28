@@ -1,21 +1,21 @@
 package com.tutorial.domain;
 
 import com.broadleafcommerce.catalog.domain.product.option.ProductOption;
-import com.broadleafcommerce.catalog.provider.jpa.domain.product.option.JpaProductOption;
+import com.broadleafcommerce.catalog.provider.jpa.domain.product.JpaProduct;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Repository domain extension counterpart to {@link ElectricCarProductOption}. This is necessary,
- * since {@link ProductOption} has the repository domain counterpart of {@link JpaProductOption}.
+ * Extension to product option on the product. These exist in an embedded collection in
+ * {@link JpaProduct#getOptions()}.
  */
 @Data
 @EqualsAndHashCode(callSuper = true) // The Data annotation includes @EqualsAndHashCode and
 @ToString(callSuper = true) // @ToString, so we should override them here to make sure we're
                             // calling super for our extension
-public class JpaElectricCarProductOption extends JpaProductOption {
+public class MyAutoCoProductOption extends ProductOption {
 
     /**
      * Is this option fulfilled at the dealership

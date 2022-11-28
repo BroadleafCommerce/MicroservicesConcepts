@@ -17,7 +17,7 @@ import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductR
 import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.ElectricCar;
+import com.tutorial.domain.MyAutoCoProduct;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -33,7 +33,7 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
 
     @Override
     protected void transactionalTeardown() {
-        getEntityManager().createQuery("DELETE FROM ElectricCar").executeUpdate();
+        getEntityManager().createQuery("DELETE FROM MyAutoCoProduct").executeUpdate();
     }
 
     @Test
@@ -90,15 +90,15 @@ class ProductExtensionOnlyIT extends AbstractMockMvcIT {
                 .andExpect(jsonPath("$.content", hasSize(0)));
     }
 
-    private Projection<ElectricCar> projection() {
-        Projection<ElectricCar> projection = Projection.get(ElectricCar.class);
+    private Projection<MyAutoCoProduct> projection() {
+        Projection<MyAutoCoProduct> projection = Projection.get(MyAutoCoProduct.class);
         Product asProduct = (Product) projection;
         asProduct.setTags(Collections.singletonList("test"));
         asProduct.setName("test");
         asProduct.setSku("test");
         asProduct.setActiveStartDate(Instant.now());
         asProduct.setDefaultPrice(Money.of(12, "USD"));
-        ElectricCar car = projection.expose();
+        MyAutoCoProduct car = projection.expose();
         car.setModel("test");
         return projection;
     }

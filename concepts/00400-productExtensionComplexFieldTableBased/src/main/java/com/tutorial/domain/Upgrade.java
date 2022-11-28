@@ -55,7 +55,7 @@ public class Upgrade implements Serializable {
     @JoinColumn(name = "ELECTRIC_CAR_ID")
     @ToString.Exclude // Avoid infinite recursion in toString()
     @JsonIgnore // Avoid infinite recursion in data tracking
-    private ElectricCar car;
+    private MyAutoCoProduct car;
 
     @Column(name = "NAME")
     @Getter
@@ -72,11 +72,11 @@ public class Upgrade implements Serializable {
     @Setter
     private String manufacturerId;
 
-    @ProjectionPostConvert // called after mapping of Projection<ElectricCar> to ElectricCar is
+    @ProjectionPostConvert // called after mapping of Projection<MyAutoCoProduct> to MyAutoCoProduct is
                            // complete
     public void postConvert(Object source, Object parent) {
-        Assert.isTrue(parent instanceof ElectricCar, "Expected an instance of ElectricCar");
-        this.car = (ElectricCar) parent;
+        Assert.isTrue(parent instanceof MyAutoCoProduct, "Expected an instance of MyAutoCoProduct");
+        this.car = (MyAutoCoProduct) parent;
     }
 
 }

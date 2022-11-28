@@ -17,8 +17,8 @@ import org.springframework.http.MediaType;
 import com.broadleafcommerce.catalog.service.product.ProductService;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.ElectricCar;
-import com.tutorial.domain.ElectricCarProjection;
+import com.tutorial.domain.MyAutoCoProduct;
+import com.tutorial.domain.MyAutoCoProductProjection;
 import com.tutorial.metadata.ProductExtensionMetadata;
 import com.tutorial.service.MyIntegrationService;
 
@@ -62,23 +62,23 @@ class BusinessLogicCustomizationExplicitProjectionIT extends AbstractMockMvcIT {
         assertThat(integrationService.getRegistrationCount()).isEqualTo(1);
     }
 
-    private ElectricCarProjection projection() {
-        ElectricCarProjection car = new ElectricCarProjection();
+    private MyAutoCoProductProjection projection() {
+        MyAutoCoProductProjection car = new MyAutoCoProductProjection();
         car.setTags(Collections.singletonList("test"));
         car.setName("test");
         car.setSku("test");
         car.setActiveStartDate(Instant.now());
         car.setModel("test");
         car.setDefaultPrice(Money.of(12, "USD"));
-        ElectricCar.Efficiency efficiency = new ElectricCar.Efficiency();
+        MyAutoCoProduct.Efficiency efficiency = new MyAutoCoProduct.Efficiency();
         efficiency.setChargeTimeMinutes(8L * 60L);
         efficiency.setRangeMiles(new BigDecimal(300));
         car.setEfficiencyByTempFahrenheit(Collections.singletonMap(
                 ProductExtensionMetadata.TemperatureOptionEnum.LOW.label(), efficiency));
-        ElectricCar.Feature feature = new ElectricCar.Feature();
+        MyAutoCoProduct.Feature feature = new MyAutoCoProduct.Feature();
         feature.setName("Bucket Seat");
         feature.setDescription("Bucket Seat");
-        ElectricCar.Material material = new ElectricCar.Material();
+        MyAutoCoProduct.Material material = new MyAutoCoProduct.Material();
         material.setName("Vegan Cover");
         material.setDescription("Durable vegan material simulates suede");
         material.setSupplier("Dinamica");

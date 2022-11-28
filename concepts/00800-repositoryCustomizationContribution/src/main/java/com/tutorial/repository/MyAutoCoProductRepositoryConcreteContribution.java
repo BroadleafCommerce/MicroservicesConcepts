@@ -5,17 +5,17 @@ import org.springframework.lang.Nullable;
 
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
-import com.tutorial.domain.ElectricCar;
+import com.tutorial.domain.MyAutoCoProduct;
 
 import java.util.List;
 
 /**
  * Contribute new method signatures to {@link JpaProductRepository}. In this case, declaring a
  * signature that will be backed by a concrete implementation. See
- * {@link DefaultElectricCarRepositoryConcreteContribution}.
+ * {@link DefaultMyAutoCoProductRepositoryConcreteContribution}.
  */
-public interface ElectricCarRepositoryConcreteContribution {
+public interface MyAutoCoProductRepositoryConcreteContribution {
 
-    List<ElectricCar> findUsingModel(@NonNull String model, @Nullable ContextInfo contextInfo);
+    List<MyAutoCoProduct> findUsingModel(@NonNull String model, @Nullable ContextInfo contextInfo);
 
 }

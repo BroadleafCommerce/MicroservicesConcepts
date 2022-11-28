@@ -6,7 +6,7 @@ import org.springframework.lang.Nullable;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.JpaNarrowingHelper;
 import com.broadleafcommerce.data.tracking.jpa.filtering.narrow.factory.JpaTrackableRepositoryDelegateHelper;
-import com.tutorial.domain.ElectricCar;
+import com.tutorial.domain.MyAutoCoProduct;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,27 +21,27 @@ import javax.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DefaultElectricCarRepositoryConcreteContribution
-        implements ElectricCarRepositoryConcreteContribution {
+public class DefaultMyAutoCoProductRepositoryConcreteContribution
+        implements MyAutoCoProductRepositoryConcreteContribution {
 
-    private final JpaTrackableRepositoryDelegateHelper<ElectricCar> supplier;
+    private final JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> supplier;
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public List<ElectricCar> findUsingModel(@NonNull String model,
+    public List<MyAutoCoProduct> findUsingModel(@NonNull String model,
             @Nullable ContextInfo contextInfo) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<ElectricCar> query = builder.createQuery(ElectricCar.class);
-        Root<ElectricCar> root = query.from(ElectricCar.class);
+        CriteriaQuery<MyAutoCoProduct> query = builder.createQuery(MyAutoCoProduct.class);
+        Root<MyAutoCoProduct> root = query.from(MyAutoCoProduct.class);
         query.select(root);
         Map<String, Object> params = new HashMap<>();
         query.where(builder.equal(root.get("model"), builder.parameter(String.class, "model")));
         params.put("model", model);
         return supplier.getHelper().fetchAll(
                 new JpaNarrowingHelper.JpaCriterias<>(query, null, params),
-                ElectricCar.class, null, contextInfo);
+                MyAutoCoProduct.class, null, contextInfo);
     }
 
 }
