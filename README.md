@@ -55,8 +55,8 @@ Applicability
             <type>pom</type>
             <scope>import</scope>
         </dependency>
+        ...
     </dependencies>
-    ...
 </dependencyManagement>
 ```
 
