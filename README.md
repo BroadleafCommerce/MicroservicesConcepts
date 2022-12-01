@@ -36,7 +36,7 @@ Applicability
         <dependency>
             <groupId>org.broadleafcommerce</groupId>
             <artifactId>spring-frameworkmapping</artifactId>
-            <version>0.9.1-SNAPSHOT</version>
+            <version>0.9.1-GA</version>
         </dependency>
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
@@ -51,7 +51,7 @@ Applicability
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-data-tracking-dependencies</artifactId>
-            <version>1.7.8-SNAPSHOT</version>
+            <version>1.7.8-GA</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
