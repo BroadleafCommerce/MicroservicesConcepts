@@ -192,7 +192,7 @@ The concept projects require recent versions of several Broadleaf Framework libr
 
 == Concept Directory
 
-[cols="<30,^20,<50"]
+[cols="<10,^30,<60"]
 |===
 |Concept |Description |Goals
 
