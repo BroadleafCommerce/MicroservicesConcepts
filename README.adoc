@@ -95,7 +95,7 @@ Once you have maven installed, another step you need to do before you can
 build the project is to configure the authentication. Maven requires it to be specified in a
 file called `settings.xml` that has to be in the `.m2` subdirectory in a user’s home directory.
 
-1. Create a folder called `.m2` in your home directory
+1. Create a folder called `.m2` in your home directory (if one does not already exist)
 2. Create a file called `settings.xml` in the `.m2` folder (if not there already)
 3. Copy the following contents to your `~/.m2/settings.xml` servers section, making sure to
 replace the credentials with the ones you received above:
