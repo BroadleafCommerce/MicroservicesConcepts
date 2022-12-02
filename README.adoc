@@ -192,7 +192,7 @@ The concept projects require recent versions of several Broadleaf Framework libr
 
 == Concept Directory
 
-.Project Structure Folders Overview
+[cols="<30,^20,<50"]
 |===
 |Concept |Description |Goals
 
