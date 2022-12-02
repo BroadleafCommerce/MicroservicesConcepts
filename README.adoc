@@ -1,0 +1,392 @@
+:toc:
+:icons: font
+:source-highlighter: prettify
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+++++
+<img src="https://www.broadleafcommerce.com/cmsstatic/grey%20microservices%20logo.png"
+align="right" height="100px"/>
+++++
+
+= Microservice Extensibility Concepts
+
+This project contains several example *concepts* demonstrating various extension and backend commerce API developer use-cases.
+
+== Terminology
+
+- *Concept*: A sub-project within this overall project that showcases a discrete customization goal. The goal will be clearly stated in each concept project. Some concept projects will be deeper riffs on concepts from other projects (e.g. a simple domain extension in one project may be built on top of to add additional repository extension in another project).
+- *Flex Package*: A Flex Package is a deployment configuration and packaging concept that allows multiple Broadleaf microservices to exist in a single JVM runtime under a single Spring instance. More details can be found https://developer.broadleafcommerce.com/architecture/deployment-flexibility#overview[here]
+
+== Project Guidelines
+- The *concept* project structure will be simple. The `Min` flexpackage alone will be generally favored, avoiding `balanced` and `granular` bloat.
+- Each *concept* project will consume framework and demo artifacts from the latest relevant `develop` branches.
+- Each *concept* project is constructed using the minimal amount of configuration and code for optimum clarity.
+
+== Project Structure
+
+.Project Structure Folders Overview
+|===
+|Directory |Description
+
+|`concepts`
+| Group of runnable projects that demonstrate a key dev or extension experience using the most streamlined approach available.
+
+|`docker`
+| Basic docker configuration to support backend of the tutorial runtime. We can consider not having these items in docker and instead have them be launched by java, or similar. If we did that, the goal would be to reduce tooling required to run the tutorial cases.
+
+|`script`
+| core build script code that supports all instances of `reset-and-run` and `stop-docker`.
+
+|===
+
+== What Do I Need?
+In order to get these `concepts running locally, you will want to obtain and install
+the following:
+
+=== Credentials
+Access to Broadleaf's Docker Registry and Maven Nexus is needed in order to pull down the
+appropriate resources.
+
+Once you have obtained these credentials, you will need to configure them for the dependencies
+below.
+
+[NOTE]
+====
+Contact `info@broadleafcommerce.com` for information on how to receive these credentials
+====
+
+=== Java
+You will need Java 11 installed on your machine.
+
+=== Docker
+You will need to have https://docs.docker.com/install/[Docker Engine & Docker Compose] installed
+locally
+
+[TIP]
+====
+Docker Desktop for both Mac and Windows already includes compose along with other
+docker apps.
+====
+
+Once you have docker installed, you will want to authenticate with Broadleaf's docker registry.
+
+Type the following into your CLI:
+
+[source,shell script]
+----
+docker login repository.broadleafcommerce.com:5001
+----
+
+When prompted, type in the username and password you received above.
+
+=== Maven
+You'll need to have Maven installed locally as well.
+https://maven.apache.org/download.cgi[Maven 3.5 or later] is recommended.
+
+Once you have maven installed, another step you need to do before you can
+build the project is to configure the authentication. Maven requires it to be specified in a
+file called `settings.xml` that has to be in the `.m2` subdirectory in a user’s home directory.
+
+1. Create a folder called `.m2` in your home directory
+2. Create a file called `settings.xml` in the `.m2` folder
+3. Copy the following contents to your `~/.m2/settings.xml` making sure to
+replace the credentials with the ones you received above:
+
+[source,xml]
+----
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd"
+    xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <servers>
+    <server>
+      <id>broadleaf-microservices</id>
+      <username>username_here</username>
+      <password>password_here</password>
+    </server>
+  </servers>
+</settings>
+----
+
+[TIP]
+====
+More info about authenticating with private repositories can be found
+https://maven.apache.org/settings.html#Servers[here] and
+https://maven.apache.org/ref/3.6.3/maven-settings/settings.html[here]
+====
+
+== Running a Concept Project
+- In the specific concept module, execute the platform specific `reset-and-run` script.
+
+[TIP]
+====
+`ctrl-c` will terminate the process.
+====
+
+
+- The `stop-docker` script may be used to take down any running container resulting from the `reset-and-run` script.
+- The admin application will be accessible at https://localhost:8446 after all components have completed startup.
+
+[TIP]
+====
+The browser may complain about the self-signed cert and you may have to make an exception for the cert in your browser.
+====
+
+== How Does This Work?
+- Each concept project creates a jar that is contributed to a standard Broadleaf `Min` flexpackage demo
+- The jar is contributed via Spring Boot `auto-configuration`
+- When necessary, `@AutoConfigureBefore` and `@AutoConfigureAfter` are employed to favor concept configuration over Broadleaf configuration
+- Integration tests are generally employed in each concept to exercise the service API and demonstrate the customization.
+- The customizations are generally Catalog service customizations - specifically riffs on `Product`.
+
+== Scope of Applicability
+- The Java customization examples in this project should all be applicable to existing and new Broadleaf Microservices projects.
+- The maven pom inheritance, maven profiles, run commands, etc... are not currently applicable to existing or new Broadleaf Microservices projects - although advances here will eventually be brought over to real dev projects in the future.
+
+[IMPORTANT]
+====
+The concept projects require recent versions of several Broadleaf Framework libraries
+====
+
+
+[source,xml]
+----
+<dependencyManagement>
+    <!-- ↓ These should appear first before the release train ↓ -->
+    <dependencies>
+        <dependency>
+            <groupId>org.broadleafcommerce</groupId>
+            <artifactId>spring-frameworkmapping</artifactId>
+            <version>0.9.1-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-common-extension</artifactId>
+            <version>1.4.13-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-common-jpa</artifactId>
+            <version>1.5.7-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-data-tracking-dependencies</artifactId>
+            <version>1.7.8-GA</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        ...
+    </dependencies>
+</dependencyManagement>
+----
+- Leveraging the code patterns and components demonstrated in the concept projects requires recent versions of several Broadleaf Framework libraries. You should set these versions (or newer) at the top of the `dependencyManagement` section of your root pom in your own project before attempting to reproduce or compile against the patterns shown here. If your release train reference is advanced enough to bring these versions (or newer) in by default, then you can skip explicitly declaring them here.
+
+== Roadmap
+- This project represents an ongoing effort to document customization use cases and patterns.
+- We will continue to add new concepts as they come up.
+- If a new concept requires a framework change or enhancement (e.g. a change to one or more of the libraries above), we will increment the version of this concept project along with noting the version change(s) to the associated common framework libraries.
+- Training will also be developed based on these concept materials and will be available separately.
+
+== Concept Directory
+
+.Project Structure Folders Overview
+|===
+|Concept |Description |Goals
+
+a| === Simple Product Extension
+****
+`00100-productExtensionOnly`
+****
+| Simple extension of `JpaProduct` adding only a basic field type. Also leverages auto projection, rather than opting for an explicit extended projection.
+a|
+- Demonstrate the simplest type of extension
+- Introduce the `Projection` interface
+- Show full lifecycle support (json in/out) for the endpoint API
+- Show supporting admin customization
+- Show automated testing and the use of `@TestCatalogRouted` to handle datarouting requirements during the test
+
+a| === Product Extension with JSON Field
+****
+`00200-productExtensionComplexFieldJson`
+****
+| Simple extension of `JpaProduct` adding more complex field types, including collections and maps. The complex types use JPA converters to persist the complex structure as JSON. This example still leverages auto projection and does not declare an explicit extending projection type.
+a|
+- Demonstrate more complex field type
+- Demonstrate interaction with `Projection` interface to expose complex structures for editing
+- Show full lifecycle support (json in/out) for the endpoint API
+- Show supporting admin customization
+- Builds On : _00100-productExtensionOnly_
+
+a| === Explicit Product Projection
+****
+`00300-productExtensionExplicitProjection`
+****
+| Continues with the complex field example persisted as JSON. However, in this case, an explicit projection type is declared.
+a|
+- Demonstrate custom mapping to/from projection
+- Demonstrate response only projection field
+- Show supporting admin customization
+- Demonstrate mapping to synthetic fields
+- Builds On : _00200-productExtensionComplexFieldJson_
+
+a| === Product Extension with New Table Relationship
+****
+`00400-productExtensionComplexFieldTableBased`
+****
+| Alters the complex field example to leverage a traditional JPA OneToMany associated collection. The relates to a new table in the database, rather than serializing to JSON.
+a|
+- Show table based complex field support in the JpaProduct extension
+- Demonstrate custom mapping to/from projection
+- Demonstrate special `@ProjectionPostConvert` support for setting bi-directional references
+- Show supporting admin customization
+- Builds On : _00200-productExtensionComplexFieldJson_
+
+a| === Product with Nested JSON Collection
+****
+`00500-nestedJsonMemberExtension`
+****
+| Extends nested structures that appear arbitrarily deep in the object graph of `JpaProduct`. The structures appear in various embedded collections and are persisted as JSON.
+a|
+- Show several examples of nested structure extension
+- Show supporting admin customization
+- Builds On : _00300-productExtensionExplicitProjection_
+
+a| === Product with New Nested Table Relationship
+****
+`00600-nestedTableBasedMemberExtension`
+****
+| Extends nested structures that appear arbitrarily deep in the object graph of JpaProduct. The structures appear in OneToMany table based collections.
+a|
+- Show example of nested OneToMany table based structure extension
+- Show supporting admin customization
+- Builds On : _00400-productExtensionComplexFieldTableBased_
+
+a| === Overriding a Repository
+****
+`00700-repositoryCustomizationOverride`
+****
+| Adds a new repository implementation fragment overriding out-of-the-box behavior of JpaTrackableRepository
+a|
+- Show concrete fragment contribution example overriding JpaTrackableRepository methods for JpaProductRepository.
+- Demonstrate the use of JpaTrackableRepositoryDelegateSupplier to use in the fragment for extension via composition
+- Builds On : _0700-repositoryCustomizationOverride, 00200-productExtensionComplexFieldJson_
+
+a| === New Repository
+****
+`00800-repositoryCustomizationContribution`
+****
+| Introduces new repository methods that contribute new persistence related behavior. This take the form of either dynamic query method fragments, or concrete implementation fragments.
+a|
+- Demonstrate new query method fragment contribution (interface only)
+- Demonstrate new concrete method implementation fragment contribution
+- Show concrete fragment contribution example overriding JpaTrackableRepository methods for JpaProductRepository.
+- Demonstrate the use of JpaTrackableRepositoryDelegateSupplier to use in the fragment for extension via composition
+- Builds On : _00200-productExtensionComplexFieldJson_
+
+a| === Customizing Business Logic
+****
+`00900-businessLogicCustomization`
+****
+| Uses a simple customization of the `DefaultProductService`.
+a|
+- Show a minor customization of the business logic of DefaultProductService
+
+a| === Customized Business Logic with Auto Projection
+****
+`01000-businessLogicCustomizationAutoProjection`
+****
+| Business logic customization that leverages a customized repository and extended domain with auto projection
+a|
+- Show DefaultProductService call the customized repository to search by a new extended field
+- Demonstrate how to use the Projection interface to interact with the service API
+- Builds On : _00800-repositoryCustomizationContribution_
+
+a| === Customized Business Logic with Explicit Projection
+****
+`01100-businessLogicCustomizationExplicitProjection`
+****
+| Business logic customization that leverages a customized repository and extended domain with explicit projection
+a|
+- Show complete lifecycle in/out of the endpoint with extended field information
+- Demonstrate handling of the customized repository and domain
+- Builds On : _00300-productExtensionExplicitProjection_
+
+a| === Endpoint Customization
+****
+`01200-endpointCustomization`
+****
+|  Simple customization of out-of-the-box `ProductEndpoint`
+a|
+- Demonstrate a behavior tweak of a single endpoint method
+
+a| === Endpoint Customization using AutoProjection
+****
+`01300-endpointCustomizationAutoProjection`
+****
+| Customization of an endpoint method in `ProductEndpoint` leveraging a customized service, repository, auto-projection, and domain
+a|
+- Demonstrate a behavior tweak of a single endpoint method
+- Show leveraging a completely customized flow through to persistence
+- Demonstrate working with an auto projection in the endpoint
+- Builds On : _01000-businessLogicCustomizationAutoProjection_
+
+a| === Endpoint Customization using Explicit Projection
+****
+`01400-endpointCustomizationExplicitProjection`
+****
+| Customization of an endpoint method in `ProductEndpoint` using an extended explicit projection and domain
+a|
+- Demonstrate a behavior tweak of a single endpoint method
+- Demonstrate working with an explicit projection in the endpoint
+- Builds On : _01100-businessLogicCustomizationExplicitProjection_
+
+a| === Brand New Entity
+****
+`01500-newDomain`
+****
+| Introduction of new domain without explicit projection or any other explicit plumbing like repository, service, or endpoint
+a|
+- Demonstrate the simplest type of domain introduction
+- Show full lifecycle support (json in/out) for the endpoint API
+- Builds On : _00100-productExtensionOnly_
+
+a| === Brand New Entity with Complex Fields
+****
+`01600-newDomainComplexField`
+****
+| Introduction of new domain including complex field structures
+a|
+- Demonstrate domain introduction with embedded json collection fields
+- Demonstrate domain introduction with nested JPA OneToMany collection fields
+- Builds On : _01500-newDomain_
+
+a| === Tuning Auto Projection with New Entity
+****
+`01700-newDomainFineTuneAutoProjection`
+****
+| Introduction of new domain with auto projection output fine tuned through customization
+a|
+- Demonstrate customization of auto projection with the ExplicitProjectionFieldConfiguration annotation
+- Demonstrate removing a field from the projection
+- Demonstrate limiting a field to response only during update/replace
+- Demonstrate altering deserialization/serialization (e.g. to/from `MonetaryAmount` for a `BigDecimal` field)
+- Builds On : _01600-newDomainComplexField_
+
+a| === New Entity with Explicit Projection
+****
+`01800-newDomainExplicitProjection`
+****
+| Introduction of new domain including explicit projection declaration
+a|
+- Demonstrate explicit projection declaration
+- Demonstrate projection customizations
+- Demonstrate custom JSON deserialization/serialization for a projection field
+- Demonstrate maintenance to/from a synthetic map to a different JPA domain structure
+- Builds On : _01600-newDomainComplexField, 00300-productExtensionExplicitProjection_
+
+|===
