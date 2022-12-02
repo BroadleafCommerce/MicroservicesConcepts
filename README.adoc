@@ -40,7 +40,7 @@ This project contains several example *concepts* demonstrating various extension
 | Group of runnable projects that demonstrate a key dev or extension experience using the most streamlined approach available.
 
 |`docker`
-| Basic docker configuration to support backend of the tutorial runtime. We can consider not having these items in docker and instead have them be launched by java, or similar. If we did that, the goal would be to reduce tooling required to run the tutorial cases.
+| Basic docker configuration to support backend of the tutorial runtime.
 
 |`script`
 | core build script code that supports all instances of `reset-and-run` and `stop-docker`.
