@@ -23,6 +23,8 @@
         <skip-reset-resources>false</skip-reset-resources>
         <!-- Generate spring.factories. Skipped by default -->
         <skip-gen-spring-factories>false</skip-gen-spring-factories>
+        <!-- Generate a liquibase schema. Skipped by default -->
+        <skip-schema>false</skip-schema>
     </properties>
 
 </project>
