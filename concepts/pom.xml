@@ -34,6 +34,7 @@
         <module>01600-newDomainComplexField</module>
         <module>01700-newDomainFineTuneAutoProjection</module>
         <module>01800-newDomainExplicitProjection</module>
+        <module>internalLifecycleConfirmation</module>
     </modules>
 
 </project>

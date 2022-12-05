@@ -13,7 +13,7 @@ import com.tutorial.service.MyAutoCoProductService;
  */
 @Configuration
 @ComponentScan(basePackageClasses = MyAutoCoProductService.class) // Component scan for our service
-                                                              // customization
+                                                                  // customization
 @AutoConfigureBefore(CatalogServiceAutoConfiguration.class) // Configure before Broadleaf so we can
                                                             // override the service
 public class BusinessLogicCustomizationExplicitProjection {}

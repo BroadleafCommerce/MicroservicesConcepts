@@ -34,7 +34,7 @@ public class MyAutoCoProductProjection extends Product {
 
     @JsonView(ResponseView.class) // Only included in the response
     private Set<MyAutoCoProduct.Material> allMaterials; // A new aggregation field achieved through
-                                                    // custom mapping
+                                                        // custom mapping
 
     private String corporateId; // A new field we manage through the attribute map on
                                 // JpaProduct#getAttributes()

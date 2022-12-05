@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Import;
 import com.broadleafcommerce.common.extension.mapping.ProjectionReferredTypeOverride;
 import com.broadleafcommerce.common.jpa.autoconfigure.CommonJpaAutoConfiguration;
 import com.broadleafcommerce.common.jpa.data.entity.JpaEntityScan;
-import com.tutorial.domain.MyAutoCoProduct;
 import com.tutorial.domain.ExtendedUpgrade;
+import com.tutorial.domain.MyAutoCoProduct;
 import com.tutorial.domain.Upgrade;
 import com.tutorial.metadata.ProductNestedExtensionMetadata;
 

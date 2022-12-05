@@ -14,8 +14,8 @@ import org.springframework.http.MediaType;
 
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
-import com.tutorial.domain.MyAutoCoProductProjection;
 import com.tutorial.domain.ExtendedUpgrade;
+import com.tutorial.domain.MyAutoCoProductProjection;
 
 import java.time.Instant;
 import java.util.Collections;

@@ -11,10 +11,10 @@ import com.broadleafcommerce.catalog.provider.jpa.domain.product.JpaProduct;
 import com.broadleafcommerce.catalog.provider.jpa.domain.product.option.JpaProductOption;
 import com.broadleafcommerce.common.extension.mapping.ProjectionReferredTypeOverride;
 import com.broadleafcommerce.common.jpa.autoconfigure.CommonJpaAutoConfiguration;
-import com.tutorial.domain.MyAutoCoProduct;
-import com.tutorial.domain.MyAutoCoProductOption;
 import com.tutorial.domain.ExtendedFeature;
 import com.tutorial.domain.JpaMyAutoCoProductOption;
+import com.tutorial.domain.MyAutoCoProduct;
+import com.tutorial.domain.MyAutoCoProductOption;
 import com.tutorial.metadata.ProductNestedExtensionMetadata;
 
 /**

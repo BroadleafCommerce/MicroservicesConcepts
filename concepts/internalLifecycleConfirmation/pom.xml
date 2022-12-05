@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.broadleafcommerce.microservices</groupId>
+        <artifactId>broadleaf-concepts-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>broadleaf-concept-internal-lifecycle-confirmation</artifactId>
+    <name>Internal Lifecycle Confirmation</name>
+    <description>An internal project to confirm the lifecycle stability of basic project aspects,
+        such as Postgres, liquibase schema, and modelmapper cache
+    </description>
+
+    <dependencies>
+        <!-- Leverage the complex product extension that already exists -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-concept-product-extension-only</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-min-core</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>false</reuseForks>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <argLine>
+                                -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Xmx1500m
+                            </argLine>
+                            <excludes>
+                                <exclude>
+                                    com.tutorial.LifecycleIT*
+                                </exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>lifecycle</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <argLine>
+                                -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Xmx1500m
+                            </argLine>
+                            <includes>
+                                <include>
+                                    com.tutorial.LifecycleIT*
+                                </include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

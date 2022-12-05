@@ -44,8 +44,8 @@ public class MyAutoCoProductEndpoint {
          */
         context.getAdditionalProperties().put("MyValue", "Test");
         return (MyAutoCoProductProjection) productSvc.create(req, context); // omitted the hydration
-                                                                        // that normally takes place
-                                                                        // in this method in the
-                                                                        // parent implementation
+        // that normally takes place
+        // in this method in the
+        // parent implementation
     }
 }

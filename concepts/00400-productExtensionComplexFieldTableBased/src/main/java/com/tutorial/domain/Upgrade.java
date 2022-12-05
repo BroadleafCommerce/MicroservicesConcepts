@@ -72,8 +72,8 @@ public class Upgrade implements Serializable {
     @Setter
     private String manufacturerId;
 
-    @ProjectionPostConvert // called after mapping of Projection<MyAutoCoProduct> to MyAutoCoProduct is
-                           // complete
+    @ProjectionPostConvert // called after mapping of Projection<MyAutoCoProduct> to MyAutoCoProduct
+                           // is complete
     public void postConvert(Object source, Object parent) {
         Assert.isTrue(parent instanceof MyAutoCoProduct, "Expected an instance of MyAutoCoProduct");
         this.car = (MyAutoCoProduct) parent;

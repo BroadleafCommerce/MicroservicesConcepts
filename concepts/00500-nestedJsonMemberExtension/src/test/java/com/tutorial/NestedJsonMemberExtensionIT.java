@@ -17,9 +17,9 @@ import com.broadleafcommerce.catalog.domain.product.option.type.DefaultAttribute
 import com.broadleafcommerce.catalog.domain.product.option.type.DefaultProductOptionType;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
+import com.tutorial.domain.ExtendedFeature;
 import com.tutorial.domain.MyAutoCoProductOption;
 import com.tutorial.domain.MyAutoCoProductProjection;
-import com.tutorial.domain.ExtendedFeature;
 
 import java.time.Instant;
 import java.util.Collections;
