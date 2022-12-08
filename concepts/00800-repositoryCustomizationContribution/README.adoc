@@ -23,7 +23,15 @@ Introduces new repository methods that contribute new persistence related behavi
 
 == Key Steps:
 
-include::../doc/caveats.adoc[]
+[NOTE]
+====
+`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
+====
+
+[NOTE]
+====
+Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
+====
 
 - Create spring boot autoconfiguration class `RepositoryCustomizationContribution`, which will be referenced from META-INF/spring.factories
 - Declare the `JpaTrackableRepositoryDelegateHelper` bean for access to the Broadleaf repository
