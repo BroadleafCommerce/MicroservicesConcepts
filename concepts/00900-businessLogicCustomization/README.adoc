@@ -19,7 +19,7 @@ Uses a simple customization of the `DefaultProductService`.
 
 == Key Steps:
 
-include::../doc/caveats.adoc
+include::../doc/caveats.adoc[]
 
 - Create spring boot autoconfiguration class `BusinessLogicCustomization`, which will be referenced from META-INF/spring.factories
 - Create extension (`ExtendedProductService`) of `DefaultProductService` overriding a method from the parent service

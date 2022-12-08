@@ -23,7 +23,7 @@ Simple extension of `JpaProduct` adding only a basic field type. Also leverages 
 
 == Key Steps:
 
-include::../doc/caveats.adoc
+include::../doc/caveats.adoc[]
 
 - Create spring boot autoconfiguration class `ProductExtensionOnly`, which will be referenced from META-INF/spring.factories
 - Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct

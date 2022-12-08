@@ -23,7 +23,7 @@ Alters the complex field example to leverage a traditional JPA OneToMany associa
 
 == Key Steps:
 
-include::../doc/caveats.adoc
+include::../doc/caveats.adoc[]
 
 - Create spring boot autoconfiguration class `ProductExtensionComplexFieldTableBased`, which will be referenced from META-INF/spring.factories
 - Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct

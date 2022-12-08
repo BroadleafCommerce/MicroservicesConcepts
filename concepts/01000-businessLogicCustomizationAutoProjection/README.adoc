@@ -21,7 +21,7 @@ Business logic customization that leverages a customized repository and extended
 
 == Key Steps:
 
-include::../doc/caveats.adoc
+include::../doc/caveats.adoc[]
 
 - Create spring boot autoconfiguration class `BusinessLogicCustomizationAutoProjection`, which will be referenced from META-INF/spring.factories
 - Create extension (`MyAutoCoProductService`) of `DefaultProductService` adding a new method

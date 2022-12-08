@@ -12,7 +12,7 @@ Simple extension of `JpaProduct` adding more complex field types, including coll
 
 == Key Steps:
 
-include::../doc/caveats.adoc
+include::../doc/caveats.adoc[]
 
 - Create spring boot autoconfiguration class `ProductExtensionComplexFieldJson`, which will be referenced from META-INF/spring.factories
 - Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct

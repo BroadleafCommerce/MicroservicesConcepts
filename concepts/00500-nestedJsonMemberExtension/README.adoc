@@ -21,7 +21,7 @@ Extends nested structures that appear arbitrarily deep in the object graph of `J
 
 == Key Steps:
 
-include::../doc/caveats.adoc
+include::../doc/caveats.adoc[]
 
 - Create spring boot autoconfiguration class `NestedJsonMemberExtension`, which will be referenced from META-INF/spring.factories
 - Create extension of collection member type

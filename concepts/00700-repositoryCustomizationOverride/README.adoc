@@ -21,7 +21,7 @@ Adds a new repository implementation fragment overriding out-of-the-box behavior
 
 == Key Steps:
 
-include::../doc/caveats.adoc
+include::../doc/caveats.adoc[]
 
 - Create spring boot autoconfiguration class `RepositoryCustomizationOverride`, which will be referenced from META-INF/spring.factories
 - Declare the `JpaTrackableRepositoryDelegateHelper` bean for access to the Broadleaf repository

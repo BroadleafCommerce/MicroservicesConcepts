@@ -23,7 +23,7 @@ Continues with the complex field example persisted as JSON. However, in this cas
 
 == Key Steps:
 
-include::../doc/caveats.adoc
+include::../doc/caveats.adoc[]
 
 - Create spring boot autoconfiguration class `ProductExtensionExplicitProjection`, which will be referenced from META-INF/spring.factories
 - Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct (see _00200-productExtensionComplexFieldJson_ key steps)
