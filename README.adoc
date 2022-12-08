@@ -197,7 +197,7 @@ The concept projects require recent versions of several Broadleaf Framework libr
 
 == Concept Directory
 
-=== Simple Product Extension : xref:concepts/README.adoc[00100-productExtensionOnly]
+=== Simple Product Extension : xref:concepts/00100-productExtensionOnly/README.adoc[00100-productExtensionOnly]
 Simple extension of `JpaProduct` adding only a basic field type. Also leverages auto projection, rather than opting for an explicit extended projection.
 
 - Demonstrate the simplest type of extension
