@@ -1,0 +1,47 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Introduction of new domain including explicit projection declaration
+
+== Goals:
+
+- Demonstrate explicit projection declaration
+- Demonstrate projection customizations
+- Demonstrate custom JSON deserialization/serialization for a projection field
+- Demonstrate maintenance to/from a synthetic map to a different JPA domain structure
+- Builds On : _01600-newDomainComplexField, 00300-productExtensionExplicitProjection_
+
+== Key Steps:
+
+[NOTE]
+====
+`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
+====
+
+[NOTE]
+====
+Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
+====
+
+- Create spring boot autoconfiguration class `NewDomainExplicitProjection`, which will be referenced from META-INF/spring.factories
+- Setup domain (see _1600-newDomainComplexField_)
+- Additionally, make `ChargingStation` implements `BusinessTypeAware` and `ModelMapperMappable`
+- Create a projection class (`ChargingStationProjection`)
+- Implement `getBusinessDomainType()` in `ChargingStation` and return `ChargingStationProjection` as the type
+- Implement toMe/fromMe (from ModelMapperMappable contract)
+  * ModelMapper will automatically map similar fields
+  * For unusual mappings, use a post converter
+  * Create a ModelMapper type map for your repository domain and projection and register your post converter
+- Declare `@EnableJpaTrackableFlow` for the autoconfiguration class to setup the lifecycle plumbing for the new domain class
+- Declare `@AutoConfigureBefore` for the autoconfiguration class to scan the new domain class before JPA processing
+

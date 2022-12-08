@@ -275,19 +275,19 @@ Business logic customization that leverages a customized repository and extended
 - Demonstrate how to use the Projection interface to interact with the service API
 - Builds On : _00800-repositoryCustomizationContribution_
 
-=== Customized Business Logic with Explicit Projection: `01100-businessLogicCustomizationExplicitProjection`
+=== Customized Business Logic with Explicit Projection: xref:concepts/01100-businessLogicCustomizationExplicitProjection/README.adoc[01100-businessLogicCustomizationExplicitProjection]
 Business logic customization that leverages a customized repository and extended domain with explicit projection
 
 - Show complete lifecycle in/out of the endpoint with extended field information
 - Demonstrate handling of the customized repository and domain
 - Builds On : _00300-productExtensionExplicitProjection_
 
-=== Endpoint Customization: `01200-endpointCustomization`
+=== Endpoint Customization: xref:concepts/01200-endpointCustomization/README.adoc[01200-endpointCustomization]
 Simple customization of out-of-the-box `ProductEndpoint`
 
 - Demonstrate a behavior tweak of a single endpoint method
 
-=== Endpoint Customization using AutoProjection: `01300-endpointCustomizationAutoProjection`
+=== Endpoint Customization using AutoProjection: xref:concepts/01300-endpointCustomizationAutoProjection/README.adoc[01300-endpointCustomizationAutoProjection]
 Customization of an endpoint method in `ProductEndpoint` leveraging a customized service, repository, auto-projection, and domain
 
 - Demonstrate a behavior tweak of a single endpoint method
@@ -295,28 +295,28 @@ Customization of an endpoint method in `ProductEndpoint` leveraging a customized
 - Demonstrate working with an auto projection in the endpoint
 - Builds On : _01000-businessLogicCustomizationAutoProjection_
 
-=== Endpoint Customization using Explicit Projection: `01400-endpointCustomizationExplicitProjection`
+=== Endpoint Customization using Explicit Projection: xref:concepts/01400-endpointCustomizationExplicitProjection/README.adoc[01400-endpointCustomizationExplicitProjection]
 Customization of an endpoint method in `ProductEndpoint` using an extended explicit projection and domain
 
 - Demonstrate a behavior tweak of a single endpoint method
 - Demonstrate working with an explicit projection in the endpoint
 - Builds On : _01100-businessLogicCustomizationExplicitProjection_
 
-=== Brand New Entity: `01500-newDomain`
+=== Brand New Entity: xref:concepts/01500-newDomain/README.adoc[01500-newDomain]
 Introduction of new domain without explicit projection or any other explicit plumbing like repository, service, or endpoint
 
 - Demonstrate the simplest type of domain introduction
 - Show full lifecycle support (json in/out) for the endpoint API
 - Builds On : _00100-productExtensionOnly_
 
-=== Brand New Entity with Complex Fields: `01600-newDomainComplexField`
+=== Brand New Entity with Complex Fields: xref:concepts/01600-newDomainComplexField/README.adoc[01600-newDomainComplexField]
 Introduction of new domain including complex field structures
 
 - Demonstrate domain introduction with embedded json collection fields
 - Demonstrate domain introduction with nested JPA OneToMany collection fields
 - Builds On : _01500-newDomain_
 
-=== Tuning Auto Projection with New Entity: `01700-newDomainFineTuneAutoProjection`
+=== Tuning Auto Projection with New Entity: xref:concepts/01700-newDomainFineTuneAutoProjection/README.adoc[01700-newDomainFineTuneAutoProjection]
 Introduction of new domain with auto projection output fine tuned through customization
 
 - Demonstrate customization of auto projection with the ExplicitProjectionFieldConfiguration annotation
@@ -325,7 +325,7 @@ Introduction of new domain with auto projection output fine tuned through custom
 - Demonstrate altering deserialization/serialization (e.g. to/from `MonetaryAmount` for a `BigDecimal` field)
 - Builds On : _01600-newDomainComplexField_
 
-=== New Entity with Explicit Projection: `01800-newDomainExplicitProjection`
+=== New Entity with Explicit Projection: xref:concepts/01800-newDomainExplicitProjection/README.adoc[01800-newDomainExplicitProjection]
 Introduction of new domain including explicit projection declaration
 
 - Demonstrate explicit projection declaration

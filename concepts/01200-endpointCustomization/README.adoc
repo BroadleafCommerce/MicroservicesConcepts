@@ -11,11 +11,11 @@ endif::[]
 
 == Description:
 
-Uses a simple customization of the `DefaultProductService`.
+Simple customization of out-of-the-box `ProductEndpoint`
 
 == Goals:
 
-- Show a minor customization of the business logic of DefaultProductService
+- Demonstrate a behavior tweak of a single endpoint method
 
 == Key Steps:
 
@@ -29,9 +29,8 @@ Uses a simple customization of the `DefaultProductService`.
 Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
 ====
 
-- Create spring boot autoconfiguration class `BusinessLogicCustomization`, which will be referenced from META-INF/spring.factories
-- Create extension (`ExtendedProductService`) of `DefaultProductService` overriding a method from the parent service
-- Use the `@Component` annotation on the extended service
-- Declare the `@ComponentScan` annotation for the autoconfiguration class (avoid the larger constructor injection requirements of declaring a bean for the service extension)
-- Declare `@AutoConfigureBefore` for the autoconfiguration class to prioritize the service extension over Broadleaf's own declaration
+- Create spring boot autoconfiguration class `EndpointCustomization`, which will be referenced from META-INF/spring.factories
+- Create new Rest Controller implementation that matches path and HTTP method of an existing endpoint from a Broadleaf framework Rest controller. Your implementation will be given precedence.
+- Declare the `@ComponentScan` annotation for the autoconfiguration class
+- Declare the `@AutoConfigureBefore` annotation for the autoconfiguration class to prioritize your controller endpoint
 

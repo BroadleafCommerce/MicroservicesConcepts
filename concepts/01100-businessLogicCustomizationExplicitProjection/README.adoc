@@ -11,13 +11,13 @@ endif::[]
 
 == Description:
 
-Business logic customization that leverages a customized repository and extended domain with auto projection
+Business logic customization that leverages a customized repository and extended domain with explicit projection
 
 == Goals:
 
-- Show DefaultProductService call the customized repository to search by a new extended field
-- Demonstrate how to use the Projection interface to interact with the service API
-- Builds On : _00800-repositoryCustomizationContribution_
+- Show complete lifecycle in/out of the endpoint with extended field information
+- Demonstrate handling of the customized repository and domain
+- Builds On : _00300-productExtensionExplicitProjection_
 
 == Key Steps:
 
@@ -31,8 +31,9 @@ Business logic customization that leverages a customized repository and extended
 Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
 ====
 
-- Create spring boot autoconfiguration class `BusinessLogicCustomizationAutoProjection`, which will be referenced from META-INF/spring.factories
+- Create spring boot autoconfiguration class `BusinessLogicCustomizationExplicitProjection`, which will be referenced from META-INF/spring.factories
 - Create extension (`MyAutoCoProductService`) of `DefaultProductService` adding a new method
 - Use the `@Component` annotation on the extended service
 - Declare the `@ComponentScan` annotation for the autoconfiguration class (avoid the larger constructor injection requirements of declaring a bean for the service extension)
 - Declare `@AutoConfigureBefore` for the autoconfiguration class to prioritize the service extension over Broadleaf's own declaration
+
