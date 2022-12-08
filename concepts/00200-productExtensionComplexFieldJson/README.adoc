@@ -1,0 +1,22 @@
+== Description:
+
+Simple extension of `JpaProduct` adding more complex field types, including collections and maps. The complex types use JPA converters to persist the complex structure as JSON. This example still leverages auto projection and does not declare an explicit extending projection type.
+
+== Goals:
+
+- Demonstrate more complex field type
+- Demonstrate interaction with `Projection` interface to expose complex structures for editing
+- Show full lifecycle support (json in/out) for the endpoint API
+- Show supporting admin customization
+- Builds On : _00100-productExtensionOnly_
+
+== Key Steps:
+
+include::../doc/caveats.adoc
+
+- Create spring boot autoconfiguration class `ProductExtensionComplexFieldJson`, which will be referenced from META-INF/spring.factories
+- Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct
+- Implement new collection fields in MyAutoCoProduct
+- Use the `@Convert` annotation on the fields to reference JPA converters for JSON/Collection conversion
+- Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class
+- Add `AutoConfigureBefore(..)` annotation to autoconfiguration class above to make sure the entity reference is scanned before JPA processing

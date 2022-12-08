@@ -1,0 +1,29 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Extends nested structures that appear arbitrarily deep in the object graph of `JpaProduct`. The structures appear in OneToMany table based collections.
+
+== Goals:
+
+- Show example of nested OneToMany table based structure extension
+- Show supporting admin customization
+- Builds On : _00400-productExtensionComplexFieldTableBased_
+
+== Key Steps:
+
+include::../doc/caveats.adoc
+
+- Create spring boot autoconfiguration class `NestedTableBasedMemberExtension`, which will be referenced from META-INF/spring.factories
+- Create extension of collection member type (in this case, a real JPA entity extension)
+- Declare `ProjectionReferredTypeOverride` bean instance in autonconfiguration class above to register the extension
+- Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class

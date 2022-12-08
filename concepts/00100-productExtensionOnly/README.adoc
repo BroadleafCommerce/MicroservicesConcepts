@@ -1,3 +1,14 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
 == Description:
 
 Simple extension of `JpaProduct` adding only a basic field type. Also leverages auto projection, rather than opting for an explicit extended projection.
@@ -12,6 +23,10 @@ Simple extension of `JpaProduct` adding only a basic field type. Also leverages 
 
 == Key Steps:
 
+include::../doc/caveats.adoc
+
 - Create spring boot autoconfiguration class `ProductExtensionOnly`, which will be referenced from META-INF/spring.factories
 - Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct
 - Implement new field in MyAutoCoProduct
+- Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class
+- Add `AutoConfigureBefore(..)` annotation to autoconfiguration class above to make sure the entity reference is scanned before JPA processing

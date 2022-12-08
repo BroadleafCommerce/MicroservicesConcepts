@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class DefaultMyAutoCoProductRepositoryOverride
         implements MyAutoCoProductRepositoryOverride {
 
-    private final JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> supplier;
+    private final JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> helper;
 
     @PersistenceContext
     private EntityManager em;
@@ -35,7 +35,7 @@ public class DefaultMyAutoCoProductRepositoryOverride
     @Transactional
     public Trackable save(Trackable entity, ContextInfo contextInfo) {
         ((MyAutoCoProduct) entity).setModel(((MyAutoCoProduct) entity).getModel() + " Modified");
-        return supplier.getRepository().save((MyAutoCoProduct) entity, contextInfo);
+        return helper.getRepository().save((MyAutoCoProduct) entity, contextInfo);
     }
 
     /**
@@ -47,7 +47,7 @@ public class DefaultMyAutoCoProductRepositoryOverride
                 em.getCriteriaBuilder().createQuery(MyAutoCoProduct.class);
         Root<MyAutoCoProduct> root = query.from(MyAutoCoProduct.class);
         query.select(root);
-        return supplier.getHelper().fetchAll(new JpaNarrowingHelper.JpaCriterias<>(query),
+        return helper.getHelper().fetchAll(new JpaNarrowingHelper.JpaCriterias<>(query),
                 MyAutoCoProduct.class, null, contextInfo);
     }
 

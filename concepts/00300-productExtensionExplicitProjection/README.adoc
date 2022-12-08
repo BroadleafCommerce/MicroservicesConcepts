@@ -1,0 +1,36 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Continues with the complex field example persisted as JSON. However, in this case, an explicit projection type is declared.
+
+== Goals:
+
+- Demonstrate custom mapping to/from projection
+- Demonstrate response only projection field
+- Show supporting admin customization
+- Demonstrate mapping to synthetic fields
+- Builds On : _00200-productExtensionComplexFieldJson_
+
+== Key Steps:
+
+include::../doc/caveats.adoc
+
+- Create spring boot autoconfiguration class `ProductExtensionExplicitProjection`, which will be referenced from META-INF/spring.factories
+- Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct (see _00200-productExtensionComplexFieldJson_ key steps)
+- Create MyAutoCoProductProjection class extending Broadleaf's Product
+- Implement `getBusinessDomainType(..)` in the domain class
+- Implement `toMe(..)` and `fromMe(..)` in the domain class
+   * Leverage a post converter to perform the interesting mapping to/from projection
+   * Use `MappingUtils.setupExtensions(..)` to setup the extension mapping with the converter
+- Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class
+- Add `AutoConfigureBefore(..)` annotation to autoconfiguration class above to make sure the entity reference is scanned before JPA processing

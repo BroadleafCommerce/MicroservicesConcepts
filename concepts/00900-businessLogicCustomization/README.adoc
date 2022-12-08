@@ -1,0 +1,28 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Uses a simple customization of the `DefaultProductService`.
+
+== Goals:
+
+- Show a minor customization of the business logic of DefaultProductService
+
+== Key Steps:
+
+include::../doc/caveats.adoc
+
+- Create spring boot autoconfiguration class `BusinessLogicCustomization`, which will be referenced from META-INF/spring.factories
+- Create extension (`ExtendedProductService`) of `DefaultProductService` overriding a method from the parent service
+- Use the `@Component` annotation on the extended service
+- Declare the `@ComponentScan` annotation to the autoconfiguration class (avoid the larger constructor injection requirements of declaring a bean for the service extension)
+
