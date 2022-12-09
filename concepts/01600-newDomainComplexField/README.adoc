@@ -17,7 +17,7 @@ Introduction of new domain including complex field structures
 
 - Demonstrate domain introduction with embedded json collection fields
 - Demonstrate domain introduction with nested JPA OneToMany collection fields
-- Builds On : _01500-newDomain_
+- Builds On : xref:concepts/01500-newDomain/README.adoc[01500-newDomain]
 
 == Key Steps:
 

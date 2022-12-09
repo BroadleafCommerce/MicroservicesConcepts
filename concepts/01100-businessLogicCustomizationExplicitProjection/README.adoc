@@ -17,7 +17,7 @@ Business logic customization that leverages a customized repository and extended
 
 - Show complete lifecycle in/out of the endpoint with extended field information
 - Demonstrate handling of the customized repository and domain
-- Builds On : _00300-productExtensionExplicitProjection_
+- Builds On : xref:concepts/00300-productExtensionExplicitProjection/README.adoc[00300-productExtensionExplicitProjection]
 
 == Key Steps:
 

@@ -18,7 +18,7 @@ Customization of an endpoint method in `ProductEndpoint` leveraging a customized
 - Demonstrate a behavior tweak of a single endpoint method
 - Show leveraging a completely customized flow through to persistence
 - Demonstrate working with an auto projection in the endpoint
-- Builds On : _01000-businessLogicCustomizationAutoProjection_
+- Builds On : xref:concepts/01000-businessLogicCustomizationAutoProjection/README.adoc[01000-businessLogicCustomizationAutoProjection]
 
 == Key Steps:
 

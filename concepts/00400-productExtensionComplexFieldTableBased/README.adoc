@@ -19,7 +19,7 @@ Alters the complex field example to leverage a traditional JPA OneToMany associa
 - Demonstrate custom mapping to/from projection
 - Demonstrate special `@ProjectionPostConvert` support for setting bi-directional references
 - Show supporting admin customization
-- Builds On : _00200-productExtensionComplexFieldJson_
+- Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
 
 == Key Steps:
 
