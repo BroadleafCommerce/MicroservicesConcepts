@@ -302,10 +302,10 @@ Extends nested structures that appear arbitrarily deep in the object graph of `J
 
 Concept: xref:concepts/00700-repositoryCustomizationOverride/README.adoc[00700-repositoryCustomizationOverride]
 
-Adds a new repository implementation fragment overriding out-of-the-box behavior of JpaTrackableRepository
+Adds a new repository implementation fragment overriding out-of-the-box behavior of `JpaTrackableRepository`
 
-- Show concrete fragment contribution example overriding JpaTrackableRepository methods for JpaProductRepository
-- Demonstrate the use of JpaTrackableRepositoryDelegateSupplier to use in the fragment for extension via composition
+- Show concrete fragment contribution example overriding `JpaTrackableRepository` methods for `JpaProductRepository`
+- Demonstrate the use of `JpaTrackableRepositoryDelegateSupplier` to use in the fragment for extension via composition
 - Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
 
 === New Repository
@@ -316,8 +316,8 @@ Introduces new repository methods that contribute new persistence related behavi
 
 - Demonstrate new query method fragment contribution (interface only)
 - Demonstrate new concrete method implementation fragment contribution
-- Show concrete fragment contribution example overriding JpaTrackableRepository methods for JpaProductRepository
-- Demonstrate the use of JpaTrackableRepositoryDelegateSupplier to use in the fragment for extension via composition
+- Show concrete fragment contribution example overriding `JpaTrackableRepository` methods for `JpaProductRepository`
+- Demonstrate the use of `JpaTrackableRepositoryDelegateSupplier` to use in the fragment for extension via composition
 - Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
 
 === Customizing Business Logic
@@ -326,7 +326,7 @@ Concept: xref:concepts/00900-businessLogicCustomization/README.adoc[00900-busine
 
 Uses a simple customization of the `DefaultProductService`.
 
-- Show a minor customization of the business logic of DefaultProductService
+- Show a minor customization of the business logic of `DefaultProductService`
 
 === Customized Business Logic with Auto Projection
 
@@ -334,8 +334,8 @@ Concept: xref:concepts/01000-businessLogicCustomizationAutoProjection/README.ado
 
 Business logic customization that leverages a customized repository and extended domain with auto projection
 
-- Show DefaultProductService call the customized repository to search by a new extended field
-- Demonstrate how to use the Projection interface to interact with the service API
+- Show `DefaultProductService` call the customized repository to search by a new extended field
+- Demonstrate how to use the `Projection` interface to interact with the service API
 - Builds On : xref:concepts/00800-repositoryCustomizationContribution/README.adoc[00800-repositoryCustomizationContribution]
 
 === Customized Business Logic with Explicit Projection
