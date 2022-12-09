@@ -1,0 +1,37 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Extends nested structures that appear arbitrarily deep in the object graph of `JpaProduct`. The structures appear in OneToMany table based collections.
+
+== Goals:
+
+- Show example of nested OneToMany table based structure extension
+- Show supporting admin customization
+- Builds On : xref:concepts/00400-productExtensionComplexFieldTableBased/README.adoc[00400-productExtensionComplexFieldTableBased]
+
+== Key Steps:
+
+[NOTE]
+====
+`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
+====
+
+[NOTE]
+====
+Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
+====
+
+- Create spring boot autoconfiguration class `NestedTableBasedMemberExtension`, which will be referenced from META-INF/spring.factories
+- Create extension of collection member JPA type (`ExtendedUpgrade`)
+- Declare `ProjectionReferredTypeOverride` bean instance in autoconfiguration class to register the extension
+- Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class

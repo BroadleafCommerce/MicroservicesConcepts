@@ -1,0 +1,40 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Customization of an endpoint method in `ProductEndpoint` using an extended explicit projection and domain
+
+== Goals:
+
+- Demonstrate a behavior tweak of a single endpoint method
+- Demonstrate working with an explicit projection in the endpoint
+- Builds On : xref:concepts/01100-businessLogicCustomizationExplicitProjection/README.adoc[01100-businessLogicCustomizationExplicitProjection]
+
+== Key Steps:
+
+[NOTE]
+====
+`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
+====
+
+[NOTE]
+====
+Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
+====
+
+- Create spring boot autoconfiguration class `EndpointCustomizationExplicitProjection`, which will be referenced from META-INF/spring.factories
+- Create new Rest Controller implementation that matches path and HTTP method of an existing endpoint from a Broadleaf framework Rest controller
+- Declare the `@ComponentScan` annotation on the autoconfiguration class
+- Declare the `@AutoConfigureBefore` annotation on the autoconfiguration class to prioritize your controller endpoint
+
+
+

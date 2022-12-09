@@ -1,5 +1,7 @@
 :icons: font
 :source-highlighter: prettify
+:doctype: book
+:toc: macro
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -16,6 +18,8 @@ align="right" height="100px"/>
 = Microservice Extensibility Concepts
 
 This project contains several example *concepts* demonstrating various extension and backend commerce API developer use-cases.
+
+toc::[]
 
 == Terminology
 
@@ -154,12 +158,11 @@ The browser may complain about the self-signed cert and you may have to make an 
 The concept projects require recent versions of several Broadleaf Framework libraries
 ====
 
-
 [source,xml]
 ----
 <dependencyManagement>
-    <!-- ↓ These should appear first before the release train ↓ -->
     <dependencies>
+        <!-- ↓ These should appear first before the release train ↓ -->
         <dependency>
             <groupId>org.broadleafcommerce</groupId>
             <artifactId>spring-frameworkmapping</artifactId>
@@ -178,7 +181,7 @@ The concept projects require recent versions of several Broadleaf Framework libr
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-data-tracking-dependencies</artifactId>
-            <version>1.7.9-GA</version>
+            <version>1.7.10-GA</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -186,6 +189,37 @@ The concept projects require recent versions of several Broadleaf Framework libr
     </dependencies>
 </dependencyManagement>
 ----
+
+[IMPORTANT]
+====
+Creating integration tests in your own projects using the patterns demonstrated in integration tests in this project requires an additional library
+====
+
+[source,xml]
+----
+<dependencyManagement>
+    <dependencies>
+        ...
+        <!-- ↓ This should appear before the release train, and after the deps above ↓ -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-core-test</artifactId>
+            <version>1.0.0-SNAPSHOT</version> <!-- preliminary version - GA available soon -->
+            <scope>test</scope>
+        </dependency>
+        ...
+    </dependencies>
+</dependencyManagement>
+<dependencies>
+    ...
+    <dependency>
+        <groupId>com.broadleafcommerce.microservices</groupId>
+        <artifactId>broadleaf-core-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+----
+
 - Leveraging the code patterns and components demonstrated in the concept projects requires recent versions of several Broadleaf Framework libraries. You should set these versions (or newer) at the top of the `dependencyManagement` section of your root pom in your own project before attempting to reproduce or compile against the patterns shown here. If your release train reference is advanced enough to bring these versions (or newer) in by default, then you can skip explicitly declaring them here.
 
 == Roadmap
@@ -196,145 +230,193 @@ The concept projects require recent versions of several Broadleaf Framework libr
 
 == Concept Directory
 
-[cols="<10,^30,<60"]
-|===
-|Concept |Description |Goals
+=== Simple Product Extension
 
-a| *Simple Product Extension* : `00100-productExtensionOnly`
-| Simple extension of `JpaProduct` adding only a basic field type. Also leverages auto projection, rather than opting for an explicit extended projection.
-a|
+Concept: xref:concepts/00100-productExtensionOnly/README.adoc[00100-productExtensionOnly]
+
+Simple extension of `JpaProduct` adding only a basic field type. Also leverages auto projection, rather than opting for an explicit extended projection.
+
 - Demonstrate the simplest type of extension
 - Introduce the `Projection` interface
 - Show full lifecycle support (json in/out) for the endpoint API
 - Show supporting admin customization
 - Show automated testing and the use of `@TestCatalogRouted` (et al.) to handle datarouting requirements during the test
 
-a| *Product Extension with JSON Field*: `00200-productExtensionComplexFieldJson`
-| Simple extension of `JpaProduct` adding more complex field types, including collections and maps. The complex types use JPA converters to persist the complex structure as JSON. This example still leverages auto projection and does not declare an explicit extending projection type.
-a|
+=== Product Extension with JSON Field
+
+Concept: xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
+
+Simple extension of `JpaProduct` adding more complex field types, including collections and maps. The complex types use JPA converters to persist the complex structure as JSON. This example still leverages auto projection and does not declare an explicit extending projection type.
+
 - Demonstrate more complex field type
 - Demonstrate interaction with `Projection` interface to expose complex structures for editing
 - Show full lifecycle support (json in/out) for the endpoint API
 - Show supporting admin customization
-- Builds On : _00100-productExtensionOnly_
+- Builds On : xref:concepts/00100-productExtensionOnly/README.adoc[00100-productExtensionOnly]
 
-a| *Explicit Product Projection*: `00300-productExtensionExplicitProjection`
-| Continues with the complex field example persisted as JSON. However, in this case, an explicit projection type is declared.
-a|
+=== Explicit Product Projection
+
+Concept: xref:concepts/00300-productExtensionExplicitProjection/README.adoc[00300-productExtensionExplicitProjection]
+
+Continues with the complex field example persisted as JSON. However, in this case, an explicit projection type is declared.
+
 - Demonstrate custom mapping to/from projection
 - Demonstrate response only projection field
 - Show supporting admin customization
 - Demonstrate mapping to synthetic fields
-- Builds On : _00200-productExtensionComplexFieldJson_
+- Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
 
-a| *Product Extension with New Table Relationship*: `00400-productExtensionComplexFieldTableBased`
-| Alters the complex field example to leverage a traditional JPA OneToMany associated collection. The relates to a new table in the database, rather than serializing to JSON.
-a|
+=== Product Extension with New Table Relationship
+
+Concept: xref:concepts/00400-productExtensionComplexFieldTableBased/README.adoc[00400-productExtensionComplexFieldTableBased]
+
+Alters the complex field example to leverage a traditional JPA OneToMany associated collection. The relates to a new table in the database, rather than serializing to JSON.
+
 - Show table based complex field support in the JpaProduct extension
 - Demonstrate custom mapping to/from projection
 - Demonstrate special `@ProjectionPostConvert` support for setting bi-directional references
 - Show supporting admin customization
-- Builds On : _00200-productExtensionComplexFieldJson_
+- Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
 
-a| *Product with Nested JSON Collection*: `00500-nestedJsonMemberExtension`
-| Extends nested structures that appear arbitrarily deep in the object graph of `JpaProduct`. The structures appear in various embedded collections and are persisted as JSON.
-a|
+=== Product with Nested JSON Collection
+
+Concept: xref:concepts/00500-nestedJsonMemberExtension/README.adoc[00500-nestedJsonMemberExtension]
+
+Extends nested structures that appear arbitrarily deep in the object graph of `JpaProduct`. The structures appear in various embedded collections and are persisted as JSON.
+
 - Show several examples of nested structure extension
 - Show supporting admin customization
-- Builds On : _00300-productExtensionExplicitProjection_
+- Builds On : xref:concepts/00300-productExtensionExplicitProjection/README.adoc[00300-productExtensionExplicitProjection]
 
-a| *Product with New Nested Table Relationship*: `00600-nestedTableBasedMemberExtension`
-| Extends nested structures that appear arbitrarily deep in the object graph of JpaProduct. The structures appear in OneToMany table based collections.
-a|
+=== Product with New Nested Table Relationship
+
+Concept: xref:concepts/00600-nestedTableBasedMemberExtension/README.adoc[00600-nestedTableBasedMemberExtension]
+
+Extends nested structures that appear arbitrarily deep in the object graph of `JpaProduct`. The structures appear in OneToMany table based collections.
+
 - Show example of nested OneToMany table based structure extension
 - Show supporting admin customization
-- Builds On : _00400-productExtensionComplexFieldTableBased_
+- Builds On : xref:concepts/00400-productExtensionComplexFieldTableBased/README.adoc[00400-productExtensionComplexFieldTableBased]
 
-a| *Overriding a Repository*: `00700-repositoryCustomizationOverride`
-| Adds a new repository implementation fragment overriding out-of-the-box behavior of JpaTrackableRepository
-a|
+=== Overriding a Repository
+
+Concept: xref:concepts/00700-repositoryCustomizationOverride/README.adoc[00700-repositoryCustomizationOverride]
+
+Adds a new repository implementation fragment overriding out-of-the-box behavior of JpaTrackableRepository
+
 - Show concrete fragment contribution example overriding JpaTrackableRepository methods for JpaProductRepository
 - Demonstrate the use of JpaTrackableRepositoryDelegateSupplier to use in the fragment for extension via composition
-- Builds On : _0700-repositoryCustomizationOverride, 00200-productExtensionComplexFieldJson_
+- Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
 
-a| *New Repository*: `00800-repositoryCustomizationContribution`
-| Introduces new repository methods that contribute new persistence related behavior. This take the form of either dynamic query method fragments, or concrete implementation fragments.
-a|
+=== New Repository
+
+Concept: xref:concepts/00800-repositoryCustomizationContribution/README.adoc[00800-repositoryCustomizationContribution]
+
+Introduces new repository methods that contribute new persistence related behavior. This take the form of either dynamic query method fragments, or concrete implementation fragments.
+
 - Demonstrate new query method fragment contribution (interface only)
 - Demonstrate new concrete method implementation fragment contribution
 - Show concrete fragment contribution example overriding JpaTrackableRepository methods for JpaProductRepository
 - Demonstrate the use of JpaTrackableRepositoryDelegateSupplier to use in the fragment for extension via composition
-- Builds On : _00200-productExtensionComplexFieldJson_
+- Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
 
-a| *Customizing Business Logic*: `00900-businessLogicCustomization`
-| Uses a simple customization of the `DefaultProductService`.
-a|
+=== Customizing Business Logic
+
+Concept: xref:concepts/00900-businessLogicCustomization/README.adoc[00900-businessLogicCustomization]
+
+Uses a simple customization of the `DefaultProductService`.
+
 - Show a minor customization of the business logic of DefaultProductService
 
-a| *Customized Business Logic with Auto Projection*: `01000-businessLogicCustomizationAutoProjection`
-| Business logic customization that leverages a customized repository and extended domain with auto projection
-a|
+=== Customized Business Logic with Auto Projection
+
+Concept: xref:concepts/01000-businessLogicCustomizationAutoProjection/README.adoc[01000-businessLogicCustomizationAutoProjection]
+
+Business logic customization that leverages a customized repository and extended domain with auto projection
+
 - Show DefaultProductService call the customized repository to search by a new extended field
 - Demonstrate how to use the Projection interface to interact with the service API
-- Builds On : _00800-repositoryCustomizationContribution_
+- Builds On : xref:concepts/00800-repositoryCustomizationContribution/README.adoc[00800-repositoryCustomizationContribution]
 
-a| *Customized Business Logic with Explicit Projection*: `01100-businessLogicCustomizationExplicitProjection`
-| Business logic customization that leverages a customized repository and extended domain with explicit projection
-a|
+=== Customized Business Logic with Explicit Projection
+
+Concept: xref:concepts/01100-businessLogicCustomizationExplicitProjection/README.adoc[01100-businessLogicCustomizationExplicitProjection]
+
+Business logic customization that leverages a customized repository and extended domain with explicit projection
+
 - Show complete lifecycle in/out of the endpoint with extended field information
 - Demonstrate handling of the customized repository and domain
-- Builds On : _00300-productExtensionExplicitProjection_
+- Builds On : xref:concepts/00300-productExtensionExplicitProjection/README.adoc[00300-productExtensionExplicitProjection]
 
-a| *Endpoint Customization*: `01200-endpointCustomization`
-|  Simple customization of out-of-the-box `ProductEndpoint`
-a|
+=== Endpoint Customization
+
+Concept: xref:concepts/01200-endpointCustomization/README.adoc[01200-endpointCustomization]
+
+Simple customization of out-of-the-box `ProductEndpoint`
+
 - Demonstrate a behavior tweak of a single endpoint method
 
-a| *Endpoint Customization using AutoProjection* `01300-endpointCustomizationAutoProjection`
-| Customization of an endpoint method in `ProductEndpoint` leveraging a customized service, repository, auto-projection, and domain
-a|
+=== Endpoint Customization using AutoProjection
+
+Concept: xref:concepts/01300-endpointCustomizationAutoProjection/README.adoc[01300-endpointCustomizationAutoProjection]
+
+Customization of an endpoint method in `ProductEndpoint` leveraging a customized service, repository, auto-projection, and domain
+
 - Demonstrate a behavior tweak of a single endpoint method
 - Show leveraging a completely customized flow through to persistence
 - Demonstrate working with an auto projection in the endpoint
-- Builds On : _01000-businessLogicCustomizationAutoProjection_
+- Builds On : xref:concepts/01000-businessLogicCustomizationAutoProjection/README.adoc[01000-businessLogicCustomizationAutoProjection]
 
-a| *Endpoint Customization using Explicit Projection*: `01400-endpointCustomizationExplicitProjection`
-| Customization of an endpoint method in `ProductEndpoint` using an extended explicit projection and domain
-a|
+=== Endpoint Customization using Explicit Projection
+
+Concept: xref:concepts/01400-endpointCustomizationExplicitProjection/README.adoc[01400-endpointCustomizationExplicitProjection]
+
+Customization of an endpoint method in `ProductEndpoint` using an extended explicit projection and domain
+
 - Demonstrate a behavior tweak of a single endpoint method
 - Demonstrate working with an explicit projection in the endpoint
-- Builds On : _01100-businessLogicCustomizationExplicitProjection_
+- Builds On : xref:concepts/01100-businessLogicCustomizationExplicitProjection/README.adoc[01100-businessLogicCustomizationExplicitProjection]
 
-a| *Brand New Entity*: `01500-newDomain`
-| Introduction of new domain without explicit projection or any other explicit plumbing like repository, service, or endpoint
-a|
+=== Brand New Entity
+
+Concept: xref:concepts/01500-newDomain/README.adoc[01500-newDomain]
+
+Introduction of new domain without explicit projection or any other explicit plumbing like repository, service, or endpoint
+
 - Demonstrate the simplest type of domain introduction
 - Show full lifecycle support (json in/out) for the endpoint API
-- Builds On : _00100-productExtensionOnly_
+- Builds On : xref:concepts/00100-productExtensionOnly/README.adoc[00100-productExtensionOnly]
 
-a| *Brand New Entity with Complex Fields*: `01600-newDomainComplexField`
-| Introduction of new domain including complex field structures
-a|
+=== Brand New Entity with Complex Fields
+
+Concept: xref:concepts/01600-newDomainComplexField/README.adoc[01600-newDomainComplexField]
+
+Introduction of new domain including complex field structures
+
 - Demonstrate domain introduction with embedded json collection fields
 - Demonstrate domain introduction with nested JPA OneToMany collection fields
-- Builds On : _01500-newDomain_
+- Builds On : xref:concepts/01500-newDomain/README.adoc[01500-newDomain]
 
-a| *Tuning Auto Projection with New Entity*: `01700-newDomainFineTuneAutoProjection`
-| Introduction of new domain with auto projection output fine tuned through customization
-a|
+=== Tuning Auto Projection with New Entity
+
+Concept: xref:concepts/01700-newDomainFineTuneAutoProjection/README.adoc[01700-newDomainFineTuneAutoProjection]
+
+Introduction of new domain with auto projection output fine tuned through customization
+
 - Demonstrate customization of auto projection with the ExplicitProjectionFieldConfiguration annotation
 - Demonstrate removing a field from the projection
 - Demonstrate limiting a field to response only during update/replace
 - Demonstrate altering deserialization/serialization (e.g. to/from `MonetaryAmount` for a `BigDecimal` field)
-- Builds On : _01600-newDomainComplexField_
+- Builds On : xref:concepts/01600-newDomainComplexField/README.adoc[01600-newDomainComplexField]
 
-a| *New Entity with Explicit Projection*: `01800-newDomainExplicitProjection`
-| Introduction of new domain including explicit projection declaration
-a|
+=== New Entity with Explicit Projection
+
+Concept: xref:concepts/01800-newDomainExplicitProjection/README.adoc[01800-newDomainExplicitProjection]
+
+Introduction of new domain including explicit projection declaration
+
 - Demonstrate explicit projection declaration
 - Demonstrate projection customizations
 - Demonstrate custom JSON deserialization/serialization for a projection field
 - Demonstrate maintenance to/from a synthetic map to a different JPA domain structure
-- Builds On : _01600-newDomainComplexField, 00300-productExtensionExplicitProjection_
-
-|===
+- Builds On : xref:concepts/01600-newDomainComplexField/README.adoc[01600-newDomainComplexField], xref:concepts/00300-productExtensionExplicitProjection/README.adoc[00300-productExtensionExplicitProjection]

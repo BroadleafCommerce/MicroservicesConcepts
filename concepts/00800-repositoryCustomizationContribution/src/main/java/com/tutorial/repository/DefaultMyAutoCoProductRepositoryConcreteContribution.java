@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class DefaultMyAutoCoProductRepositoryConcreteContribution
         implements MyAutoCoProductRepositoryConcreteContribution {
 
-    private final JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> supplier;
+    private final JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> helper;
 
     @PersistenceContext
     private EntityManager em;
@@ -39,7 +39,7 @@ public class DefaultMyAutoCoProductRepositoryConcreteContribution
         Map<String, Object> params = new HashMap<>();
         query.where(builder.equal(root.get("model"), builder.parameter(String.class, "model")));
         params.put("model", model);
-        return supplier.getHelper().fetchAll(
+        return helper.getHelper().fetchAll(
                 new JpaNarrowingHelper.JpaCriterias<>(query, null, params),
                 MyAutoCoProduct.class, null, contextInfo);
     }

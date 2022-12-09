@@ -1,0 +1,39 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Adds a new repository implementation fragment overriding out-of-the-box behavior of JpaTrackableRepository
+
+== Goals:
+
+- Show concrete fragment contribution example overriding JpaTrackableRepository methods for JpaProductRepository
+- Demonstrate the use of JpaTrackableRepositoryDelegateSupplier to use in the fragment for extension via composition
+- Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
+
+== Key Steps:
+
+[NOTE]
+====
+`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
+====
+
+[NOTE]
+====
+Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
+====
+
+- Create spring boot autoconfiguration class `RepositoryCustomizationOverride`, which will be referenced from META-INF/spring.factories
+- Declare the `JpaTrackableRepositoryDelegateHelper` bean for access to the Broadleaf repository
+- Create a new concrete repository fragment (`DefaultMyAutoCoProductRepositoryOverride`) and an associated interface
+- Override (or add new) methods in the fragment
+- Declare a bean for the concrete fragment in the autoconfiguration class
+- Declare a `RepositoryContribution` bean in the autoconfiguration class, registering the new fragment with Broadleaf's out-of-the-box repository

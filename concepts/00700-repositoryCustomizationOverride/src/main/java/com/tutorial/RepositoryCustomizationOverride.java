@@ -20,15 +20,15 @@ import java.util.Collections;
 public class RepositoryCustomizationOverride {
 
     @Bean
-    public JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateSupplier() {
+    public JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateHelper() {
         return new DefaultJpaTrackableRepositoryDelegateHelper<>(MyAutoCoProduct.class,
                 JpaProductRepository.class);
     }
 
     @Bean
     public MyAutoCoProductRepositoryOverride fragment(
-            JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateSupplier) {
-        return new DefaultMyAutoCoProductRepositoryOverride(delegateSupplier);
+            JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateHelper) {
+        return new DefaultMyAutoCoProductRepositoryOverride(delegateHelper);
     }
 
     @Bean

@@ -26,6 +26,7 @@
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-min-core</artifactId>
+            <version>${blc.research.base.project.version}</version>
         </dependency>
     </dependencies>
 

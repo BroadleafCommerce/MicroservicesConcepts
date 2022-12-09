@@ -1,0 +1,47 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Alters the complex field example to leverage a traditional JPA OneToMany associated collection. The relates to a new table in the database, rather than serializing to JSON.
+
+== Goals:
+
+- Show table based complex field support in the JpaProduct extension
+- Demonstrate custom mapping to/from projection
+- Demonstrate special `@ProjectionPostConvert` support for setting bi-directional references
+- Show supporting admin customization
+- Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
+
+== Key Steps:
+
+[NOTE]
+====
+`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
+====
+
+[NOTE]
+====
+Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
+====
+
+- Create spring boot autoconfiguration class `ProductExtensionComplexFieldTableBased`, which will be referenced from META-INF/spring.factories
+- Create `MyAutoCoProduct` repository domain class extending Broadleaf's `JpaProduct`
+- Create `Upgrade` repository domain class, which will serve as a OneToMany collection member
+- Add new OneToMany JPA collection field to `MyAutoCoProduct`
+- Create `MyAutoCoProductProjection` class extending Broadleaf's `Product`
+- Implement `getBusinessDomainType(..)` in the domain class
+- Implement `toMe(..)` and `fromMe(..)` in the domain class
+  * Call the super implementation of the method override first
+  * Use `MappingUtils.setupExtensions(..)` to setup the extension mapping with the converter
+- Annotate method in `Upgrade` with `@ProjectionPostConvert` to handle bi-direction reference back to `MyAutoCoProduct`
+- Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class
+- Add `AutoConfigureBefore(..)` annotation to autoconfiguration class above to make sure the entity reference is scanned before JPA processing

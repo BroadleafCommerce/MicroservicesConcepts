@@ -1,0 +1,40 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Simple extension of `JpaProduct` adding only a basic field type. Also leverages auto projection, rather than opting for an explicit extended projection.
+
+== Goals:
+
+- Demonstrate the simplest type of extension
+- Introduce the `Projection` interface
+- Show full lifecycle support (json in/out) for the endpoint API
+- Show supporting admin customization
+- Show automated testing and the use of `@TestCatalogRouted` (et al.) to handle datarouting requirements during the test
+
+== Key Steps:
+
+[NOTE]
+====
+`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
+====
+
+[NOTE]
+====
+Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
+====
+
+- Create spring boot autoconfiguration class `ProductExtensionOnly`, which will be referenced from META-INF/spring.factories
+- Create `MyAutoCoProduct` repository domain class extending Broadleaf's `JpaProduct`
+- Implement new field in `MyAutoCoProduct`
+- Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class
+- Add `AutoConfigureBefore(..)` annotation to autoconfiguration class above to make sure the entity reference is scanned before JPA processing

@@ -1,0 +1,40 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Introduction of new domain with auto projection output fine tuned through customization
+
+== Goals:
+
+- Demonstrate customization of auto projection with the ExplicitProjectionFieldConfiguration annotation
+- Demonstrate removing a field from the projection
+- Demonstrate limiting a field to response only during update/replace
+- Demonstrate altering deserialization/serialization (e.g. to/from `MonetaryAmount` for a `BigDecimal` field)
+- Builds On : xref:concepts/01600-newDomainComplexField/README.adoc[01600-newDomainComplexField]
+
+== Key Steps:
+
+[NOTE]
+====
+`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
+====
+
+[NOTE]
+====
+Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
+====
+
+- Create spring boot autoconfiguration class `NewDomainFineTuneAutoProjection`, which will be referenced from META-INF/spring.factories
+- Setup domain (see _1600-newDomainComplexField_)
+- Declare `@ExplicitProjectionFieldConfiguration` annotation on one or more fields in `ChargingStation` to fine tune how the projection is generated
+- Declare `@EnableJpaTrackableFlow` on the autoconfiguration class to setup the lifecycle plumbing for the new domain class
+- Declare `@AutoConfigureBefore` on the autoconfiguration class to scan the new domain class before JPA processing

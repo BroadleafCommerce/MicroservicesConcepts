@@ -1,0 +1,37 @@
+:icons: font
+:source-highlighter: prettify
+:doctype: book
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Description:
+
+Uses a simple customization of the `DefaultProductService`.
+
+== Goals:
+
+- Show a minor customization of the business logic of DefaultProductService
+
+== Key Steps:
+
+[NOTE]
+====
+`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
+====
+
+[NOTE]
+====
+Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
+====
+
+- Create spring boot autoconfiguration class `BusinessLogicCustomization`, which will be referenced from META-INF/spring.factories
+- Create extension (`ExtendedProductService`) of `DefaultProductService` overriding a method from the parent service
+- Use the `@Component` annotation on the extended service
+- Declare the `@ComponentScan` annotation on the autoconfiguration class (avoid the larger constructor injection requirements of declaring a bean for the service extension)
+- Declare `@AutoConfigureBefore` on the autoconfiguration class to prioritize the service extension over Broadleaf's own declaration
+

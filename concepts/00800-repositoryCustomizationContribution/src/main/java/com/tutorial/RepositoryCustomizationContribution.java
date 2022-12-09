@@ -21,15 +21,15 @@ import java.util.Collections;
 public class RepositoryCustomizationContribution {
 
     @Bean
-    public JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateSupplier() {
+    public JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateHelper() {
         return new DefaultJpaTrackableRepositoryDelegateHelper<>(MyAutoCoProduct.class,
                 JpaProductRepository.class);
     }
 
     @Bean
     public MyAutoCoProductRepositoryConcreteContribution fragment(
-            JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateSupplier) {
-        return new DefaultMyAutoCoProductRepositoryConcreteContribution(delegateSupplier);
+            JpaTrackableRepositoryDelegateHelper<MyAutoCoProduct> delegateHelper) {
+        return new DefaultMyAutoCoProductRepositoryConcreteContribution(delegateHelper);
     }
 
     @Bean
