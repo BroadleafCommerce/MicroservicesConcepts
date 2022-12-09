@@ -155,12 +155,11 @@ The browser may complain about the self-signed cert and you may have to make an 
 The concept projects require recent versions of several Broadleaf Framework libraries
 ====
 
-
 [source,xml]
 ----
 <dependencyManagement>
-    <!-- ↓ These should appear first before the release train ↓ -->
     <dependencies>
+        <!-- ↓ These should appear first before the release train ↓ -->
         <dependency>
             <groupId>org.broadleafcommerce</groupId>
             <artifactId>spring-frameworkmapping</artifactId>
@@ -187,6 +186,37 @@ The concept projects require recent versions of several Broadleaf Framework libr
     </dependencies>
 </dependencyManagement>
 ----
+
+[IMPORTANT]
+====
+Creating integration tests in your own projects using the patterns demonstrated in integration tests in this project requires an additional library
+====
+
+[source,xml]
+----
+<dependencyManagement>
+    <dependencies>
+        ...
+        <!-- ↓ This should appear before the release train, and after the deps above ↓ -->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-core-test</artifactId>
+            <version>1.0.0-SNAPSHOT</version> <!-- preliminary version - GA available soon -->
+            <scope>test</scope>
+        </dependency>
+        ...
+    </dependencies>
+</dependencyManagement>
+<dependencies>
+    ...
+    <dependency>
+        <groupId>com.broadleafcommerce.microservices</groupId>
+        <artifactId>broadleaf-core-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+----
+
 - Leveraging the code patterns and components demonstrated in the concept projects requires recent versions of several Broadleaf Framework libraries. You should set these versions (or newer) at the top of the `dependencyManagement` section of your root pom in your own project before attempting to reproduce or compile against the patterns shown here. If your release train reference is advanced enough to bring these versions (or newer) in by default, then you can skip explicitly declaring them here.
 
 == Roadmap
