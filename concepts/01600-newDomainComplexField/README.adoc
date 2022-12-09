@@ -38,5 +38,5 @@ Existing implementations will continue to depend on starter project liquibase su
 - Create a new simple POJO class to serve as JSON converted collection field member (`Pricing`)
 - Add new collection fields to `ChargingStation`
 - Add JPA converter on the `Pricing` related collection field in `ChargingStation`
-- Declare `@EnableJpaTrackableFlow` for the autoconfiguration class to setup the lifecycle plumbing for the new domain class
-- Declare `@AutoConfigureBefore` for the autoconfiguration class to scan the new domain class before JPA processing
+- Declare `@EnableJpaTrackableFlow` on the autoconfiguration class to setup the lifecycle plumbing for the new domain class
+- Declare `@AutoConfigureBefore` on the autoconfiguration class to scan the new domain class before JPA processing

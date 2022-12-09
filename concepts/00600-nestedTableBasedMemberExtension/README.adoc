@@ -32,6 +32,6 @@ Existing implementations will continue to depend on starter project liquibase su
 ====
 
 - Create spring boot autoconfiguration class `NestedTableBasedMemberExtension`, which will be referenced from META-INF/spring.factories
-- Create extension of collection member type (in this case, a real JPA entity extension)
-- Declare `ProjectionReferredTypeOverride` bean instance in autonconfiguration class above to register the extension
+- Create extension of collection member JPA type (`ExtendedUpgrade`)
+- Declare `ProjectionReferredTypeOverride` bean instance in autoconfiguration class to register the extension
 - Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class

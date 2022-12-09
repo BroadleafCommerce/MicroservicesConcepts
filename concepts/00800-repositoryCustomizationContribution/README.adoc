@@ -35,8 +35,8 @@ Existing implementations will continue to depend on starter project liquibase su
 
 - Create spring boot autoconfiguration class `RepositoryCustomizationContribution`, which will be referenced from META-INF/spring.factories
 - Declare the `JpaTrackableRepositoryDelegateHelper` bean for access to the Broadleaf repository
-- Create a new concrete repository fragment (DefaultMyAutoCoProductRepositoryConcreteContribution) and an interface for the fragment
-- Create a new repository fragment interface (MyAutoCoProductRepositoryDynamicContribution) for the dynamic query method contribution
+- Create a new concrete repository fragment (`DefaultMyAutoCoProductRepositoryConcreteContribution`) and an associated interface
+- Create a new repository fragment interface (`MyAutoCoProductRepositoryDynamicContribution`) for the dynamic query method contribution
 - Declare a bean for the concrete fragment in the autoconfiguration class
 - Declare a `RepositoryContribution` bean in the autoconfiguration class, registering the new fragments with Broadleaf's out-of-the-box repository
 

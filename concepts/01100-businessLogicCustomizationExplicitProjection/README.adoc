@@ -34,6 +34,6 @@ Existing implementations will continue to depend on starter project liquibase su
 - Create spring boot autoconfiguration class `BusinessLogicCustomizationExplicitProjection`, which will be referenced from META-INF/spring.factories
 - Create extension (`MyAutoCoProductService`) of `DefaultProductService` adding a new method
 - Use the `@Component` annotation on the extended service
-- Declare the `@ComponentScan` annotation for the autoconfiguration class (avoid the larger constructor injection requirements of declaring a bean for the service extension)
-- Declare `@AutoConfigureBefore` for the autoconfiguration class to prioritize the service extension over Broadleaf's own declaration
+- Declare the `@ComponentScan` annotation on the autoconfiguration class (avoid the larger constructor injection requirements of declaring a bean for the service extension)
+- Declare `@AutoConfigureBefore` on the autoconfiguration class to prioritize the service extension over Broadleaf's own declaration
 

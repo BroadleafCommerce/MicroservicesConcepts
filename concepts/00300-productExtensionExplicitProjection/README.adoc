@@ -34,10 +34,11 @@ Existing implementations will continue to depend on starter project liquibase su
 ====
 
 - Create spring boot autoconfiguration class `ProductExtensionExplicitProjection`, which will be referenced from META-INF/spring.factories
-- Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct (see _00200-productExtensionComplexFieldJson_ key steps)
-- Create MyAutoCoProductProjection class extending Broadleaf's Product
-- Implement `getBusinessDomainType(..)` in the domain class
-- Implement `toMe(..)` and `fromMe(..)` in the domain class
+- Create `MyAutoCoProduct` repository domain class extending Broadleaf's `JpaProduct`(see _00200-productExtensionComplexFieldJson_ key steps)
+- Create `MyAutoCoProductProjection` class extending Broadleaf's `Product`
+- Override `getBusinessDomainType(..)` in the domain class
+- Override `toMe(..)` and `fromMe(..)` in the domain class (from `ModelMapperMappable` contract)
+   * Call the super implementation first from the method override
    * Leverage a post converter to perform the interesting mapping to/from projection
    * Use `MappingUtils.setupExtensions(..)` to setup the extension mapping with the converter
 - Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class

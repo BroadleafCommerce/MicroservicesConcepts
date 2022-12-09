@@ -36,5 +36,5 @@ Existing implementations will continue to depend on starter project liquibase su
 - Create spring boot autoconfiguration class `NewDomainFineTuneAutoProjection`, which will be referenced from META-INF/spring.factories
 - Setup domain (see _1600-newDomainComplexField_)
 - Declare `@ExplicitProjectionFieldConfiguration` annotation on one or more fields in `ChargingStation` to fine tune how the projection is generated
-- Declare `@EnableJpaTrackableFlow` for the autoconfiguration class to setup the lifecycle plumbing for the new domain class
-- Declare `@AutoConfigureBefore` for the autoconfiguration class to scan the new domain class before JPA processing
+- Declare `@EnableJpaTrackableFlow` on the autoconfiguration class to setup the lifecycle plumbing for the new domain class
+- Declare `@AutoConfigureBefore` on the autoconfiguration class to scan the new domain class before JPA processing

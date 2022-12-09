@@ -33,7 +33,7 @@ Existing implementations will continue to depend on starter project liquibase su
 
 - Create spring boot autoconfiguration class `RepositoryCustomizationOverride`, which will be referenced from META-INF/spring.factories
 - Declare the `JpaTrackableRepositoryDelegateHelper` bean for access to the Broadleaf repository
-- Create a new concrete repository fragment (DefaultMyAutoCoProductRepositoryOverride) and an interface for the fragment
+- Create a new concrete repository fragment (`DefaultMyAutoCoProductRepositoryOverride`) and an associated interface
 - Override (or add new) methods in the fragment
 - Declare a bean for the concrete fragment in the autoconfiguration class
 - Declare a `RepositoryContribution` bean in the autoconfiguration class, registering the new fragment with Broadleaf's out-of-the-box repository

@@ -23,8 +23,8 @@ Existing implementations will continue to depend on starter project liquibase su
 ====
 
 - Create spring boot autoconfiguration class `ProductExtensionComplexFieldJson`, which will be referenced from META-INF/spring.factories
-- Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct
-- Implement new collection fields in MyAutoCoProduct
-- Use the `@Convert` annotation on the fields to reference JPA converters for JSON/Collection conversion
+- Create `MyAutoCoProduct` repository domain class extending Broadleaf's `JpaProduct`
+- Implement new collection fields in `MyAutoCoProduct`
+- Use the `@Convert` annotation on the collection fields to reference JPA converters for JSON/Collection conversion
 - Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class
 - Add `AutoConfigureBefore(..)` annotation to autoconfiguration class above to make sure the entity reference is scanned before JPA processing

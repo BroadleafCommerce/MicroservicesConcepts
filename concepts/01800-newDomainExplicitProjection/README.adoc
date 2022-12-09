@@ -38,10 +38,10 @@ Existing implementations will continue to depend on starter project liquibase su
 - Additionally, make `ChargingStation` implements `BusinessTypeAware` and `ModelMapperMappable`
 - Create a projection class (`ChargingStationProjection`)
 - Implement `getBusinessDomainType()` in `ChargingStation` and return `ChargingStationProjection` as the type
-- Implement toMe/fromMe (from ModelMapperMappable contract)
+- Implement toMe/fromMe in `ChargingStation` (from ModelMapperMappable contract)
   * ModelMapper will automatically map similar fields
   * For unusual mappings, use a post converter
   * Create a ModelMapper type map for your repository domain and projection and register your post converter
-- Declare `@EnableJpaTrackableFlow` for the autoconfiguration class to setup the lifecycle plumbing for the new domain class
-- Declare `@AutoConfigureBefore` for the autoconfiguration class to scan the new domain class before JPA processing
+- Declare `@EnableJpaTrackableFlow` on the autoconfiguration class to setup the lifecycle plumbing for the new domain class
+- Declare `@AutoConfigureBefore` on the autoconfiguration class to scan the new domain class before JPA processing
 

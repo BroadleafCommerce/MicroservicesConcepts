@@ -30,7 +30,7 @@ Existing implementations will continue to depend on starter project liquibase su
 ====
 
 - Create spring boot autoconfiguration class `EndpointCustomization`, which will be referenced from META-INF/spring.factories
-- Create new Rest Controller implementation that matches path and HTTP method of an existing endpoint from a Broadleaf framework Rest controller. Your implementation will be given precedence.
-- Declare the `@ComponentScan` annotation for the autoconfiguration class
-- Declare the `@AutoConfigureBefore` annotation for the autoconfiguration class to prioritize your controller endpoint
+- Create new Rest Controller implementation that matches path and HTTP method of an existing endpoint from a Broadleaf framework Rest controller
+- Declare the `@ComponentScan` annotation on the autoconfiguration class
+- Declare the `@AutoConfigureBefore` annotation on the autoconfiguration class to prioritize your controller endpoint
 

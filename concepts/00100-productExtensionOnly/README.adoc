@@ -34,7 +34,7 @@ Existing implementations will continue to depend on starter project liquibase su
 ====
 
 - Create spring boot autoconfiguration class `ProductExtensionOnly`, which will be referenced from META-INF/spring.factories
-- Create MyAutoCoProduct repository domain class extending Broadleaf's JpaProduct
-- Implement new field in MyAutoCoProduct
+- Create `MyAutoCoProduct` repository domain class extending Broadleaf's `JpaProduct`
+- Implement new field in `MyAutoCoProduct`
 - Add `JpaEntityScan` annotation to autoconfiguration class above for new extended entity class
 - Add `AutoConfigureBefore(..)` annotation to autoconfiguration class above to make sure the entity reference is scanned before JPA processing
