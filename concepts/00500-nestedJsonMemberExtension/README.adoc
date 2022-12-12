@@ -17,7 +17,7 @@ Extends nested structures that appear arbitrarily deep in the object graph of `J
 
 - Show several examples of nested structure extension
 - Show supporting admin customization
-- Builds On : xref:concepts/00300-productExtensionExplicitProjection/README.adoc[00300-productExtensionExplicitProjection]
+- Builds On : xref:../../concepts/00300-productExtensionExplicitProjection/README.adoc[00300-productExtensionExplicitProjection]
 
 == Key Steps:
 

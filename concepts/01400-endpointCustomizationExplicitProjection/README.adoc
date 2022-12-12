@@ -17,7 +17,7 @@ Customization of an endpoint method in `ProductEndpoint` using an extended expli
 
 - Demonstrate a behavior tweak of a single endpoint method
 - Demonstrate working with an explicit projection in the endpoint
-- Builds On : xref:concepts/01100-businessLogicCustomizationExplicitProjection/README.adoc[01100-businessLogicCustomizationExplicitProjection]
+- Builds On : xref:../../concepts/01100-businessLogicCustomizationExplicitProjection/README.adoc[01100-businessLogicCustomizationExplicitProjection]
 
 == Key Steps:
 
