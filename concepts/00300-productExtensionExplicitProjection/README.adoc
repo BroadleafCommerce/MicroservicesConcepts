@@ -19,7 +19,7 @@ Continues with the complex field example persisted as JSON. However, in this cas
 - Demonstrate response only projection field
 - Show supporting admin customization
 - Demonstrate mapping to synthetic fields
-- Builds On : xref:concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
+- Builds On : xref:../../concepts/00200-productExtensionComplexFieldJson/README.adoc[00200-productExtensionComplexFieldJson]
 
 == Key Steps:
 

@@ -17,7 +17,7 @@ Extends nested structures that appear arbitrarily deep in the object graph of `J
 
 - Show example of nested OneToMany table based structure extension
 - Show supporting admin customization
-- Builds On : xref:concepts/00400-productExtensionComplexFieldTableBased/README.adoc[00400-productExtensionComplexFieldTableBased]
+- Builds On : xref:../../concepts/00400-productExtensionComplexFieldTableBased/README.adoc[00400-productExtensionComplexFieldTableBased]
 
 == Key Steps:
 

@@ -19,7 +19,7 @@ Introduction of new domain including explicit projection declaration
 - Demonstrate projection customizations
 - Demonstrate custom JSON deserialization/serialization for a projection field
 - Demonstrate maintenance to/from a synthetic map to a different JPA domain structure
-- Builds On : xref:concepts/01600-newDomainComplexField/README.adoc[01600-newDomainComplexField], xref:concepts/00300-productExtensionExplicitProjection/README.adoc[00300-productExtensionExplicitProjection]
+- Builds On : xref:../../concepts/01600-newDomainComplexField/README.adoc[01600-newDomainComplexField], xref:../../concepts/00300-productExtensionExplicitProjection/README.adoc[00300-productExtensionExplicitProjection]
 
 == Key Steps:
 

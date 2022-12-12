@@ -17,7 +17,7 @@ Introduction of new domain without explicit projection or any other explicit plu
 
 - Demonstrate the simplest type of domain introduction
 - Show full lifecycle support (json in/out) for the endpoint API
-- Builds On : xref:concepts/00100-productExtensionOnly/README.adoc[00100-productExtensionOnly]
+- Builds On : xref:../../concepts/00100-productExtensionOnly/README.adoc[00100-productExtensionOnly]
 
 == Key Steps:
 
