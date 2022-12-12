@@ -8,7 +8,7 @@ Simple extension of `JpaProduct` adding more complex field types, including coll
 - Demonstrate interaction with `Projection` interface to expose complex structures for editing
 - Show full lifecycle support (json in/out) for the endpoint API
 - Show supporting admin customization
-- Builds On : xref:../00100-productExtensionOnly/README.adoc[00100-productExtensionOnly]
+- Builds On : xref:fake/../00100-productExtensionOnly/README.adoc[00100-productExtensionOnly]
 
 == Key Steps:
 
