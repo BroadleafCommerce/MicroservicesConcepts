@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.broadleafcommerce.catalog.domain.product.Product;
 import com.broadleafcommerce.catalog.service.product.hydration.ProductHydrationService;
 import com.broadleafcommerce.catalog.web.endpoint.ProductEndpoint;
+import com.broadleafcommerce.common.extension.data.DataRouteByExample;
 import com.broadleafcommerce.common.extension.projection.Projection;
 import com.broadleafcommerce.data.tracking.core.context.ContextInfo;
 import com.broadleafcommerce.data.tracking.core.context.ContextOperation;
@@ -32,7 +34,13 @@ import lombok.RequiredArgsConstructor;
  * {@link FrameworkRestController} should also be replaced with {@link RestController}. Finally, any
  * {@link Policy} annotations should be repeated here.
  * <p>
- * </p>
+ * Also note the {@link DataRouteByExample} annotation on the class. This defines the Data Route to
+ * use for persistent operations, and should be used on any entrypoint (such as an Endpoint or
+ * message listener) to the application. In a word, this ensures that data is read from or modified
+ * in the correct database or schema for the microservice. See the
+ * <a href="https://developer.broadleafcommerce.com/shared-concepts/data-routing">Data Routing
+ * document in the Dev Portal</a> for more information.
+ * <p>
  * It is generally preferable to declare a new {@code @RestController} annotated class for your
  * endpoint that does not derive from the Broadleaf controller. This usually serves to simplify the
  * injection requirements for your needs. Your path mapping will still be preferred over the
@@ -41,6 +49,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping({"/products"})
 @RequiredArgsConstructor
+@DataRouteByExample(Product.class)
 public class MyAutoCoProductEndpoint {
 
     private final MyAutoCoProductService productSvc;
