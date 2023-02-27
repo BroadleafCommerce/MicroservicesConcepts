@@ -47,7 +47,9 @@
                         </goals>
                         <configuration>
                             <argLine>
-                                -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Xmx1500m
+                                ${java.17.options}
+                                -Djdk.net.URLClassPath.disableClassPathURLCheck=true
+                                -Xmx1500m
                             </argLine>
                             <excludes>
                                 <exclude>
@@ -63,7 +65,9 @@
                         </goals>
                         <configuration>
                             <argLine>
-                                -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Xmx1500m
+                                ${java.17.options}
+                                -Djdk.net.URLClassPath.disableClassPathURLCheck=true
+                                -Xmx1500m
                             </argLine>
                             <includes>
                                 <include>

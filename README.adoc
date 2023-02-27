@@ -68,7 +68,7 @@ Contact `info@broadleafcommerce.com` for information on how to receive these cre
 ====
 
 === Java
-You will need Java 11 installed on your machine.
+You will need Java 17 installed on your machine.
 
 === Docker
 You will need to have https://docs.docker.com/install/[Docker Engine & Docker Compose] installed

@@ -40,4 +40,4 @@ ECHO -------------------------------------------------------
 call mvn "install" "-f" "%CD%\..\..\pom.xml" "-pl" ":%artifactId%" "-am" "-DskipTests" "-Papp,mapperCache" "-PnoSchema"
 set NO_GCE_CHECK=true
 set BROADLEAF_CATALOG_LIQUIBASE_CHANGELOG=%changeLog%
-call java "-jar" "target/%artifactId%-%version%.jar"
+call java "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED" "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED" "--add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED" "--add-opens=jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED" "--add-opens=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED" "--add-opens=java.base/java.io=ALL-UNNAMED" "--add-opens=java.base/java.nio=ALL-UNNAMED" "--add-opens=java.base/java.util=ALL-UNNAMED" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED" "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED" "--add-opens=java.base/java.time=ALL-UNNAMED" "--add-opens=java.base/java.time.format=ALL-UNNAMED" "-jar" "target/%artifactId%-%version%.jar"
