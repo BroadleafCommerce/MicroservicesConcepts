@@ -125,6 +125,14 @@ https://maven.apache.org/settings.html#Servers[here] and
 https://maven.apache.org/ref/3.6.3/maven-settings/settings.html[here]
 ====
 
+=== DNS
+You will need to be able to resolve `localsolr` to `127.0.0.1`. This is usually achieved by adding this to `/etc/hosts`
+
+[source,txt]
+----
+127.0.0.1 localsolr
+----
+
 == Running a Concept Project
 - In the specific concept module, execute the platform specific `reset-and-run` script.
 
