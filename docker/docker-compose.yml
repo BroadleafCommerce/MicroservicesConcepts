@@ -43,7 +43,7 @@ services:
       BROADLEAF_GATEWAY_PROXYURLS_CATALOGBROWSE: '${BROADLEAF_GATEWAY_PROXYURLS_CATALOGBROWSE}'
       ###
       DEBUG_PORT: 8001
-    image: repository.broadleafcommerce.com:5001/broadleaf/admingateway-monitored:1.4.7-SNAPSHOT
+    image: repository.broadleafcommerce.com:5001/broadleaf/admingateway-monitored:1.4.9-SNAPSHOT
     networks:
       - kafkanet
       - backend
@@ -55,7 +55,8 @@ services:
     environment:
       NODE_ENV: development
       VITE_ENABLE_DEV_SETTINGS: 'true'
-    image: repository.broadleafcommerce.com:5001/broadleaf/adminstarter:latest-1.10-snapshot
+      VITE_ENABLE_PKCE: 'true'
+    image: repository.broadleafcommerce.com:5001/broadleaf/adminstarter:latest-1.11-snapshot
     networks:
       - backend
     ports:
@@ -68,6 +69,8 @@ services:
       BROADLEAF_AUTH_DATA_LOAD_REGISTERPREDEFINEDOPENAPICLIENT: 'true'
       DEBUG_PORT: 8000
       SPRING_DATASOURCE_URL: 'jdbc:postgresql://database:5432/broadleaf?currentSchema=auth'
+      BROADLEAF_AUTH_LOGIN_EMBEDDED_ENABLED: 'true'
+      BROADLEAF_AUTH_SECURITY_PKCE_ENABLED: 'true'
     image: repository.broadleafcommerce.com:5001/broadleaf-demo/auth:1.9.0-SNAPSHOT
     networks:
       - kafkanet
@@ -111,7 +114,7 @@ services:
       BROADLEAF_GATEWAY_PROXYURLS_SHIPPING: '${BROADLEAF_GATEWAY_PROXYURLS_SHIPPING}'
       BROADLEAF_GATEWAY_PROXYURLS_TENANT: '${BROADLEAF_GATEWAY_PROXYURLS_TENANT}'
       DEBUG_PORT: 8014
-    image: repository.broadleafcommerce.com:5001/broadleaf/commercegateway-monitored:1.4.7-SNAPSHOT
+    image: repository.broadleafcommerce.com:5001/broadleaf/commercegateway-monitored:1.4.9-SNAPSHOT
     networks:
       - kafkanet
       - backend
@@ -130,6 +133,8 @@ services:
       NEXT_PUBLIC_TENANT_RESOLVER_APPLICATION_PARAMETER: 'application'
       NEXT_PUBLIC_GATEWAY_HOST: 'https://host.docker.internal:8456'
       NEXT_PUBLIC_API_ORIGIN: 'https://host.docker.internal:8456'
+      NEXT_PUBLIC_USE_EMBEDDED_LOGIN: 'true'
+      NEXT_PUBLIC_USE_PKCE: 'true'
     image: repository.broadleafcommerce.com:5001/broadleaf/commerce-nextjs-starter:latest-1.6-snapshot
     networks:
       - backend

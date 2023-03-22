@@ -15,9 +15,11 @@ import org.springframework.http.MediaType;
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
 import com.broadleafcommerce.microservices.AbstractMockMvcIT;
 import com.broadleafcommerce.microservices.DefaultTestDataRoutes.TestCatalogRouted;
+import com.tutorial.domain.Characteristics;
 import com.tutorial.domain.MyAutoCoProductProjection;
 import com.tutorial.domain.Upgrade;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Collections;
 
@@ -33,6 +35,7 @@ class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
     @Override
     protected void transactionalTeardown() {
         getEntityManager().createQuery("DELETE FROM Upgrade").executeUpdate();
+        getEntityManager().createQuery("DELETE FROM Characteristics").executeUpdate();
         getEntityManager().createQuery("DELETE FROM MyAutoCoProduct").executeUpdate();
     }
 
@@ -58,7 +61,9 @@ class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
                 .andExpect(jsonPath("$.content[0].upgrades", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].upgrades[0].name").value("upgrade"))
                 .andExpect(jsonPath("$.content[0].tags", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].tags[0]").value("test"));
+                .andExpect(jsonPath("$.content[0].tags[0]").value("test"))
+                .andExpect(jsonPath("$.content[0].characteristics.model").value("test"))
+                .andExpect(jsonPath("$.content[0].characteristics.weight").value("4000.0"));
     }
 
     private MyAutoCoProductProjection projection() {
@@ -74,6 +79,12 @@ class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
         upgrade.setDescription("upgrade description");
         upgrade.setManufacturerId("upgrade manufacturer id");
         car.setUpgrades(Collections.singletonList(upgrade));
+        Characteristics characteristics = new Characteristics();
+        characteristics.setLength(BigDecimal.valueOf(14.4D));
+        characteristics.setWidth(BigDecimal.valueOf(5.8D));
+        characteristics.setHeight(BigDecimal.valueOf(5.8D));
+        characteristics.setWeight(BigDecimal.valueOf(4000));
+        car.setCharacteristics(characteristics);
         return car;
     }
 
