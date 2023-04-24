@@ -27,4 +27,7 @@ public class MyAutoCoProduct extends JpaProduct {
     @Column(name = "MODEL")
     private String model;
 
+    @Column(name = "IS_ALL_WHEEL_DRIVE")
+    private boolean allWheelDrive;
+
 }
