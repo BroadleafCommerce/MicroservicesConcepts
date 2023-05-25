@@ -179,17 +179,17 @@ The concept projects require recent versions of several Broadleaf Framework libr
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-common-extension</artifactId>
-            <version>1.4.13-GA</version>
+            <version>1.4.18-GA</version>
         </dependency>
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-common-jpa</artifactId>
-            <version>1.5.7-GA</version>
+            <version>1.5.12-GA</version>
         </dependency>
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-data-tracking-dependencies</artifactId>
-            <version>1.7.10-GA</version>
+            <version>1.7.21-GA</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -212,7 +212,7 @@ Creating integration tests in your own projects using the patterns demonstrated 
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-core-test</artifactId>
-            <version>1.0.0-SNAPSHOT</version> <!-- preliminary version - GA available soon -->
+            <version>1.0.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         ...
