@@ -28,13 +28,18 @@ import static com.broadleafcommerce.common.jpa.JpaConstants.CONTEXT_ID_LENGTH;
 @EqualsAndHashCode(exclude = {"id", "car"})
 public class Characteristics {
 
+    /**
+     * Notice that we are not using {@code @GeneratedValue} but using the product's id as the
+     * primary key. This is necessary for managing the subordinate entity in a {@code @OneToOne}
+     * relationship in order for sandboxing transitions to function appropriately.
+     */
     @Id
     @Column(name = "ELECTRIC_CAR_ID", nullable = false, length = CONTEXT_ID_LENGTH)
     private String id;
 
     @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "ELECTRIC_CAR_ID")
-    @MapsId
+    @MapsId // maps the product's id as the characteristic's primary key as well
     @ToString.Exclude // Avoid infinite recursion in toString()
     @JsonIgnore // Avoid infinite recursion in data tracking
     private MyAutoCoProduct car;
