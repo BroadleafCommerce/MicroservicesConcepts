@@ -66,6 +66,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.concurrent.locks.Lock;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -273,6 +274,11 @@ public class LifecycleIT {
                     @Override
                     public void unlock(String lockName, String lockKey) throws LockException {
                         // do nothing
+                    }
+
+                    @Override
+                    public Lock obtainLockInstance(String lockName) {
+                        return null;
                     }
 
                     @Override
