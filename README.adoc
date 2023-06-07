@@ -179,7 +179,7 @@ The concept projects require recent versions of several Broadleaf Framework libr
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-common-extension</artifactId>
-            <version>1.4.18-GA</version>
+            <version>1.4.19-GA</version>
         </dependency>
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
