@@ -19,6 +19,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -49,6 +50,11 @@ public class MyAutoCoProduct extends JpaProduct {
     @BatchSize(size = 100)
     @Fetch(FetchMode.SELECT)
     private List<Upgrade> upgrades = new ArrayList<>();
+
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER,
+            mappedBy = "car")
+    @Fetch(FetchMode.SELECT)
+    private Characteristics characteristics;
 
     @Override
     public ModelMapper fromMe() {

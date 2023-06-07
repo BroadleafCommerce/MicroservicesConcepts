@@ -125,6 +125,14 @@ https://maven.apache.org/settings.html#Servers[here] and
 https://maven.apache.org/ref/3.6.3/maven-settings/settings.html[here]
 ====
 
+=== DNS
+You will need to be able to resolve `localsolr` to `127.0.0.1`. This is usually achieved by adding this to `/etc/hosts`
+
+[source,txt]
+----
+127.0.0.1 localsolr
+----
+
 == Running a Concept Project
 - In the specific concept module, execute the platform specific `reset-and-run` script.
 
@@ -171,17 +179,17 @@ The concept projects require recent versions of several Broadleaf Framework libr
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-common-extension</artifactId>
-            <version>1.4.13-GA</version>
+            <version>1.4.19-GA</version>
         </dependency>
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-common-jpa</artifactId>
-            <version>1.5.7-GA</version>
+            <version>1.5.12-GA</version>
         </dependency>
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-data-tracking-dependencies</artifactId>
-            <version>1.7.10-GA</version>
+            <version>1.7.21-GA</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -204,7 +212,7 @@ Creating integration tests in your own projects using the patterns demonstrated 
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-core-test</artifactId>
-            <version>1.0.0-SNAPSHOT</version> <!-- preliminary version - GA available soon -->
+            <version>1.0.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         ...

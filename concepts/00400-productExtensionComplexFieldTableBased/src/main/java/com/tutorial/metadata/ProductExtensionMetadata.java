@@ -56,7 +56,11 @@ public class ProductExtensionMetadata {
         return view.getGeneralForm()
                 .getGroup(ProductGroups.BASIC_INFORMATION)
                 .addField(modelField())
-                .addField(upgradesField());
+                .addField(upgradesField())
+                .addField(weightField())
+                .addField(widthField())
+                .addField(lengthField())
+                .addField(heightField());
     }
 
     @NotNull
@@ -76,4 +80,31 @@ public class ProductExtensionMetadata {
                 .label("Model");
     }
 
+    @NotNull
+    private DefaultField weightField() {
+        return Fields.decimal()
+                .name("characteristics.weight")
+                .label("Weight");
+    }
+
+    @NotNull
+    private DefaultField widthField() {
+        return Fields.decimal()
+                .name("characteristics.width")
+                .label("Width");
+    }
+
+    @NotNull
+    private DefaultField lengthField() {
+        return Fields.decimal()
+                .name("characteristics.length")
+                .label("Length");
+    }
+
+    @NotNull
+    private DefaultField heightField() {
+        return Fields.decimal()
+                .name("characteristics.height")
+                .label("Height");
+    }
 }
