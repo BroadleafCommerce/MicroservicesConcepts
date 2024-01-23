@@ -4,12 +4,12 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.broadleafcommerce.microservices</groupId>
-        <artifactId>broadleaf-microservices-project-root-tutorial</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <artifactId>broadleaf-microservices-flex-parent</artifactId>
+        <version>2.0.0.2-GA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>broadleaf-microservices-concepts</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Broadleaf Microservice Concepts</name>
     <description>Parent project that holds tutorial projects that demonstrate different possible dev
@@ -19,7 +19,7 @@
     <properties>
         <!-- This value is used during liquibase schema generation,
             which is executed by default during the maven build lifecycle -->
-        <service-key>catalog</service-key>
+        <broadleaf-service-key>catalog</broadleaf-service-key>
     </properties>
 
     <!-- Housekeeping to establish the connection to source control -->
@@ -64,13 +64,48 @@
     <!-- This tutorial suite focuses on customization of CatalogServices -->
     <dependencies>
         <dependency>
-            <groupId>com.broadleafdemo</groupId>
-            <artifactId>demo-catalog-services</artifactId>
-            <version>${demo.version}</version>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-catalog-services</artifactId>
         </dependency>
         <dependency>
             <groupId>com.broadleafcommerce.microservices</groupId>
             <artifactId>broadleaf-catalog-services-metadata</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-metadata-autoconfigure</artifactId>
+        </dependency>
+        <!--Supporting Dependencies-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-test-binder</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <!--Additional Dependencies-->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-common-extension-compatibility-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-common-extension-compatibility</artifactId>
         </dependency>
     </dependencies>
 

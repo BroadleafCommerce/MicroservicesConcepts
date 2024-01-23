@@ -1,0 +1,33 @@
+# Place properties here to holistically override or set Spring environment
+# property values. These values will override anything set in your library
+# component override configs, or any properties inherited from Broadleaf
+# or Spring. Also, note that you can create additional versions of this
+# file to achieve different environment profiles according to Spring's
+# environment profile support:
+# https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files.profile-specific
+
+broadleaf:
+  common:
+    ssl-verification:
+      disabled: true
+  environment:
+    report:
+      disabled: true
+  tenant:
+    global:
+      allowed-locales:
+        - en_US
+        - en
+        - en_GB
+        - es
+        - es_ES
+        - es_MX
+        - fr
+        - fr_FR
+spring:
+  codec:
+    max-in-memory-size: 1048576
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB

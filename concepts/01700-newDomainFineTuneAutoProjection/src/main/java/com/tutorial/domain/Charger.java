@@ -2,6 +2,7 @@ package com.tutorial.domain;
 
 import static com.broadleafcommerce.common.jpa.JpaConstants.CONTEXT_ID_LENGTH;
 
+import com.broadleafcommerce.data.tracking.jpa.hibernate.UlidUserType;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.util.Assert;
@@ -11,16 +12,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,7 +44,7 @@ public class Charger implements Serializable {
     @Id
     @GeneratedValue(generator = "blcid")
     @GenericGenerator(name = "blcid", strategy = "blcid")
-    @Type(type = "com.broadleafcommerce.data.tracking.jpa.hibernate.ULidType")
+    @Type(UlidUserType.class)
     @Column(name = "ID", nullable = false, length = CONTEXT_ID_LENGTH)
     private String id;
 

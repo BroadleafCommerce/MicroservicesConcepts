@@ -2,11 +2,11 @@ package com.tutorial.domain;
 
 import com.broadleafcommerce.catalog.provider.jpa.domain.product.JpaProduct;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

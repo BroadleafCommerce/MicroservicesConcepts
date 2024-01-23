@@ -31,9 +31,11 @@ toc::[]
 - *Fragment (or Repository Fragment)*: This is a Spring Data concept for contributing repository data persistence behavior via interfaces and concrete implementations. The resulting spring component is callable at runtime and exposes the aggregate contract of all the contributed interfaces. Broadleaf provides facilities to contribute additional fragments (interfaces and optional concrete impls) to existing repositories. This is the primary extension mechanism for adding behavior to Broadleaf declared repositories.
 
 == Project Guidelines
-- The *concept* project structure will be simple. The `Min` flexpackage alone will be generally favored, avoiding `balanced` and `granular` bloat.
-- Each *concept* project will consume framework and demo artifacts from the latest relevant `develop` branches.
+- The *concept* project structure will be simple.
+- Each *concept* project will consume framework and demo artifacts from the latest relevant `stable` branches.
 - Each *concept* project is constructed using the minimal amount of configuration and code for optimum clarity.
+- The *concept* project is based on Broadleaf starter parent pom files.
+- If you're using an link:https://start.broadleafcommerce.com/[initialzr] starter project, you can include sample code from here in your own generated project. The samples demonstrated here are all for the catalog component, and you can generate a similar catalog component override module using the initialzr and selecting the `catalog` service checkbox to customize.
 
 == Project Structure
 
@@ -41,13 +43,7 @@ toc::[]
 |Directory |Description
 
 |`concepts`
-| Group of runnable projects that demonstrate a key dev or extension experience using the most streamlined approach available.
-
-|`docker`
-| Basic docker configuration to support backend of the tutorial runtime.
-
-|`script`
-| core build script code that supports all instances of `reset-and-run` and `stop-docker`.
+| Group of buildable projects that demonstrate a key dev or extension experience using the most streamlined approach available.
 
 |===
 
@@ -55,180 +51,19 @@ toc::[]
 In order to get these `concepts` running locally, you will want to obtain and install
 the following:
 
-=== Credentials
-Access to Broadleaf's Docker Registry and Maven Nexus is needed in order to pull down the
-appropriate resources.
+1. General requirements described link:https://developer.broadleafcommerce.com/starter-projects#what_do_i_need[here].
+2. Docker setup requirements described link:https://developer.broadleafcommerce.com/starter-projects/evaluation-credentials#docker_registry_authentication[here].
+3. Maven setup requirements described link:https://developer.broadleafcommerce.com/starter-projects/evaluation-credentials#maven_repository_authentication[here].
 
-Once you have obtained these credentials, you will need to configure them for the dependencies
-below.
-
-[NOTE]
-====
-Contact `info@broadleafcommerce.com` for information on how to receive these credentials
-====
-
-=== Java
-You will need Java 17 installed on your machine.
-
-=== Docker
-You will need to have https://docs.docker.com/install/[Docker Engine & Docker Compose] installed
-locally
-
-[TIP]
-====
-Docker Desktop for both Mac and Windows already includes compose along with other
-docker apps.
-====
-
-Once you have docker installed, you will want to authenticate with Broadleaf's docker registry.
-
-Type the following into your CLI:
-
-[source,shell script]
-----
-docker login repository.broadleafcommerce.com:5001
-----
-
-When prompted, type in the username and password you received above.
-
-=== Maven
-You'll need to have Maven installed locally as well.
-https://maven.apache.org/download.cgi[Maven 3.5 or later] is recommended.
-
-Once you have maven installed, another step you need to do before you can
-build the project is to configure the authentication. Maven requires it to be specified in a
-file called `settings.xml` that has to be in the `.m2` subdirectory in a user’s home directory.
-
-1. Create a folder called `.m2` in your home directory (if one does not already exist)
-2. Create a file called `settings.xml` in the `.m2` folder (if not there already)
-3. Copy the following contents to your `~/.m2/settings.xml` servers section, making sure to
-replace the credentials with the ones you received above:
-
-[source,xml]
-----
-<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd"
-    xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <servers>
-    <server>
-      <id>broadleaf-microservices</id>
-      <username>username_here</username>
-      <password>password_here</password>
-    </server>
-  </servers>
-</settings>
-----
-
-[TIP]
-====
-More info about authenticating with private repositories can be found
-https://maven.apache.org/settings.html#Servers[here] and
-https://maven.apache.org/ref/3.6.3/maven-settings/settings.html[here]
-====
-
-=== DNS
-You will need to be able to resolve `localsolr` to `127.0.0.1`. This is usually achieved by adding this to `/etc/hosts`
-
-[source,txt]
-----
-127.0.0.1 localsolr
-----
-
-== Running a Concept Project
-- In the specific concept module, execute the platform specific `reset-and-run` script.
-
-[TIP]
-====
-`ctrl-c` will terminate the process.
-====
-
-
-- The `stop-docker` script may be used to take down any running container resulting from the `reset-and-run` script.
-- The admin application will be accessible at https://localhost:8446 after all components have completed startup.
-
-[TIP]
-====
-The browser may complain about the self-signed cert and you may have to make an exception for the cert in your browser.
-====
-
-== How Does This Work?
-- Each concept project creates a jar that is contributed to a standard Broadleaf `Min` flexpackage demo
-- The jar is contributed via Spring Boot `auto-configuration`
-- When necessary, `@AutoConfigureBefore` and `@AutoConfigureAfter` are employed to favor concept configuration over Broadleaf configuration
-- Integration tests are generally employed in each concept to exercise the service API and demonstrate the customization.
-- The customizations are generally Catalog service customizations - specifically riffs on `Product`.
-
-== Scope of Applicability
-- The Java customization examples in this project should all be applicable to existing and new Broadleaf Microservices projects.
-- The maven pom inheritance, maven profiles, run commands, etc... are not currently applicable to existing or new Broadleaf Microservices projects - although advances here will eventually be brought over to real dev projects in the future.
-
-[IMPORTANT]
-====
-The concept projects require recent versions of several Broadleaf Framework libraries
-====
-
-[source,xml]
-----
-<dependencyManagement>
-    <dependencies>
-        <!-- ↓ These should appear first before the release train ↓ -->
-        <dependency>
-            <groupId>org.broadleafcommerce</groupId>
-            <artifactId>spring-frameworkmapping</artifactId>
-            <version>0.9.1-GA</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-common-extension</artifactId>
-            <version>1.4.20-GA</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-common-jpa</artifactId>
-            <version>1.5.13-GA</version>
-        </dependency>
-        <dependency>
-            <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-data-tracking-dependencies</artifactId>
-            <version>1.7.23-M2</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-        ...
-    </dependencies>
-</dependencyManagement>
-----
-
-[IMPORTANT]
-====
-Creating integration tests in your own projects using the patterns demonstrated in integration tests in this project requires an additional library
-====
-
-[source,xml]
-----
-<dependencyManagement>
-    <dependencies>
-        ...
-        <!-- ↓ This should appear before the release train, and after the deps above ↓ -->
-        <dependency>
-            <groupId>com.broadleafcommerce.microservices</groupId>
-            <artifactId>broadleaf-core-test</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        ...
-    </dependencies>
-</dependencyManagement>
-<dependencies>
-    ...
-    <dependency>
-        <groupId>com.broadleafcommerce.microservices</groupId>
-        <artifactId>broadleaf-core-test</artifactId>
-        <scope>test</scope>
-    </dependency>
-</dependencies>
-----
-
-- Leveraging the code patterns and components demonstrated in the concept projects requires recent versions of several Broadleaf Framework libraries. You should set these versions (or newer) at the top of the `dependencyManagement` section of your root pom in your own project before attempting to reproduce or compile against the patterns shown here. If your release train reference is advanced enough to bring these versions (or newer) in by default, then you can skip explicitly declaring them here.
+== Building a Concept Project
+* You can compile and run the tests in each or all of these projects.
+* You can tweak code / configuration and explore further customizations and test confirmations.
+* In the project root at a terminal prompt you can:
+** Mac - `./mvnw clean install` to build all the service overrides, liquibase changelogs, modelmapper caches, and execute tests.
+** Windows - `mvnw.cmd clean install` to build all the service overrides, liquibase changelogs, modelmapper caches, and execute tests.
+* Or, to build only a single module from the project root (replace $artifactId with the artifactId of the module you want to build. e.g. `broadleaf-concept-product-extension-only`):
+** Mac - `./mvnw clean install -pl :$artifactId -am` (the colon before the artifactId is important)
+** Windows - `mvnw.cmd clean install -pl :$artifactId -am` (the colon before the artifactId is important)
 
 == Roadmap
 - This project represents an ongoing effort to document customization use cases and patterns.
