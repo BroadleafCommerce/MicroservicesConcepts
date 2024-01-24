@@ -18,5 +18,6 @@ bin/
 .factorypath
 .sts4-cache
 local.keystore
-**/resources
+concepts/**/resources/db/changelog/*.xml
+concepts/**/resources/db/changelog/*.yaml
 /.prepare.sh

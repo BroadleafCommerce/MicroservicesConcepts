@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.broadleafcommerce.microservices</groupId>
+        <artifactId>broadleaf-concepts-parent</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <repositories>
+        <repository>
+            <id>broadleaf-microservices</id>
+            <name>Broadleaf Microservices</name>
+            <url>https://repository.broadleafcommerce.com/repository/microservices/</url>
+        </repository>
+    </repositories>
+    <artifactId>broadleaf-concept-internal-confirmation</artifactId>
+    <name>Internal Confirmation</name>
+    <description>Internal Confirmation</description>
+    <properties>
+        <flex-package-name>internal</flex-package-name>
+        <skip-mapper-cache>false</skip-mapper-cache>
+        <skip-flex-changelog>true</skip-flex-changelog>
+    </properties>
+    <dependencies>
+        <!--Customized component: catalog-->
+        <dependency>
+            <groupId>com.broadleafcommerce.microservices</groupId>
+            <artifactId>broadleaf-concept-product-extension-only</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>

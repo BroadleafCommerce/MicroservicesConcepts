@@ -1,0 +1,721 @@
+schema:
+  version: '1.0'
+project:
+  groupId: com.example.microservices
+  packageName: com.example.microservices
+  starterParentVersion: 2.1.0-SNAPSHOT
+flexPackages:
+- name: supporting
+  domain:
+    cloud: supporting
+    docker: supporting
+    local: localhost
+  enabled: false
+  flexUnits: adminnav,adminuser,metadata,notification,sandbox,search,tenant
+  messageInterlink:
+    suppressed: true
+    tenantSync: true
+  ports:
+  - debug: true
+    port: 9007
+    targetPort: 9007
+  - port: 9457
+    targetPort: 9457
+- name: processing
+  domain:
+    cloud: processing
+    docker: processing
+    local: localhost
+  enabled: false
+  flexUnits: import,indexer,scheduledjob,search,inventory,catalog,offer,pricing,customer,order,menu,content
+  messageInterlink:
+    all: true
+    customer: false
+    tenantSyncComponentFilter: indexer,import
+  primary: false
+  ports:
+  - debug: true
+    port: 9006
+    targetPort: 9006
+  - port: 9461
+    targetPort: 9461
+- name: browse
+  domain:
+    cloud: browse
+    docker: browse
+    local: localhost
+  enabled: false
+  flexUnits: asset,catalog,catalogbrowse,content,menu,offer,pricing,ratings,vendor
+  messageInterlink:
+    suppressed: true
+    tenantSync: true
+  ports:
+  - debug: true
+    port: 9004
+    targetPort: 9004
+  - port: 9447
+    targetPort: 9447
+- name: cart
+  domain:
+    cloud: cart
+    docker: cart
+    local: localhost
+  enabled: false
+  flexUnits: cart,cartops,customer,fulfillment,inventory,order,orderops,paymenttransaction,shipping,creditaccount
+  messageInterlink:
+    customer: true
+    suppressed: true
+    tenantSync: true
+  ports:
+  - debug: true
+    port: 9005
+    targetPort: 9005
+  - port: 9458
+    targetPort: 9458
+- name: min
+  domain:
+    cloud: core
+    docker: core
+    local: localhost
+  enabled: false
+  flexUnits: adminnav,adminuser,asset,cart,cartops,catalog,catalogbrowse,content,customer,fulfillment,import,
+    inventory,menu,metadata,notification,offer,order,orderops,paymenttransaction,pricing,
+    ratings,sandbox,scheduledjob,search,shipping,tenant,vendor,creditaccount
+  ports:
+  - port: 8447
+    targetPort: 8447
+  - debug: true
+    port: 8004
+    targetPort: 8004
+- name: one
+  domain:
+    cloud: core
+    docker: core
+    local: localhost
+  enabled: true
+  flexUnits: adminnav,adminuser,asset,cart,cartops,catalog,catalogbrowse,content,customer,fulfillment,import,
+    indexer,inventory,menu,metadata,notification,offer,order,orderops,paymenttransaction,
+    pricing,ratings,sandbox,scheduledjob,search,shipping,tenant,vendor,creditaccount
+  ports:
+  - port: 8447
+    targetPort: 8447
+  - debug: true
+    port: 8004
+    targetPort: 8004
+- name: auth
+  domain:
+    cloud: auth
+    docker: auth
+    local: localhost
+  enabled: true
+  flexUnits: auth
+  ports:
+  - port: 8443
+    targetPort: 8443
+  - debug: true
+    port: 8000
+    targetPort: 8000
+  - port: 8080
+    targetPort: 8080
+  - port: 9001
+    targetPort: 9001
+components:
+- name: adminnav
+  routed: true
+  altName: adminnavigation
+  domain:
+    cloud: adminnav
+    docker: adminnav
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8455
+    targetPort: 8455
+  - debug: true
+    port: 8013
+    targetPort: 8013
+- name: adminuser
+  routed: true
+  domain:
+    cloud: adminuser
+    docker: adminuser
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8464
+    targetPort: 8464
+  - debug: true
+    port: 8022
+    targetPort: 8022
+- name: asset
+  routed: true
+  domain:
+    cloud: asset
+    docker: asset
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8453
+    targetPort: 8453
+  - debug: true
+    port: 8011
+    targetPort: 8011
+- name: auth
+  routed: true
+  altRoute: authapi
+  domain:
+    cloud: auth
+    docker: auth
+    local: localhost
+  enabled: false
+  dataSource:
+    type: single
+  ports:
+  - port: 8443
+    targetPort: 8443
+  - port: 8080
+    targetPort: 8080
+  - port: 9001
+    targetPort: 9001
+  - debug: true
+    port: 8000
+    targetPort: 8000
+- name: cart
+  routed: true
+  domain:
+    cloud: cart
+    docker: cart
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8458
+    targetPort: 8458
+  - debug: true
+    port: 8016
+    targetPort: 8016
+- name: cartops
+  routed: true
+  altName: cartoperation
+  domain:
+    cloud: cartops
+    docker: cartops
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8459
+    targetPort: 8459
+  - debug: true
+    port: 8017
+    targetPort: 8017
+- name: catalog
+  routed: true
+  domain:
+    cloud: catalog
+    docker: catalog
+    local: localhost
+  enabled: true
+  ports:
+  - port: 8442
+    targetPort: 8442
+  - debug: true
+    port: 8999
+    targetPort: 8999
+- name: catalogbrowse
+  routed: true
+  domain:
+    cloud: catalogbrowse
+    docker: catalogbrowse
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8468
+    targetPort: 8468
+  - debug: true
+    port: 8026
+    targetPort: 8026
+- name: content
+  routed: true
+  domain:
+    cloud: content
+    docker: content
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8474
+    targetPort: 8474
+  - debug: true
+    port: 8032
+    targetPort: 8032
+- name: creditaccount
+  routed: true
+  domain:
+    cloud: creditaccount
+    docker: creditaccount
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8478
+    targetPort: 8478
+  - debug: true
+    port: 8078
+    targetPort: 8078
+- name: customer
+  routed: true
+  domain:
+    cloud: customer
+    docker: customer
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8463
+    targetPort: 8463
+  - debug: true
+    port: 8021
+    targetPort: 8021
+- name: fulfillment
+  routed: true
+  domain:
+    cloud: fulfillment
+    docker: fulfillment
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8479
+    targetPort: 8479
+  - debug: true
+    port: 8079
+    targetPort: 8079
+- name: import
+  packageIdentifier: dataimport
+  routed: true
+  domain:
+    cloud: import
+    docker: import
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8461
+    targetPort: 8461
+  - debug: true
+    port: 8019
+    targetPort: 8019
+- name: indexer
+  routed: true
+  domain:
+    cloud: indexer
+    docker: indexer
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8462
+    targetPort: 8462
+  - debug: true
+    port: 8020
+    targetPort: 8020
+- name: inventory
+  routed: true
+  domain:
+    cloud: inventory
+    docker: inventory
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8471
+    targetPort: 8471
+  - debug: true
+    port: 8029
+    targetPort: 8029
+- name: menu
+  routed: true
+  domain:
+    cloud: menu
+    docker: menu
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8444
+    targetPort: 8444
+  - debug: true
+    port: 8003
+    targetPort: 8003
+- name: metadata
+  routed: true
+  domain:
+    cloud: metadata
+    docker: metadata
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8445
+    targetPort: 8445
+  - debug: true
+    port: 8002
+    targetPort: 8002
+- name: notification
+  routed: true
+  domain:
+    cloud: notification
+    docker: notification
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8469
+    targetPort: 8469
+  - debug: true
+    port: 8027
+    targetPort: 8027
+- name: offer
+  routed: true
+  altRoute: campaign
+  domain:
+    cloud: offer
+    docker: offer
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8452
+    targetPort: 8452
+  - debug: true
+    port: 8010
+    targetPort: 8010
+- name: order
+  routed: true
+  domain:
+    cloud: order
+    docker: order
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8470
+    targetPort: 8470
+  - debug: true
+    port: 8028
+    targetPort: 8028
+- name: orderops
+  routed: true
+  altName: orderoperation
+  domain:
+    cloud: orderops
+    docker: orderops
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8472
+    targetPort: 8472
+  - debug: true
+    port: 8030
+    targetPort: 8030
+- name: paymenttransaction
+  routed: true
+  domain:
+    cloud: paymenttransaction
+    docker: paymenttransaction
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8476
+    targetPort: 8476
+  - debug: true
+    port: 8076
+    targetPort: 8076
+- name: pricing
+  routed: true
+  domain:
+    cloud: pricing
+    docker: pricing
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8448
+    targetPort: 8448
+  - debug: true
+    port: 8005
+    targetPort: 8005
+- name: ratings
+  routed: true
+  domain:
+    cloud: ratings
+    docker: ratings
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8477
+    targetPort: 8477
+  - debug: true
+    port: 8036
+    targetPort: 8036
+- name: sandbox
+  routed: true
+  domain:
+    cloud: sandbox
+    docker: sandbox
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8449
+    targetPort: 8449
+  - debug: true
+    port: 8007
+    targetPort: 8007
+- name: scheduledjob
+  routed: true
+  domain:
+    cloud: scheduledjob
+    docker: scheduledjob
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8454
+    targetPort: 8454
+  - debug: true
+    port: 8012
+    targetPort: 8012
+- name: search
+  routed: true
+  domain:
+    cloud: search
+    docker: search
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8457
+    targetPort: 8457
+  - debug: true
+    port: 8015
+    targetPort: 8015
+- name: shipping
+  routed: true
+  domain:
+    cloud: shipping
+    docker: shipping
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8475
+    targetPort: 8475
+  - debug: true
+    port: 8075
+    targetPort: 8075
+- name: tenant
+  routed: true
+  domain:
+    cloud: tenant
+    docker: tenant
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8450
+    targetPort: 8450
+  - debug: true
+    port: 8008
+    targetPort: 8008
+- name: vendor
+  routed: true
+  domain:
+    cloud: vendor
+    docker: vendor
+    local: localhost
+  enabled: false
+  ports:
+  - port: 8473
+    targetPort: 8473
+  - debug: true
+    port: 8031
+    targetPort: 8031
+others:
+- name: adminweb
+  routed: true
+  domain:
+    cloud: adminweb
+    docker: adminweb
+    local: localhost
+  enabled: true
+  ports:
+  - port: 3000
+    targetPort: 3000
+- name: commerceweb
+  routed: true
+  domain:
+    cloud: commerceweb
+    docker: commerceweb
+    local: localhost
+  enabled: true
+  ports:
+  - port: 4000
+    targetPort: 4000
+- name: openapi
+  routed: true
+  domain:
+    cloud: openapi-ui
+    docker: openapi
+    local: localhost
+  enabled: true
+  ports:
+  - port: 3003
+    targetPort: 3003
+supporting:
+- name: akhq
+  platform: akhq
+  descriptor: snippets/docker-akhq.yml
+  enabled: true
+  domain:
+    cloud: akhq
+    docker: akhq
+    local: localhost
+  ports:
+    port: '9000'
+- name: config
+  platform: config
+  descriptor: snippets/docker-config.yml
+  enabled: true
+  domain:
+    cloud: config
+    docker: config
+    local: localhost
+  ports:
+    port: '8888'
+- name: admingateway
+  platform: admingateway
+  enabled: true
+  domain:
+    cloud: admingateway
+    docker: admingateway
+    local: localhost
+  ports:
+    port: '8446'
+  editSource: false
+- name: commercegateway
+  platform: commercegateway
+  enabled: true
+  domain:
+    cloud: commercegateway
+    docker: commercegateway
+    local: localhost
+  ports:
+    port: '8456'
+  editSource: false
+- name: database
+  platform: postgresql
+  descriptor: snippets/docker-postgres.yml
+  enabled: true
+  domain:
+    cloud: database
+    docker: database
+    local: localhost
+  resourceName: broadleaf
+  ports:
+    port: '5432'
+- name: database
+  platform: mariadb
+  descriptor: snippets/docker-mariadb.yml
+  enabled: false
+  domain:
+    cloud: database
+    docker: database
+    local: localhost
+  ports:
+    port: '33270'
+    containerPort: '3306'
+- name: database
+  platform: mysql
+  descriptor: snippets/docker-mysql.yml
+  enabled: false
+  domain:
+    cloud: database
+    docker: database
+    local: localhost
+  ports:
+    port: '32270'
+    containerPort: '3306'
+- name: database
+  platform: oracle
+  descriptor: snippets/docker-oracle.yml
+  enabled: false
+  domain:
+    cloud: database
+    docker: host.docker.internal
+    local: localhost
+  resourceName: xe
+  ports:
+    port: '1521'
+    tnslsnrPort: '5500'
+- name: database
+  platform: yugabytedb
+  descriptor: snippets/docker-yugabytedb.yml
+  enabled: false
+  domain:
+    cloud: database
+    docker: database
+    local: localhost
+  resourceName: yugabyte
+  ports:
+    masterPort: '7001'
+    ycqlPort: '9042'
+    port: '5433'
+    tserverPort: '9000'
+- name: broker
+  platform: kafka
+  descriptor: snippets/docker-kafka.yml
+  enabled: true
+  domain:
+    alternates:
+    - kafkacluster-0.kafkacluster-headless.default.svc.cluster.local
+    - kafkacluster-0.kafkacluster-headless.default.svc.cluster
+    - kafkacluster-0.kafkacluster-headless.default.svc
+    - kafkacluster-0.kafkacluster-headless.default
+    - kafkacluster-0.kafkacluster-headless
+    - kafkacluster-1.kafkacluster-headless.default.svc.cluster.local
+    - kafkacluster-1.kafkacluster-headless.default.svc.cluster
+    - kafkacluster-1.kafkacluster-headless.default.svc
+    - kafkacluster-1.kafkacluster-headless.default
+    - kafkacluster-1.kafkacluster-headless
+    - kafkacluster-2.kafkacluster-headless.default.svc.cluster.local
+    - kafkacluster-2.kafkacluster-headless.default.svc.cluster
+    - kafkacluster-2.kafkacluster-headless.default.svc
+    - kafkacluster-2.kafkacluster-headless.default
+    - kafkacluster-2.kafkacluster-headless
+    cloud: localkafka
+    docker: localkafka
+    local: localhost
+  ports:
+    listenPortLocal: '29094'
+    jmxPort: '7777'
+    listenPortContainer: '9094'
+    interBrokerPort: '9093'
+- name: broker
+  platform: gcppubsub
+  descriptor: snippets/docker-gcppubsub.yml
+  enabled: false
+  domain:
+    cloud: localgcppubsub
+    docker: localgcppubsub
+    local: localhost
+  ports:
+    listenPortLocal: '8999'
+- name: search
+  platform: solr
+  descriptor: snippets/docker-solr.yml
+  enabled: true
+  domain:
+    cloud: localsolr
+    docker: localsolr
+    local: localhost
+  ports:
+    port: '8983'
+- name: zk
+  platform: zk
+  descriptor: snippets/docker-zk.yml
+  enabled: true
+  domain:
+    cloud: zk
+    docker: zk
+    local: localhost
+  ports:
+    port: '2181'
+extensions: []
+docker:
+  components: admingateway,adminweb,database,broker,search,zk,commercegateway,commerceweb,openapi,config,akhq
+  imageDeploymentRepoDomain: repository.broadleafcommerce.com
+  imageDeploymentRepoPort: '5001'
+  imageTagPrefix: broadleaf-demo
+  universalJavaOpts: -Xmx1536m

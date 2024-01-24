@@ -2,6 +2,7 @@ package com.tutorial.domain;
 
 import static com.broadleafcommerce.common.jpa.JpaConstants.CONTEXT_ID_LENGTH;
 
+import com.broadleafcommerce.data.tracking.jpa.hibernate.UlidUserType;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -29,19 +30,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -68,7 +69,7 @@ public class ChargingStation implements
     @Id
     @GeneratedValue(generator = "blcid")
     @GenericGenerator(name = "blcid", strategy = "blcid")
-    @Type(type = "com.broadleafcommerce.data.tracking.jpa.hibernate.ULidType")
+    @Type(UlidUserType.class)
     @Column(name = "ID", nullable = false, length = CONTEXT_ID_LENGTH)
     private String contextId;
 
