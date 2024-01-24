@@ -62,7 +62,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Primarily an internal stability test to confirm startup and basic operation with postgres,
  * generated liquibase schema, and modelmapper cache. This should help with confirming the stability
- * of most of the aspects of {@code ./reset-and-run.sh} in CI. The test will first create the
+ * of most of the aspects in CI. The test execution via maven will first create the
  * modelmapper cache, then will startup the app with liquibase support for the extension against
  * Postgres, inject the modelmapper cache, and exercise the extension via the API.
  */

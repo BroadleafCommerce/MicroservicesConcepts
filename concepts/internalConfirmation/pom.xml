@@ -18,7 +18,7 @@
     <name>Internal Confirmation</name>
     <description>Internal Confirmation</description>
     <properties>
-        <flex-package-name>one</flex-package-name>
+        <flex-package-name>internal</flex-package-name>
         <skip-mapper-cache>false</skip-mapper-cache>
         <skip-flex-changelog>true</skip-flex-changelog>
     </properties>
