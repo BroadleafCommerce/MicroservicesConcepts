@@ -23,16 +23,6 @@ Introduction of new domain with auto projection output fine tuned through custom
 
 == Key Steps:
 
-[NOTE]
-====
-`META-INF/spring.factories` is generated automatically as part of the tutorial. However, in a real implementation, this file must be explicitly created and populated.
-====
-
-[NOTE]
-====
-Existing implementations will continue to depend on starter project liquibase support to emit client domain customization changelogs (e.g. `UtilitiesIT` usage). In the future, liquibase changelog generation support will be included as part of the maven build for development projects at large (similar to how it's done in the tutorial concepts).
-====
-
 - Create spring boot autoconfiguration class `NewDomainFineTuneAutoProjection`, which will be referenced from META-INF/spring.factories
 - Setup domain (see _1600-newDomainComplexField_)
 - Declare `@ExplicitProjectionFieldConfiguration` annotation on one or more fields in `ChargingStation` to fine tune how the projection is generated
