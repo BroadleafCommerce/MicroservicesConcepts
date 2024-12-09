@@ -54,7 +54,7 @@ public class MyAutoCoProduct extends JpaProduct {
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER,
             mappedBy = "car")
     @Fetch(FetchMode.SELECT)
-    private Characteristics characteristics;
+    private Characteristics altCharacteristics;
 
     @Override
     public ModelMapper fromMe() {

@@ -3,13 +3,18 @@ package com.tutorial;
 import static com.broadleafcommerce.data.tracking.test.BaseSandboxIntegrationTest.X_CONTEXT_REQUEST;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.broadleafcommerce.data.tracking.jpa.tenant.domain.catalog.JpaCatalog;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.util.collections.Sets;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import com.broadleafcommerce.catalog.provider.jpa.repository.product.JpaProductRepository;
@@ -32,6 +37,9 @@ import java.util.Collections;
                    // scope of this test. This is a requirement of Broadleaf data tracking.
 class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @Override
     protected void transactionalTeardown() {
         getEntityManager().createQuery("DELETE FROM Upgrade").executeUpdate();
@@ -41,6 +49,14 @@ class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
 
     @Test
     void testProductExtensionComplexFieldTableBased() throws Exception {
+        getTemplate().executeWithoutResult(status -> {
+            JpaCatalog catalog = new JpaCatalog();
+            catalog.setName("test");
+            catalog.setContextId("1");
+            catalog.setLevel(1L);
+            getEntityManager().merge(catalog);
+        });
+
         getMockMvc().perform(
                 post("/products")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -50,7 +66,7 @@ class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
                         .with(getMockMvcUtil().withAuthorities(Sets.newSet("CREATE_PRODUCT"))))
                 .andExpect(status().is2xxSuccessful());
 
-        getMockMvc().perform(
+        String json = getMockMvc().perform(
                 get("/products")
                         .header(X_CONTEXT_REQUEST,
                                 toJsonExcludeNull(testContextRequest(false, true)))
@@ -60,10 +76,26 @@ class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
                 .andExpect(jsonPath("$.content[0].model").value("test"))
                 .andExpect(jsonPath("$.content[0].upgrades", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].upgrades[0].name").value("upgrade"))
+                .andExpect(jsonPath("$.content[0].upgrades[0].description").value("upgrade description"))
                 .andExpect(jsonPath("$.content[0].tags", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].tags[0]").value("test"))
-                .andExpect(jsonPath("$.content[0].characteristics.model").value("test"))
-                .andExpect(jsonPath("$.content[0].characteristics.weight").value("4000.0"));
+                .andExpect(jsonPath("$.content[0].altCharacteristics.model").value("test"))
+                .andExpect(jsonPath("$.content[0].altCharacteristics.weight").value("4000.0"))
+                .andReturn().getResponse().getContentAsString();
+        JsonNode node = objectMapper.readTree(json);
+        String product = node.get("content").elements().next().toString();
+        MyAutoCoProductProjection projection = objectMapper.readValue(product, MyAutoCoProductProjection.class);
+        projection.getUpgrades().get(0).setDescription("updated description");
+
+        getMockMvc().perform(
+                        patch("/products/" + projection.getId())
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(toJsonExcludeNull(projection))
+                                .header(X_CONTEXT_REQUEST,
+                                        toJsonExcludeNull(testContextRequest(false, true)))
+                                .with(getMockMvcUtil().withAuthorities(Sets.newSet("UPDATE_PRODUCT"))))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.upgrades[0].description").value("updated description"));
     }
 
     private MyAutoCoProductProjection projection() {
@@ -84,7 +116,7 @@ class ProductExtensionComplexFieldTableBasedIT extends AbstractMockMvcIT {
         characteristics.setWidth(BigDecimal.valueOf(5.8D));
         characteristics.setHeight(BigDecimal.valueOf(5.8D));
         characteristics.setWeight(BigDecimal.valueOf(4000));
-        car.setCharacteristics(characteristics);
+        car.setAltCharacteristics(characteristics);
         return car;
     }
 

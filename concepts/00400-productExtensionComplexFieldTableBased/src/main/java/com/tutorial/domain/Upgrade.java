@@ -2,7 +2,10 @@ package com.tutorial.domain;
 
 import static com.broadleafcommerce.common.jpa.JpaConstants.CONTEXT_ID_LENGTH;
 
+import com.broadleafcommerce.common.extension.RequestView;
+import com.broadleafcommerce.common.extension.ResponseView;
 import com.broadleafcommerce.data.tracking.jpa.hibernate.UlidUserType;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.util.Assert;
@@ -50,6 +53,7 @@ public class Upgrade implements Serializable {
     @GenericGenerator(name = "blcid", strategy = "blcid")
     @Type(UlidUserType.class)
     @Column(name = "ID", nullable = false, length = CONTEXT_ID_LENGTH)
+    @JsonView({RequestView.class, ResponseView.class})
     private String id;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -61,16 +65,19 @@ public class Upgrade implements Serializable {
     @Column(name = "NAME")
     @Getter
     @Setter
+    @JsonView({RequestView.class, ResponseView.class})
     private String name;
 
     @Column(name = "DESCRIPTION")
     @Getter
     @Setter
+    @JsonView({RequestView.class, ResponseView.class})
     private String description;
 
     @Column(name = "MANUFACTURER_ID")
     @Getter
     @Setter
+    @JsonView({RequestView.class, ResponseView.class})
     private String manufacturerId;
 
     @ProjectionPostConvert // called after mapping of Projection<MyAutoCoProduct> to MyAutoCoProduct

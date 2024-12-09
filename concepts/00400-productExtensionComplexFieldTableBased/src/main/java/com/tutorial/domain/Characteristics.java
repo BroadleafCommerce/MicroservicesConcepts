@@ -1,5 +1,8 @@
 package com.tutorial.domain;
 
+import com.broadleafcommerce.common.extension.RequestView;
+import com.broadleafcommerce.common.extension.ResponseView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.util.Assert;
 import com.broadleafcommerce.data.tracking.core.mapping.ProjectionPostConvert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,6 +38,7 @@ public class Characteristics {
      */
     @Id
     @Column(name = "ELECTRIC_CAR_ID", nullable = false, length = CONTEXT_ID_LENGTH)
+    @JsonView({RequestView.class, ResponseView.class})
     private String id;
 
     @OneToOne(cascade = CascadeType.REFRESH)
@@ -47,26 +51,31 @@ public class Characteristics {
     @Column(name = "MODEL")
     @Getter
     @Setter
+    @JsonView({RequestView.class, ResponseView.class})
     private String model;
 
     @Column(name = "LENGTH")
     @Getter
     @Setter
+    @JsonView({RequestView.class, ResponseView.class})
     private BigDecimal length;
 
     @Column(name = "WIDTH")
     @Getter
     @Setter
+    @JsonView({RequestView.class, ResponseView.class})
     private BigDecimal width;
 
     @Column(name = "HEIGHT")
     @Getter
     @Setter
+    @JsonView({RequestView.class, ResponseView.class})
     private BigDecimal height;
 
     @Column(name = "WEIGHT")
     @Getter
     @Setter
+    @JsonView({RequestView.class, ResponseView.class})
     private BigDecimal weight;
 
     @ProjectionPostConvert // called after mapping of Projection<MyAutoCoProduct> to MyAutoCoProduct

@@ -27,6 +27,6 @@ public class MyAutoCoProductProjection extends Product {
 
     private String model;
     private List<Upgrade> upgrades;
-    private Characteristics characteristics;
+    private Characteristics altCharacteristics;
 
 }
